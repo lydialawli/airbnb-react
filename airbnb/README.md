@@ -6,7 +6,7 @@
 - [x] Places
 - [ ] Place
 - [ ] Review
-- [ ] Gallery
+- [x] Gallery
 - [ ] Confirm
 - [ ] Sidebar component
 - [ ] Profile

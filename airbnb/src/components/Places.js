@@ -3,6 +3,7 @@ import Nav from '../components/Nav.js'
 import Thumbnail from '../components/Thumbnail'
 import '../styles/filters.css'
 import '../styles/grid.css'
+import '../styles/users.css'
 
 class Places extends React.Component {
     state = {
