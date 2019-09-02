@@ -85,7 +85,7 @@ class Places extends React.Component {
                 </div>
                 <div className="filters">
                     <select>
-                        {this.state.rooms.map((e, i) => { return <option value="1">Rooms: {e}</option> })}
+                         {[...Array(10)].map((n,i) => {return <option value="1">Rooms: {i+1}</option>})}
                     </select>
                     <select>
                         {this.state.placeTitles.map(e => { return <option value="1">{e}</option> })}

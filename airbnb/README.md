@@ -4,8 +4,8 @@
 - [x] filter 
 - [x] Nav component
 - [x] Places
-- [ ] Place
-- [ ] Review
+- [x] Place
+- [x] Review
 - [x] Gallery
 - [ ] Confirm
 - [ ] Sidebar component
