@@ -7,9 +7,9 @@
 - [x] Place
 - [x] Review
 - [x] Gallery
-- [ ] Confirm
-- [ ] Sidebar component
-- [ ] Profile
+- [x] Confirm
+- [x] Sidebar component
+- [x] Profile
 - [ ] Bookings
 - [ ] Favorites
 - [ ] Host
