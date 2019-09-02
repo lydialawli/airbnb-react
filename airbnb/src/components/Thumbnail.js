@@ -23,7 +23,6 @@ class Thumbnail extends React.Component {
 					<span className="price">$350/night</span>
 					<span className="rating">
                         {[...Array(5)].map((n,i) => i >= this.props.place.stars ?  <i className="far fa-star"></i> : <i className="fas fa-star"></i>)}
-                        <br/>
 						<span>{this.props.place.reviews} Reviews</span>
 					</span>
 				</div>

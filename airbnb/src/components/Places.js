@@ -64,7 +64,6 @@ class Places extends React.Component {
             },
         ],
         placeTitles: ['All types'],
-        rooms: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         filterTypes: [{ value: 'date', name: 'Latest' }, { value: 'price', name: 'Price' }, { value: 'rating', name: 'Rating' }]
     }
 
