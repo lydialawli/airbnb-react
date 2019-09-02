@@ -1,9 +1,9 @@
 ## Milestones
 
-- [ ] Thumbnail component
+- [x] Thumbnail component
 - [x] filter 
 - [x] Nav component
-- [ ] Places
+- [x] Places
 - [ ] Place
 - [ ] Review
 - [ ] Gallery

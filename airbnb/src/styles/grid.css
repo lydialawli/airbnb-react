@@ -47,7 +47,7 @@
 }
 
 .grid.image {
-	background-image: url('../images/thailand.jpg');
+	background-image: url('/../public/thailand.jpg');
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;

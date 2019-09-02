@@ -1,12 +1,78 @@
 import React from 'react'
 import Nav from '../components/Nav.js'
+import Thumbnail from '../components/Thumbnail'
 import '../styles/filters.css'
+import '../styles/grid.css'
 
 class Places extends React.Component {
     state = {
-        places: ['All Types', 'Entire Villa', 'Shared Villa', 'Entire House', 'Shared House', 'Private Room'],
+        places: [
+            {
+                title: 'Duplex with Garden',
+                description: 'Entire Duplex • 2 Rooms',
+                price: 2000,
+                location: 'Marina',
+                id: 0,
+                stars: 4,
+                reviews: 37,
+            },
+            {
+                title: 'Double Room Shared House',
+                description: 'Shared House • 4 Rooms',
+                price: 5000,
+                location: 'Ramblas',
+                id: 1,
+                stars: 3,
+                reviews: 12,
+            },
+            {
+                title: 'Single Room Shared House',
+                description: 'Shared House • 3 Rooms',
+                price: 300,
+                location: 'Ramblas',
+                id: 2,
+                stars: 5,
+                reviews: 50,
+            },
+            {
+                title: 'Studio Lounge small',
+                description: 'Studio Lounge • 2 Rooms',
+                price: 1000,
+                location: 'Barceloneta',
+                id: 3,
+                stars: 5,
+                reviews: 4,
+            },
+            {
+                title: 'Studio Lounge Big',
+                description: 'Entire Studio Lounge • 1 Rooms',
+                price: 3000,
+                location: 'Barceloneta',
+                id: 4,
+                stars: 2,
+                reviews: 36,
+            },
+            {
+                title: 'Single room private House',
+                description: 'Private house • 1 Rooms',
+                price: 400,
+                location: 'Eixample',
+                id: 5,
+                stars: 4,
+                reviews: 43,
+            },
+        ],
+        placeTitles: ['All types'],
         rooms: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         filterTypes: [{ value: 'date', name: 'Latest' }, { value: 'price', name: 'Price' }, { value: 'rating', name: 'Rating' }]
+    }
+
+    componentWillMount() {
+        let placeTitles = this.state.places.map(e => {
+            this.state.placeTitles.push(e.title)
+        })
+
+        this.setState = ({ placeTitles })
     }
 
 
@@ -21,7 +87,7 @@ class Places extends React.Component {
                         {this.state.rooms.map((e, i) => { return <option value="1">Rooms: {e}</option> })}
                     </select>
                     <select>
-                        {this.state.places.map(e => { return <option value="1">{e}</option> })}
+                        {this.state.placeTitles.map(e => { return <option value="1">{e}</option> })}
                     </select>
                     <input type="number" placeholder="max price" />
                     <select>
@@ -29,6 +95,16 @@ class Places extends React.Component {
                     </select>
                     <input type="text" className="search" placeholder="Search..." />
                 </div>
+                <div className="grid five large">
+                    {this.state.places.map((p, i) => {
+                        return (
+                            <Thumbnail key={i} place={p} index={i} />
+                        )
+                    })}
+                </div>
+
+
+
             </div>
 
         )
