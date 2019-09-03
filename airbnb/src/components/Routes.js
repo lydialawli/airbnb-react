@@ -9,6 +9,7 @@ import Favorites from './Favorites'
 import Host from './Host'
 import Create from './Create'
 import Signup from './Signup'
+import Login from './Login'
 import '../styles/global.css'
 
 //make sure larger paths goes first
@@ -24,6 +25,7 @@ class Routes extends React.Component {
                     <Route path='/create' component={Create}></Route>
                     <Route path='/signup' component={Signup}></Route>
                     <Route path='/place' component={Place}></Route>
+                    <Route path='/login' component={Login}></Route>
                     <Route path='/host' component={Host}></Route>
                     <Route path='/' component={Places}></Route>
                 </Switch>
