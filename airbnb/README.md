@@ -12,7 +12,7 @@
 - [x] Profile
 - [x] Bookings
 - [x] Favorites
-- [ ] Host
+- [x] Host
 - [ ] Create
 - [ ] Signup
 - [ ] Login
