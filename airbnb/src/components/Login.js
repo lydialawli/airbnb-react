@@ -9,11 +9,12 @@ import '../styles/buttons.css'
 
 class Login extends React.Component {
     state = {
-        logo: './logo-airbnb.png'
+        logo: './logo-airbnb.png',
+        bg: './thailand.jpg'
     }
 
     render() {
-        return (<div className="grid center middle tall image">
+        return (<div className="grid center middle tall image" style={{ backgroundImage: `url(${this.state.bg})` }}>
             <div className="card small">
                 <div className="content">
                     <div className="logo" style={{ backgroundImage: `url(${this.state.logo})` }}></div>

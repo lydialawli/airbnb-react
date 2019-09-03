@@ -17,6 +17,7 @@ class Places extends React.Component {
                 stars: 4,
                 reviews: 37,
                 bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
+                fav: false
             },
             {
                 title: 'Double Room Shared House',
@@ -27,8 +28,8 @@ class Places extends React.Component {
                 stars: 3,
                 reviews: 12,
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
-                fav: true
-                
+                fav: false
+
             },
             {
                 title: 'Single Room Shared House',
@@ -39,6 +40,7 @@ class Places extends React.Component {
                 stars: 5,
                 reviews: 50,
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
+                fav: false
             },
             {
                 title: 'Studio Lounge small',
@@ -49,6 +51,7 @@ class Places extends React.Component {
                 stars: 5,
                 reviews: 4,
                 bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
+                fav: false
             },
             {
                 title: 'Studio Lounge Big',
@@ -59,6 +62,7 @@ class Places extends React.Component {
                 stars: 2,
                 reviews: 36,
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
+                fav: false
             },
             {
                 title: 'Single room private House',
@@ -69,18 +73,27 @@ class Places extends React.Component {
                 stars: 4,
                 reviews: 43,
                 bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
+                fav: false
             },
         ],
-        placeTitles: ['All types'],
+        placeTitles: ['All types', 'Shared'],
         filterTypes: [{ value: 'date', name: 'Latest' }, { value: 'price', name: 'Price' }, { value: 'rating', name: 'Rating' }]
     }
 
     componentWillMount() {
-        let placeTitles = this.state.places.map(e => {
-            this.state.placeTitles.push(e.title)
-        })
+        // let placeTitles = this.state.places.map(e => {
+        //     this.state.placeTitles.push(e.title)
+        // })
 
-        this.setState = ({ placeTitles })
+        // this.setState({ placeTitles })
+    }
+
+    changeFav = (e,i) => {
+        let places = this.state.places
+        let element = places[i]
+        element.fav = !element.fav
+        this.setState({ places })
+       
     }
 
 
@@ -92,10 +105,10 @@ class Places extends React.Component {
                 </div>
                 <div className="filters">
                     <select>
-                         {[...Array(10)].map((n,i) => {return <option value="1">Rooms: {i+1}</option>})}
+                        {[...Array(10)].map((n, i) => { return <option key={i} value="1">Rooms: {i + 1}</option> })}
                     </select>
                     <select>
-                        {this.state.placeTitles.map(e => { return <option value="1">{e}</option> })}
+                        {this.state.placeTitles.map((e,i) => { return <option key={i} value="1">{e}</option> })}
                     </select>
                     <input type="number" placeholder="max price" />
                     <select>
@@ -106,7 +119,7 @@ class Places extends React.Component {
                 <div className="grid five large">
                     {this.state.places.map((p, i) => {
                         return (
-                            <Thumbnail key={i} place={p} index={i} fav={p.fav}/>
+                            <Thumbnail key={i} place={p} index={i} fav={p.fav} like={this.changeFav} />
                         )
                     })}
                 </div>

@@ -77,8 +77,8 @@ class Place extends React.Component {
                             <div className="card specs">
                                 <div className="content">
                                     <ul className="grid two">
-                                        {this.state.place.houseInfo.map(e => {
-                                            return <li><i className={e.icon}></i>{e.about}</li>
+                                        {this.state.place.houseInfo.map((e,i) => {
+                                            return <li key={i}><i className={e.icon}></i>{e.about}</li>
                                         })}
                                     </ul>
                                 </div>
@@ -88,8 +88,8 @@ class Place extends React.Component {
                             <div className="card specs">
                                 <div className="content">
                                     <ul className="grid two">
-                                        {this.state.place.amenities.map(e => {
-                                            return <li><i className={e.icon}></i>{e.asset}</li>
+                                        {this.state.place.amenities.map((e,i) => {
+                                            return <li key={i}> <i className={e.icon}> </i>{e.asset} </li>
                                         })}
                                     </ul>
                                 </div>
@@ -134,9 +134,9 @@ class Place extends React.Component {
                                             <select>
                                                 {[...Array(10)].map((n, i) => {
                                                     if (i + 1 === 1)
-                                                        return <option>{i + 1} guest</option>
+                                                        return <option key={i}>{i + 1} guest</option>
                                                     else
-                                                        return <option>{i + 1} guests</option>
+                                                        return <option key={i}>{i + 1} guests</option>
                                                 })}
                                             </select>
                                         </div>

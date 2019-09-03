@@ -10,12 +10,19 @@ class Thumbnail extends React.Component {
 		place: this.props.place
 	}
 
+	like = (e,i) => {
+		e.preventDefault()
+		this.props.like(e,i)
+	}
+
+
+
 	render() {
 		return (
 			<Link className="card link" to="/place">
 				<div className="image" style={{ backgroundImage: `url(${this.state.place.bg})` }}>
-					<button className="icon">
-						<i className={this.props.fav ? "fas fa-heart" : "far fa-heart"}></i>
+					<button className="icon" type="button" onClick={(e) => {this.like(e, this.props.index)}}>
+						<i className={this.props.fav ? "fas fa-heart" : "far fa-heart"} ></i>
 					</button>
 				</div>
 				<div className="content">

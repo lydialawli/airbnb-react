@@ -20,9 +20,12 @@ class Confirm extends React.Component {
             reviews: 37,
             bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
             nights: 3,
+            price: 150,
             totalPrice:'$1.050',
         }
     }
+
+
 
     render() {
         return (
