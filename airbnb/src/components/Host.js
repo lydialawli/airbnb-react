@@ -47,7 +47,7 @@ class Host extends React.Component {
                     <div className="grid sidebar-left">
                         <Sidebar page="host" />
                         <div className="content">
-                            <Link className="button primary" to="create.html">Host new place</Link>
+                            <Link className="button primary" to="/create">Host new place</Link>
                             <hr />
                             <h2>Places I'm hosting</h2>
                             <div class="grid two">

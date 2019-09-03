@@ -9,25 +9,21 @@ class Sidebar extends React.Component {
         pressedButton: this.props.page
     }
 
-    setActiveButton = (button) => {
-        return this.state.pressedButton === button ? 'active' : ''
-    }
-
     render() {
 
         return (
             <div className="sidebar">
                 <ul>
-                    <li className={this.setActiveButton('profile')}>
+                    <li className={this.state.pressedButton === 'profile' ? 'active' : ''}>
                         <Link to="/profile">Profile</Link>
                     </li>
-                    <li className={this.setActiveButton('bookings')}>
+                    <li className={this.state.pressedButton === 'bookings' ? 'active' : ''}>
                         <Link to="/bookings">Bookings</Link>
                     </li>
-                    <li className={this.setActiveButton('favorites')}>
+                    <li className={this.state.pressedButton === 'favorites' ? 'active' : ''}>
                         <Link to="/favorites">Favorites</Link>
                     </li>
-                    <li className={this.setActiveButton('host')}>
+                    <li className={this.state.pressedButton === 'host' ? 'active' : ''}>
                         <Link to="/host">Host</Link>
                     </li>
                 </ul>

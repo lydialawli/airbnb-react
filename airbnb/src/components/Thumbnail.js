@@ -26,7 +26,7 @@ class Thumbnail extends React.Component {
 				<div className="content">
 					<small className="meta">{this.props.place.description} </small>
 					<h2>{this.props.place.title}</h2>
-					<small className="location" disabled={this.props.page==="favorites"? false : true}>
+					<small className="location" disabled={this.props.page==="favorites"? 'disabled' : ''}>
 						<i className="fas fa-map-marker-alt"></i>
 						<span>{this.props.place.location}</span>
 

@@ -13,7 +13,7 @@
 - [x] Bookings
 - [x] Favorites
 - [x] Host
-- [ ] Create
+- [x] Create
 - [ ] Signup
 - [ ] Login
 
