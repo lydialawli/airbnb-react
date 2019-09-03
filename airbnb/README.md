@@ -19,7 +19,7 @@
 - [x] Place: add function to select image
 - [ ] Confirm: make total nights and price auto
 - [x] hearts for fav should change icon onClick
-- [ ] Make search bar work
+- [x] Make search bar work
 - [ ] Fix all keys
 - [ ] Make review work
 

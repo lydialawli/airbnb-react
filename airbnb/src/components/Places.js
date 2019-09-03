@@ -76,25 +76,34 @@ class Places extends React.Component {
                 fav: false
             },
         ],
-        placeTitles: ['All types', 'Shared'],
-        filterTypes: [{ value: 'date', name: 'Latest' }, { value: 'price', name: 'Price' }, { value: 'rating', name: 'Rating' }]
+        placeTitles: ['All types', 'Shared House', 'Shared Villa', 'Private Room', 'Shared room double bed'],
+        filterTypes: [{ value: 'date', name: 'Latest' }, { value: 'price', name: 'Price' }, { value: 'rating', name: 'Rating' }],
+        originalPlaces: []
     }
 
     componentWillMount() {
-        // let placeTitles = this.state.places.map(e => {
-        //     this.state.placeTitles.push(e.title)
-        // })
-
-        // this.setState({ placeTitles })
+        this.setState({
+            originalPlaces: this.state.places
+        })
     }
 
-    changeFav = (e,i) => {
+
+    changeFav = (e, i) => {
         let places = this.state.places
         let element = places[i]
         element.fav = !element.fav
         this.setState({ places })
-       
+
     }
+
+    filterPlaces = (event) => {
+        let text = event.target.value
+        let filtered = this.state.originalPlaces.filter(e =>
+            e.title.toUpperCase().includes(text.toUpperCase()))
+
+        this.setState({ places: filtered })
+    }
+
 
 
     render() {
@@ -108,13 +117,13 @@ class Places extends React.Component {
                         {[...Array(10)].map((n, i) => { return <option key={i} value="1">Rooms: {i + 1}</option> })}
                     </select>
                     <select>
-                        {this.state.placeTitles.map((e,i) => { return <option key={i} value="1">{e}</option> })}
+                        {this.state.placeTitles.map((e, i) => { return <option key={i} value="1">{e}</option> })}
                     </select>
                     <input type="number" placeholder="max price" />
                     <select>
                         {this.state.filterTypes.map(e => { return <option value={e.value}>{e.name}</option> })}
                     </select>
-                    <input type="text" className="search" placeholder="Search..." />
+                    <input className='search' type='text' onChange={this.filterPlaces} placeholder={'Search...'} />
                 </div>
                 <div className="grid five large">
                     {this.state.places.map((p, i) => {
