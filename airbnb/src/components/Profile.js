@@ -10,7 +10,7 @@ import '../styles/buttons.css'
 
 class Profile extends React.Component {
     state = {
-        avatar: 'https://randomuser.me/api/portraits/men/9.jpg',
+        user: {name: 'Ly', avatar: 'https://seakoala.io/docs/images/universeLy.png', email: 'ly@seakoala.io', location: 'Spain'}
     }
 
 
@@ -29,20 +29,20 @@ class Profile extends React.Component {
                             <form>
                                 <div className="group">
                                     <label>Name</label>
-                                    <input type="text" value="Tony" />
+                                    <input type="text" value={this.state.user.name} />
                                 </div>
                                 <div className="group">
                                     <label>Email</label>
-                                    <input type="email" value="tony@tortugacoders.com" />
+                                    <input type="email" value={this.state.user.email}/>
                                 </div>
                                 <div className="group">
                                     <label>Location</label>
-                                    <input type="text" value="Thailand" />
+                                    <input type="text" value={this.state.user.location} />
                                 </div>
                                 <div className="group">
                                     <label>Profile Picture</label>
                                     <div className="user">
-                                        <div className="avatar" style={{ backgroundImage: `url(${this.state.avatar})` }}></div>
+                                        <div className="avatar" style={{ backgroundImage: `url(${this.state.user.avatar})` }}></div>
                                         <div className="name">
                                             <input type="file" />
                                         </div>

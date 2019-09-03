@@ -7,18 +7,13 @@ import { Link } from 'react-router-dom'
 class Thumbnail extends React.Component {
 
 	state = {
-		image: this.props.place.bg,
-		date: this.props.place.date
-	}
-
-	getDate = () => {
-		return this.state.date ? this.state.date : ''
+		place: this.props.place
 	}
 
 	render() {
 		return (
 			<Link className="card link" to="/place">
-				<div className="image" style={{ backgroundImage: `url(${this.state.image})` }}>
+				<div className="image" style={{ backgroundImage: `url(${this.state.place.bg})` }}>
 					<button className="icon">
 						<i className={this.props.fav ? "fas fa-heart" : "far fa-heart"}></i>
 					</button>
@@ -26,17 +21,19 @@ class Thumbnail extends React.Component {
 				<div className="content">
 					<small className="meta">{this.props.place.description} </small>
 					<h2>{this.props.place.title}</h2>
-					<small className="location" disabled={this.props.page==="favorites"? 'disabled' : ''}>
+
+					{this.props.page !== 'places' || this.props.page !== 'confirm' ? <small className="location">
 						<i className="fas fa-map-marker-alt"></i>
 						<span>{this.props.place.location}</span>
+					</small> : ''}
 
-					</small>
-					<span className="price">$350/night</span>
+					{this.props.page === 'bookings' ? <span className="price">{this.props.place.price}</span> : <span className="price">${this.props.place.price}/night</span>}
+
 					<span className="rating">
 						{[...Array(5)].map((n, i) => i >= this.props.place.stars ? <i className="far fa-star"></i> : <i className="fas fa-star"></i>)}
 						<span>{this.props.place.reviews} Reviews</span>
 					</span>
-					<span className={this.props.place.date ? 'date' : ''}>{this.getDate()}</span>
+					<span className={this.props.place.date ? 'date' : ''}>{this.props.place.date ? this.props.place.date : ''}</span>
 				</div>
 			</Link>
 		)

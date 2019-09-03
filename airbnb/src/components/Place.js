@@ -38,8 +38,19 @@ class Place extends React.Component {
             houseInfo: [{ icon: 'fas fa-fw fa-home', about: 'Entire Villa' }, { icon: 'fas fa-fw fa-user-friends', about: '10 guests' }, { icon: 'fas fa-fw fa-bed', about: '7 bedrooms' }, { icon: 'fas fa-fw fa-bath', about: '6 baths' }],
             amenities: [{ icon: 'fas fa-utensils', asset: 'Swimming Pool' }, { icon: 'fas fa-dumbbell', asset: 'Kitchen' }, { icon: 'fas fa-dumbbell', asset: 'Wi-Fi' }, { icon: 'fas fa-tshirt', asset: 'TV' }, { icon: 'fas fa-swimmer', asset: 'Gym' }, { icon: 'fas fa-wind', asset: 'Iron' }, { icon: 'fas fa-tv', asset: 'Air Conditioning' }],
             rating: 4,
-            priceOneNight: '$350'
+            priceOneNight: 350
         },
+        thumbnails: [
+            'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
+            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223171.jpg',
+            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223174.jpg',
+            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223178.jpg',
+            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223180.jpg',
+            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223186.jpg',
+            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223190.jpg',
+            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223195.jpg',
+            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223199.jpg'
+        ],
 
     }
 
@@ -47,7 +58,7 @@ class Place extends React.Component {
         return (
             <div>
                 <Nav />
-                <Gallery />
+                <Gallery images={this.state.thumbnails}/>
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">
@@ -107,7 +118,7 @@ class Place extends React.Component {
                         <div className="sidebar booking">
                             <div className="card shadow">
                                 <div className="content large">
-                                    <h3>{this.state.place.priceOneNight}<small>per night</small></h3>
+                                    <h3>${this.state.place.priceOneNight}<small>per night</small></h3>
                                     <small>
                                         {[...Array(5)].map((n, i) => i >= this.state.place.rating ? <i className="far fa-star"></i> : <i className="fas fa-star"></i>)}
                                         <span>{this.state.place.rating} Reviews</span>

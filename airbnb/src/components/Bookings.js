@@ -21,6 +21,7 @@ class Bookings extends React.Component {
                 id: 0,
                 stars: 4,
                 reviews: 37,
+                nights:5,
                 date: '10 Aug 2020 - 15 Aug 2020',
                 bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg'
             },
@@ -32,6 +33,7 @@ class Bookings extends React.Component {
                 id: 1,
                 stars: 3,
                 reviews: 18,
+                nights:3,
                 date: '01 May 2019 - 04 May 2019',
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
             },
@@ -43,6 +45,7 @@ class Bookings extends React.Component {
                 id: 2,
                 stars: 5,
                 reviews: 290,
+                nights:9,
                 date: '18 Apr 2019 - 27 Apr 2019',
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
             },]
@@ -61,14 +64,14 @@ class Bookings extends React.Component {
                         <div className="content">
                             <h2>Upcoming Trips</h2>
                             <div class="grid two">
-                                <Thumbnail key={this.state.places[0].id} place={this.state.places[0]} index={0} fav="true"/>
+                                <Thumbnail key={this.state.places[0].id} page="bookings" place={this.state.places[0]} index={0} fav="true"/>
                             </div>
                             <h2>Past Trips</h2>
                             <div class="grid two">
                                 {this.state.places.map((p, i) => {
                                     if (i !== 0) {
                                         return (
-                                            <Thumbnail key={i} place={p} index={i} />
+                                            <Thumbnail key={i} page="bookings" place={p} index={i} />
                                         )
                                     }
 

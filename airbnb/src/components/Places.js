@@ -11,7 +11,7 @@ class Places extends React.Component {
             {
                 title: 'Duplex with Garden',
                 description: 'Entire Duplex • 2 Rooms',
-                price: 2000,
+                price: 250,
                 location: 'Marina',
                 id: 0,
                 stars: 4,
@@ -21,7 +21,7 @@ class Places extends React.Component {
             {
                 title: 'Double Room Shared House',
                 description: 'Shared House • 4 Rooms',
-                price: 5000,
+                price: 500,
                 location: 'Ramblas',
                 id: 1,
                 stars: 3,
@@ -43,7 +43,7 @@ class Places extends React.Component {
             {
                 title: 'Studio Lounge small',
                 description: 'Studio Lounge • 2 Rooms',
-                price: 1000,
+                price: 280,
                 location: 'Barceloneta',
                 id: 3,
                 stars: 5,
@@ -53,7 +53,7 @@ class Places extends React.Component {
             {
                 title: 'Studio Lounge Big',
                 description: 'Entire Studio Lounge • 1 Rooms',
-                price: 3000,
+                price: 300,
                 location: 'Barceloneta',
                 id: 4,
                 stars: 2,
@@ -63,7 +63,7 @@ class Places extends React.Component {
             {
                 title: 'Single room private House',
                 description: 'Private house • 1 Rooms',
-                price: 400,
+                price: 250,
                 location: 'Eixample',
                 id: 5,
                 stars: 4,

@@ -7,33 +7,37 @@ import '../styles/buttons.css'
 
 class Gallery extends React.Component {
     state = {
-        thumbnails: [
-            'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223171.jpg',
-            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223174.jpg',
-            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223178.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223180.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223186.jpg',
-            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223190.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223195.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223199.jpg'
-        ],
-        selected: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
+        thumbnails: this.props.images,
+        bigImage: '',
     }
 
+    componentWillMount() {
+        this.setState({
+            bigImage: this.state.thumbnails[0]
+        })
+    }
+
+    changeBigImage = (i) => {
+        this.setState({
+            bigImage: this.state.thumbnails[i]
+        })
+    }
+
+
+  
     render() {
         return (
             <div className="gallery">
-                <div className="image-main" style={{backgroundImage: `url(${this.state.thumbnails[0]})` }}>
+                <div className="image-main" style={{ backgroundImage: `url(${this.state.bigImage})` }}>
                     <button className="icon">
                         <i className="far fa-heart"></i>
                     </button>
                 </div>
                 <div className="thumbnails">
-                    {this.state.thumbnails.map((e,i)=> {
-                        return  <div className={`thumbnail ${this.state.selected===this.state.thumbnails[i]? 'selected' : ''}` } style={{backgroundImage: `url(${this.state.thumbnails[i]})` }}></div>
+                    {this.state.thumbnails.map((e, i) => {
+                        return <div className={`thumbnail ${this.state.bigImage === e ? 'selected' : ''}`} onClick={()=> this.changeBigImage(i)} style={{ backgroundImage: `url(${this.state.thumbnails[i]})` }}></div>
                     })}
-                  
+
                 </div>
             </div>
         )

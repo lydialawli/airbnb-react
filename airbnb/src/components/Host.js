@@ -17,7 +17,7 @@ class Host extends React.Component {
             {
                 title: 'Villa Kelusa',
                 description: 'Entire Villa • 6 Rooms',
-                price: '3 nights • $190 Total',
+                price: 190,
                 location: 'Bali, Indonesia',
                 id: 1,
                 stars: 3,
@@ -27,7 +27,7 @@ class Host extends React.Component {
             {
                 title: 'Tropical Architecture',
                 description: 'Private Room',
-                price: '9 nights • $2,980 Total',
+                price: 190,
                 location: 'Koh Samui, Thailand',
                 id: 2,
                 stars: 5,
@@ -53,7 +53,7 @@ class Host extends React.Component {
                             <div class="grid two">
                                 {this.state.places.map((p, i) => {
                                     return (
-                                        <Thumbnail key={i} place={p} index={i} />
+                                        <Thumbnail key={i} place={p} index={i} page= 'host' />
                                     )
                                 })}
                             </div>
