@@ -11,7 +11,7 @@
 - [x] Sidebar component
 - [x] Profile
 - [x] Bookings
-- [ ] Favorites
+- [x] Favorites
 - [ ] Host
 - [ ] Create
 - [ ] Signup
