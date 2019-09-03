@@ -1,7 +1,6 @@
 import React from 'react'
 import Nav from '../components/Nav.js'
 import Sidebar from '../components/Sidebar.js'
-import { Link } from 'react-router-dom'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'

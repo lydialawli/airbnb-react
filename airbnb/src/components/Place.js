@@ -33,7 +33,8 @@ class Place extends React.Component {
                 name: 'Ella', date: '27 May 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
                 avatar: 'https://randomuser.me/api/portraits/women/7.jpg'
             },
-        ]
+        ],
+        amenities: ['Swimming Pool', 'Kitchen', ' Wi-Fi', 'TV', 'Gym', 'Iron', 'Air Conditioning']
     }
 
     render() {

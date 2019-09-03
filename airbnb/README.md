@@ -14,7 +14,7 @@
 - [x] Favorites
 - [x] Host
 - [x] Create
-- [ ] Signup
+- [x] Signup
 - [ ] Login
 
 ![airbnb Routes mapping](https://raw.githubusercontent.com/tortugacoders/k-06-react/master/assets/airbnb.png?token=AIAFDZULJUOPQ6P6HNRLTPC5OXVGI)

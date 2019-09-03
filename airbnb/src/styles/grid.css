@@ -47,7 +47,7 @@
 }
 
 .grid.image {
-	background-image: url('/../public/thailand.jpg');
+	background-image: url('https://raw.githubusercontent.com/tortugacoders/airbnb-html/master/images/thailand.jpg?token=AIAFDZR4EH3WSZOXJC7IZO25O4Y3O');
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
