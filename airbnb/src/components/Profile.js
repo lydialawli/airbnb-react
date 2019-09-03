@@ -10,7 +10,7 @@ import '../styles/buttons.css'
 
 class Profile extends React.Component {
     state = {
-        userProfile: 'https://randomuser.me/api/portraits/men/9.jpg',
+        avatar: 'https://randomuser.me/api/portraits/men/9.jpg',
     }
 
 
@@ -42,7 +42,7 @@ class Profile extends React.Component {
                                 <div className="group">
                                     <label>Profile Picture</label>
                                     <div className="user">
-                                        <div className="avatar" style={{ backgroundImage: `url(${this.state.userProfile})` }}></div>
+                                        <div className="avatar" style={{ backgroundImage: `url(${this.state.avatar})` }}></div>
                                         <div className="name">
                                             <input type="file" />
                                         </div>

@@ -14,12 +14,13 @@ class Confirm extends React.Component {
         place: {
             title: 'Duplex with Garden',
             description: 'Entire Duplex • 2 Rooms',
-            price: 2000,
             location: 'Marina',
             id: 0,
             stars: 4,
             reviews: 37,
             bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
+            nights: 3,
+            totalPrice:'$1.050',
         }
     }
 
@@ -59,8 +60,8 @@ class Confirm extends React.Component {
                                     </select>
                                 </div>
                                 <div className="group">
-                                    <label>Total: 3 nights</label>
-                                    <h2>$1,050</h2>
+                                    <label>Total: {this.state.place.nights} nights</label>
+                                    <h2>{this.state.place.totalPrice}</h2>
                                 </div>
                                 <button className="primary">Confirm</button>
                             </form>
