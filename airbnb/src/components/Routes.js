@@ -4,6 +4,7 @@ import Places from './Places'
 import Place from './Place'
 import Confirm from './Confirm'
 import Profile from './Profile'
+import Bookings from './Bookings'
 import '../styles/global.css'
 
 //make sure larger paths goes first
@@ -12,6 +13,7 @@ class Routes extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
+                    <Route path='/bookings' component={Bookings}></Route>
                     <Route path='/profile' component={Profile}></Route>
                     <Route path='/confirm' component={Confirm}></Route>
                     <Route path='/place' component={Place}></Route>

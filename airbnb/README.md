@@ -10,7 +10,7 @@
 - [x] Confirm
 - [x] Sidebar component
 - [x] Profile
-- [ ] Bookings
+- [x] Bookings
 - [ ] Favorites
 - [ ] Host
 - [ ] Create

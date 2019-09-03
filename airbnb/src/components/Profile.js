@@ -22,7 +22,7 @@ class Profile extends React.Component {
                 </div>
                 <div className="grid medium">
                     <div className="grid sidebar-left">
-                        <Sidebar />
+                        <Sidebar page="profile"/>
 
                         <div className="content">
                             <h2>My Profile</h2>

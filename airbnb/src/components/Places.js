@@ -16,6 +16,7 @@ class Places extends React.Component {
                 id: 0,
                 stars: 4,
                 reviews: 37,
+                bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
             },
             {
                 title: 'Double Room Shared House',
@@ -25,6 +26,9 @@ class Places extends React.Component {
                 id: 1,
                 stars: 3,
                 reviews: 12,
+                bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
+                fav: true
+                
             },
             {
                 title: 'Single Room Shared House',
@@ -34,6 +38,7 @@ class Places extends React.Component {
                 id: 2,
                 stars: 5,
                 reviews: 50,
+                bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
             },
             {
                 title: 'Studio Lounge small',
@@ -43,6 +48,7 @@ class Places extends React.Component {
                 id: 3,
                 stars: 5,
                 reviews: 4,
+                bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
             },
             {
                 title: 'Studio Lounge Big',
@@ -52,6 +58,7 @@ class Places extends React.Component {
                 id: 4,
                 stars: 2,
                 reviews: 36,
+                bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
             },
             {
                 title: 'Single room private House',
@@ -61,6 +68,7 @@ class Places extends React.Component {
                 id: 5,
                 stars: 4,
                 reviews: 43,
+                bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
             },
         ],
         placeTitles: ['All types'],
@@ -98,7 +106,7 @@ class Places extends React.Component {
                 <div className="grid five large">
                     {this.state.places.map((p, i) => {
                         return (
-                            <Thumbnail key={i} place={p} index={i} />
+                            <Thumbnail key={i} place={p} index={i} fav={p.fav}/>
                         )
                     })}
                 </div>
