@@ -2,6 +2,7 @@ import React from 'react'
 import Nav from '../components/Nav.js'
 import Gallery from '../components/Gallery.js'
 import ReviewCard from '../components/ReviewCard.js'
+import { Link } from 'react-router-dom'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/users.css'
@@ -38,7 +39,7 @@ class Place extends React.Component {
             houseInfo: [{ icon: 'fas fa-fw fa-home', about: 'Entire Villa' }, { icon: 'fas fa-fw fa-user-friends', about: '10 guests' }, { icon: 'fas fa-fw fa-bed', about: '7 bedrooms' }, { icon: 'fas fa-fw fa-bath', about: '6 baths' }],
             amenities: [{ icon: 'fas fa-utensils', asset: 'Swimming Pool' }, { icon: 'fas fa-dumbbell', asset: 'Kitchen' }, { icon: 'fas fa-dumbbell', asset: 'Wi-Fi' }, { icon: 'fas fa-tshirt', asset: 'TV' }, { icon: 'fas fa-swimmer', asset: 'Gym' }, { icon: 'fas fa-wind', asset: 'Iron' }, { icon: 'fas fa-tv', asset: 'Air Conditioning' }],
             rating: 4,
-            priceOneNight: 350
+            priceOneNight: 350, fav: false
         },
         thumbnails: [
             'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
@@ -51,6 +52,20 @@ class Place extends React.Component {
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223195.jpg',
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223199.jpg'
         ],
+    }
+
+
+    UNSAFE_componentWillMount() {
+        this.setState({
+            originalPlace: this.state.place
+        })
+    }
+
+
+    changeFav = (e) => {
+        let place = this.state.place
+        place.fav = !place.fav
+        this.setState({ place })
 
     }
 
@@ -58,7 +73,7 @@ class Place extends React.Component {
         return (
             <div>
                 <Nav />
-                <Gallery images={this.state.thumbnails}/>
+                <Gallery images={this.state.thumbnails} like={this.changeFav} fav={this.state.place.fav}/>
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">
@@ -78,7 +93,7 @@ class Place extends React.Component {
                                 <div className="content">
                                     <ul className="grid two">
                                         {this.state.place.houseInfo.map((e,i) => {
-                                            return <li key={i}><i className={e.icon}></i>{e.about}</li>
+                                            return <li key={i}><i key={i} className={e.icon}></i>{e.about}</li>
                                         })}
                                     </ul>
                                 </div>
@@ -89,7 +104,7 @@ class Place extends React.Component {
                                 <div className="content">
                                     <ul className="grid two">
                                         {this.state.place.amenities.map((e,i) => {
-                                            return <li key={i}> <i className={e.icon}> </i>{e.asset} </li>
+                                            return <li key={i}> <i key={i} className={e.icon}> </i>{e.asset} </li>
                                         })}
                                     </ul>
                                 </div>
@@ -101,7 +116,7 @@ class Place extends React.Component {
                                         <label>Leave a review</label>
                                         <textarea></textarea>
                                         <div className="rating">
-                                            {[...Array(5)].map(n => { return <i className="far fa-star"></i> })}
+                                            {[...Array(5)].map((n,i) => { return <i key={i} className="far fa-star"></i> })}
                                         </div>
                                         <button className="primary small">Submit</button>
                                     </div>
@@ -120,7 +135,7 @@ class Place extends React.Component {
                                 <div className="content large">
                                     <h3>${this.state.place.priceOneNight}<small>per night</small></h3>
                                     <small>
-                                        {[...Array(5)].map((n, i) => i >= this.state.place.rating ? <i className="far fa-star"></i> : <i className="fas fa-star"></i>)}
+                                        {[...Array(5)].map((n, i) => i >= this.state.place.rating ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
                                         <span>{this.state.place.rating} Reviews</span>
                                     </small>
                                     <form className="small">
@@ -140,9 +155,9 @@ class Place extends React.Component {
                                                 })}
                                             </select>
                                         </div>
-                                        <div className="group">
+                                        <Link to='/confirm' className="group">
                                             <button className="secondary full">Book this place</button>
-                                        </div>
+                                        </Link>
                                     </form>
 
                                 </div>

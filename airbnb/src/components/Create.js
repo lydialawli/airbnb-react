@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from '../components/Nav.js'
 import Sidebar from '../components/Sidebar.js'
+import { Link } from 'react-router-dom'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -10,6 +11,7 @@ import '../styles/buttons.css'
 
 class Create extends React.Component {
     state = {
+        page: 'create',
         userProfile: 'https://randomuser.me/api/portraits/men/9.jpg',
         options: ['Entire Villa', 'Entire House', 'Entire Apartment', 'Private Room', 'Shared Villa', 'Shared House', 'Shared Apartment'],
         amenities: ['Swimming Pool', 'Kitchen', ' Wi-Fi', 'TV', 'Gym', 'Iron', 'Air Conditioning']
@@ -51,7 +53,7 @@ class Create extends React.Component {
                                 <div className="group">
                                     <label>Type</label>
                                     <select>
-                                        {this.state.options.map(e => { return <option value="1">{e}</option> })}
+                                        {this.state.options.map((e,i) => { return <option key={i} defaultValue="1">{e}</option> })}
                                     </select>
                                 </div>
                                 <div className="group">
@@ -72,16 +74,20 @@ class Create extends React.Component {
                                 </div>
                                 <div className="group">
                                     <label>Amenities</label>
-                                    {this.state.amenities.map(e => {
+                                    {this.state.amenities.map((e,i) => {
                                         return (
-                                            <label className="checkbox">
+                                            <label key={i} className="checkbox">
                                                 <input type="checkbox" /> {e}
-                                          </label>
+                                            </label>
                                         )
                                     })}
                                 </div>
-                                <button className="primary">Publish this Place</button>
-                                <button className="cancel"><i className="fas fa-times"></i></button>
+                                <Link to='/host' className="group">
+                                    <button className="primary">Publish this Place</button>
+                                </Link>
+                                <Link to='/host' className="group">
+                                    <button className="cancel"><i className="fas fa-times"></i></button>
+                                </Link>
                             </form>
 
                         </div>

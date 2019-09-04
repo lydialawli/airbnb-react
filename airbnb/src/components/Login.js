@@ -27,10 +27,12 @@ class Login extends React.Component {
                             <label>Password</label>
                             <input type="password" />
                         </div>
+
                         <button className="primary">Login</button>
+
                     </form>
                     <p className="footer">
-                    New to Airbnb?  <Link to="/signup">Signup</Link>
+                        New to Airbnb?  <Link to="/signup">Signup</Link>
                     </p>
                 </div>
             </div>

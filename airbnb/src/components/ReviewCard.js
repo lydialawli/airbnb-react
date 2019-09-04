@@ -23,7 +23,7 @@ class ReviewCard extends React.Component {
                         </div>
                     </div>
                     <div className="rating">
-                        {[...Array(5)].map((n, i) => i >= this.state.user.rating ? <i className="far fa-star"></i> : <i className="fas fa-star"></i>)}
+                        {[...Array(5)].map((n, i) => i >= this.state.user.rating ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
                     </div>
                     <p>{this.state.user.comment}</p>
                 </div>

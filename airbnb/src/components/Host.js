@@ -12,6 +12,7 @@ import '../styles/buttons.css'
 
 class Host extends React.Component {
     state = {
+        page: 'host',
         userProfile: 'https://randomuser.me/api/portraits/men/9.jpg',
         places: [
             {
@@ -23,6 +24,7 @@ class Host extends React.Component {
                 stars: 3,
                 reviews: 18,
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
+                fav: false,
             },
             {
                 title: 'Tropical Architecture',
@@ -33,7 +35,16 @@ class Host extends React.Component {
                 stars: 5,
                 reviews: 290,
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
+                fav: false,
             },]
+    }
+
+
+    changeFav = (e, i) => {
+        let places = this.state.places
+        let element = places[i]
+        element.fav = !element.fav
+        this.setState({ places })
     }
 
 
@@ -50,10 +61,10 @@ class Host extends React.Component {
                             <Link className="button primary" to="/create">Host new place</Link>
                             <hr />
                             <h2>Places I'm hosting</h2>
-                            <div class="grid two">
+                            <div className="grid two">
                                 {this.state.places.map((p, i) => {
                                     return (
-                                        <Thumbnail key={i} place={p} index={i} page= 'host' />
+                                        <Thumbnail key={i} place={p} index={i} page={this.state.page} fav={p.fav} like={this.changeFav} />
                                     )
                                 })}
                             </div>

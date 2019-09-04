@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from '../components/Nav.js'
 import Sidebar from '../components/Sidebar.js'
+import { Link } from 'react-router-dom'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -10,7 +11,7 @@ import '../styles/buttons.css'
 
 class Profile extends React.Component {
     state = {
-        user: {name: 'Ly', avatar: 'https://seakoala.io/docs/images/universeLy.png', email: 'ly@seakoala.io', location: 'Spain'}
+        user: { name: 'Ly', avatar: 'https://seakoala.io/docs/images/universeLy.png', email: 'ly@seakoala.io', location: 'Spain' }
     }
 
 
@@ -22,22 +23,22 @@ class Profile extends React.Component {
                 </div>
                 <div className="grid medium">
                     <div className="grid sidebar-left">
-                        <Sidebar page="profile"/>
+                        <Sidebar page="profile" />
 
                         <div className="content">
                             <h2>My Profile</h2>
                             <form>
                                 <div className="group">
                                     <label>Name</label>
-                                    <input type="text" value={this.state.user.name} />
+                                    <input type="text" defaultValue={this.state.user.name} />
                                 </div>
                                 <div className="group">
                                     <label>Email</label>
-                                    <input type="email" value={this.state.user.email}/>
+                                    <input type="email" defaultValue={this.state.user.email} />
                                 </div>
                                 <div className="group">
                                     <label>Location</label>
-                                    <input type="text" value={this.state.user.location} />
+                                    <input type="text" defaultValue={this.state.user.location} />
                                 </div>
                                 <div className="group">
                                     <label>Profile Picture</label>
@@ -51,7 +52,9 @@ class Profile extends React.Component {
                                 <button>Save Changes</button>
                             </form>
                             <hr />
-                            <button className="secondary">Logout</button>
+                            <Link to='/login' >
+                                <button className="secondary">Logout</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

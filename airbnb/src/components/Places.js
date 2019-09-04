@@ -7,12 +7,12 @@ import '../styles/users.css'
 
 class Places extends React.Component {
     state = {
+        page: 'places',
         places: [
             {
                 title: 'Duplex with Garden',
                 description: 'Entire Duplex • 2 Rooms',
                 price: 250,
-                location: 'Marina',
                 id: 0,
                 stars: 4,
                 reviews: 37,
@@ -23,7 +23,6 @@ class Places extends React.Component {
                 title: 'Double Room Shared House',
                 description: 'Shared House • 4 Rooms',
                 price: 500,
-                location: 'Ramblas',
                 id: 1,
                 stars: 3,
                 reviews: 12,
@@ -35,7 +34,6 @@ class Places extends React.Component {
                 title: 'Single Room Shared House',
                 description: 'Shared House • 3 Rooms',
                 price: 300,
-                location: 'Ramblas',
                 id: 2,
                 stars: 5,
                 reviews: 50,
@@ -46,7 +44,6 @@ class Places extends React.Component {
                 title: 'Studio Lounge small',
                 description: 'Studio Lounge • 2 Rooms',
                 price: 280,
-                location: 'Barceloneta',
                 id: 3,
                 stars: 5,
                 reviews: 4,
@@ -57,7 +54,6 @@ class Places extends React.Component {
                 title: 'Studio Lounge Big',
                 description: 'Entire Studio Lounge • 1 Rooms',
                 price: 300,
-                location: 'Barceloneta',
                 id: 4,
                 stars: 2,
                 reviews: 36,
@@ -68,7 +64,6 @@ class Places extends React.Component {
                 title: 'Single room private House',
                 description: 'Private house • 1 Rooms',
                 price: 250,
-                location: 'Eixample',
                 id: 5,
                 stars: 4,
                 reviews: 43,
@@ -93,7 +88,6 @@ class Places extends React.Component {
         let element = places[i]
         element.fav = !element.fav
         this.setState({ places })
-
     }
 
     filterPlaces = (event) => {
@@ -121,14 +115,14 @@ class Places extends React.Component {
                     </select>
                     <input type="number" placeholder="max price" />
                     <select>
-                        {this.state.filterTypes.map(e => { return <option value={e.value}>{e.name}</option> })}
+                        {this.state.filterTypes.map((e,i) => { return <option key={i} value={e.value}>{e.name}</option> })}
                     </select>
-                    <input className='search' type='text' onChange={this.filterPlaces} placeholder={'Search...'} />
+                    <input className='search' type='text' onChange={this.filterPlaces} placeholder={'Search...'}/>
                 </div>
                 <div className="grid five large">
                     {this.state.places.map((p, i) => {
                         return (
-                            <Thumbnail key={i} place={p} index={i} fav={p.fav} like={this.changeFav} />
+                            <Thumbnail key={i} place={p} index={i} page={this.state.page} fav={p.fav} like={this.changeFav} />
                         )
                     })}
                 </div>

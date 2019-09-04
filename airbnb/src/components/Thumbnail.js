@@ -29,15 +29,13 @@ class Thumbnail extends React.Component {
 					<small className="meta">{this.props.place.description} </small>
 					<h2>{this.props.place.title}</h2>
 
-					{this.props.page !== 'places' || this.props.page !== 'confirm' ? <small className="location">
-						<i className="fas fa-map-marker-alt"></i>
-						<span>{this.props.place.location}</span>
-					</small> : ''}
+					{this.props.place.location ? <small className="location">
+						<i className="fas fa-map-marker-alt"></i><span>{this.props.place.location}</span></small> : ''}
 
 					{this.props.page === 'bookings' ? <span className="price">{this.props.place.price}</span> : <span className="price">${this.props.place.price}/night</span>}
 
 					<span className="rating">
-						{[...Array(5)].map((n, i) => i >= this.props.place.stars ? <i className="far fa-star"></i> : <i className="fas fa-star"></i>)}
+						{[...Array(5)].map((n, i) => i >= this.props.place.stars ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
 						<span>{this.props.place.reviews} Reviews</span>
 					</span>
 					<span className={this.props.place.date ? 'date' : ''}>{this.props.place.date ? this.props.place.date : ''}</span>

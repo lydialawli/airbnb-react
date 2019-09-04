@@ -22,5 +22,6 @@
 - [x] Make search bar work
 - [ ] Fix all keys
 - [ ] Make review work
+- [ ] Add modules to reuse fav()
 
 ![airbnb Routes mapping](https://raw.githubusercontent.com/tortugacoders/k-06-react/master/assets/airbnb.png?token=AIAFDZULJUOPQ6P6HNRLTPC5OXVGI)

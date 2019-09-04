@@ -38,7 +38,7 @@ class Favorites extends React.Component {
                         <Sidebar page="favorites" />
                         <div className="content">
                             <h2>My Favorites</h2>
-                            <div class="grid two">
+                            <div className="grid two">
                                 <Thumbnail page="favorites" key={this.state.places[0].id} place={this.state.places[0]} index={0} fav="true"/>
                             </div>
                     
