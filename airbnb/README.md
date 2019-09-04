@@ -20,7 +20,8 @@
 - [ ] Confirm: make total nights and price auto
 - [x] hearts for fav should change icon onClick
 - [x] Make search bar work
-- [ ] Fix all keys
+- [x] Fix all keys
+- [x] Make user vote stars work
 - [ ] Make review work
 - [ ] Add modules to reuse fav()
 

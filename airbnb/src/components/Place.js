@@ -39,7 +39,7 @@ class Place extends React.Component {
             houseInfo: [{ icon: 'fas fa-fw fa-home', about: 'Entire Villa' }, { icon: 'fas fa-fw fa-user-friends', about: '10 guests' }, { icon: 'fas fa-fw fa-bed', about: '7 bedrooms' }, { icon: 'fas fa-fw fa-bath', about: '6 baths' }],
             amenities: [{ icon: 'fas fa-utensils', asset: 'Swimming Pool' }, { icon: 'fas fa-dumbbell', asset: 'Kitchen' }, { icon: 'fas fa-dumbbell', asset: 'Wi-Fi' }, { icon: 'fas fa-tshirt', asset: 'TV' }, { icon: 'fas fa-swimmer', asset: 'Gym' }, { icon: 'fas fa-wind', asset: 'Iron' }, { icon: 'fas fa-tv', asset: 'Air Conditioning' }],
             rating: 4,
-            priceOneNight: 350, fav: false
+            priceOneNight: 350, fav: false,
         },
         thumbnails: [
             'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
@@ -51,7 +51,7 @@ class Place extends React.Component {
             'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223190.jpg',
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223195.jpg',
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223199.jpg'
-        ],
+        ], userRating: 0
     }
 
 
@@ -66,14 +66,20 @@ class Place extends React.Component {
         let place = this.state.place
         place.fav = !place.fav
         this.setState({ place })
+    }
 
+    setUserRating = (i) => {
+        this.setState({
+            userRating: i
+        })
+        console.log(this.state.userRating)
     }
 
     render() {
         return (
             <div>
                 <Nav />
-                <Gallery images={this.state.thumbnails} like={this.changeFav} fav={this.state.place.fav}/>
+                <Gallery images={this.state.thumbnails} like={this.changeFav} fav={this.state.place.fav} />
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">
@@ -92,7 +98,7 @@ class Place extends React.Component {
                             <div className="card specs">
                                 <div className="content">
                                     <ul className="grid two">
-                                        {this.state.place.houseInfo.map((e,i) => {
+                                        {this.state.place.houseInfo.map((e, i) => {
                                             return <li key={i}><i key={i} className={e.icon}></i>{e.about}</li>
                                         })}
                                     </ul>
@@ -103,7 +109,7 @@ class Place extends React.Component {
                             <div className="card specs">
                                 <div className="content">
                                     <ul className="grid two">
-                                        {this.state.place.amenities.map((e,i) => {
+                                        {this.state.place.amenities.map((e, i) => {
                                             return <li key={i}> <i key={i} className={e.icon}> </i>{e.asset} </li>
                                         })}
                                     </ul>
@@ -116,7 +122,16 @@ class Place extends React.Component {
                                         <label>Leave a review</label>
                                         <textarea></textarea>
                                         <div className="rating">
-                                            {[...Array(5)].map((n,i) => { return <i key={i} className="far fa-star"></i> })}
+
+                                            {
+                                                [...Array(5)].map((n, i) => {
+                                                    if (i >= this.state.userRating)
+                                                        return <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i>
+                                                    else
+                                                        return <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
+                                                })
+                                            }
+
                                         </div>
                                         <button className="primary small">Submit</button>
                                     </div>
@@ -172,3 +187,4 @@ class Place extends React.Component {
 
 
 export default Place
+
