@@ -22,7 +22,8 @@
 - [x] Make search bar work
 - [x] Fix all keys
 - [x] Make user vote stars work
-- [ ] Make review work
+- [x] Make review work
 - [ ] Add modules to reuse fav()
+- [ ] Places filter room work
 
 ![airbnb Routes mapping](https://raw.githubusercontent.com/tortugacoders/k-06-react/master/assets/airbnb.png?token=AIAFDZULJUOPQ6P6HNRLTPC5OXVGI)

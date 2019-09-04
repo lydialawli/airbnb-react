@@ -13,6 +13,7 @@ import '../styles/sidebar.css'
 
 class Place extends React.Component {
     state = {
+        user: { avatar: 'https://seakoala.io/docs/images/universeLy.png', name: 'Ly', location: 'Girona', rating: 0 },
         place: {
             host: { avatar: 'https://randomuser.me/api/portraits/women/2.jpg', name: 'Kitty' },
             title: 'Luxury Villa Indu Siam',
@@ -20,21 +21,22 @@ class Place extends React.Component {
             description: 'Stylish, tropical, luxurious, airy and absolute beach front, this villa combines form and function, enjoying magnificent views of Samui’s small islands and the sea beyond. With 520sqm of indoor/outdoor living space with 5 ensuite bedrooms, large living area, beachfront infinity pool, garden, air conditioned gym, professional pool table, bbq and Sala, this villa is perfect for up to 10 adults With 260sqm (2798sqfeet) of living space and 250sqm (2,700sqfeet) of outdoor space.',
             reviews: [
                 {
-                    name: 'Amanda', date: '27 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
-                    avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
-                },
-                {
-                    name: 'John', date: '22 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 3,
-                    avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
+                    name: 'Ella', date: '27 May 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
+                    avatar: 'https://randomuser.me/api/portraits/women/7.jpg'
                 },
                 {
                     name: 'Sam', date: '4 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 4,
                     avatar: 'https://randomuser.me/api/portraits/men/5.jpg'
                 },
                 {
-                    name: 'Ella', date: '27 May 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
-                    avatar: 'https://randomuser.me/api/portraits/women/7.jpg'
+                    name: 'John', date: '22 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 3,
+                    avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
                 },
+                {
+                    name: 'Amanda', date: '27 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
+                    avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
+                }
+
             ],
             houseInfo: [{ icon: 'fas fa-fw fa-home', about: 'Entire Villa' }, { icon: 'fas fa-fw fa-user-friends', about: '10 guests' }, { icon: 'fas fa-fw fa-bed', about: '7 bedrooms' }, { icon: 'fas fa-fw fa-bath', about: '6 baths' }],
             amenities: [{ icon: 'fas fa-utensils', asset: 'Swimming Pool' }, { icon: 'fas fa-dumbbell', asset: 'Kitchen' }, { icon: 'fas fa-dumbbell', asset: 'Wi-Fi' }, { icon: 'fas fa-tshirt', asset: 'TV' }, { icon: 'fas fa-swimmer', asset: 'Gym' }, { icon: 'fas fa-wind', asset: 'Iron' }, { icon: 'fas fa-tv', asset: 'Air Conditioning' }],
@@ -51,7 +53,8 @@ class Place extends React.Component {
             'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223190.jpg',
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223195.jpg',
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223199.jpg'
-        ], userRating: 0
+        ],
+        userReviewed: false
     }
 
 
@@ -69,13 +72,42 @@ class Place extends React.Component {
     }
 
     setUserRating = (i) => {
-        this.setState({
-            userRating: i
-        })
-        console.log(this.state.userRating)
+        let user = this.state.user
+        user.rating = i
+
+        let today = new Date().toDateString()
+
+        user.date = today
+
+        this.setState({ user })
+        console.log(this.state.user)
     }
 
+    saveUserReview = (event) => {
+        let text = event.target.value
+        let user = this.state.user
+        user.comment = text
+
+        this.setState({ user })
+        console.log(this.state.user)
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+
+        let place = this.state.place
+        place.reviews.push(this.state.user)
+
+        this.setState({
+            place: place,
+            userReviewed: true
+        })
+    }
+
+
+
     render() {
+
         return (
             <div>
                 <Nav />
@@ -119,27 +151,30 @@ class Place extends React.Component {
                                 <h2>{this.state.place.reviews.length} Reviews</h2>
                                 <form>
                                     <div className="group">
-                                        <label>Leave a review</label>
-                                        <textarea></textarea>
-                                        <div className="rating">
+                                        {
+                                            this.state.userReviewed ? <h3>Done!</h3> :
+                                                (
+                                                    <>
+                                                        <label>Leave a review</label>
+                                                        <textarea onChange={this.saveUserReview}></textarea>
+                                                        <div className="rating" />
 
-                                            {
-                                                [...Array(5)].map((n, i) => {
-                                                    if (i >= this.state.userRating)
-                                                        return <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i>
-                                                    else
-                                                        return <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
-                                                })
-                                            }
+                                                        {  [...Array(5)].map((n, i) => {
+                                                           return  i >= this.state.user.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
+                                                        })}
+                                                            < button className="primary small" onClick={(e) => this.handleSubmit(e)}>Submit</button>
+                                                    </>
+                                                )
+                                        }
 
-                                        </div>
-                                        <button className="primary small">Submit</button>
+
+
                                     </div>
                                 </form>
-                                <div>
+                                <div>{}
                                     {this.state.place.reviews.map((user, i) => {
                                         return <ReviewCard key={i} user={user} />
-                                    })}
+                                    }).reverse()}
                                 </div>
                             </div>
 
@@ -180,7 +215,7 @@ class Place extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
