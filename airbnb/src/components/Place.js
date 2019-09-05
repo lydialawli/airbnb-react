@@ -54,7 +54,8 @@ class Place extends React.Component {
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223195.jpg',
             'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223199.jpg'
         ],
-        userReviewed: false
+        userReviewed: false,
+        months :['January','February','March','April','May','June','July','August','September','October','November','December']
     }
 
 
@@ -65,7 +66,7 @@ class Place extends React.Component {
     }
 
 
-    changeFav = (e) => {
+    changeFav = () => {
         let place = this.state.place
         place.fav = !place.fav
         this.setState({ place })
@@ -75,12 +76,21 @@ class Place extends React.Component {
         let user = this.state.user
         user.rating = i
 
-        let today = new Date().toDateString()
-
-        user.date = today
-
         this.setState({ user })
         console.log(this.state.user)
+    }
+
+    todayDate = () => {
+        let user = this.state.user
+
+        let today = new Date()
+        let dd = today.getDate()
+        let mm = today.getMonth()
+        let yyyy = today.getFullYear()
+        today = dd + ' ' + this.state.months[mm] + ' ' + yyyy
+
+        user.date = today
+        this.setState({ user })
     }
 
     saveUserReview = (event) => {
@@ -94,7 +104,7 @@ class Place extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-
+        this.todayDate()
         let place = this.state.place
         place.reviews.push(this.state.user)
 
