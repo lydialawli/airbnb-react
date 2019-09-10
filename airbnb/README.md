@@ -24,6 +24,6 @@
 - [x] Make user vote stars work
 - [x] Make review work
 - [ ] Add modules to reuse fav()
-- [ ] Places filter room work
+- [x] Places filter room work
 
 ![airbnb Routes mapping](https://raw.githubusercontent.com/tortugacoders/k-06-react/master/assets/airbnb.png?token=AIAFDZULJUOPQ6P6HNRLTPC5OXVGI)
