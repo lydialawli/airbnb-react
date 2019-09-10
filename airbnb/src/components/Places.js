@@ -16,11 +16,16 @@ class Places extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-        this.setState({
-            originalPlaces: this.state.places
-        })
+        axios.get('http://localhost:5000/places')
+            .then(res => {
+                this.setState({
+                    places: res.data,
+                    originalPlaces: res.data
+                })
+                console.log(res.data)
+            })
+            .catch(err => { console.log(err) })
     }
-
 
     changeFav = (e, i) => {
         let places = this.state.places
@@ -58,7 +63,7 @@ class Places extends React.Component {
             filtered = this.state.originalPlaces.sort((a, b) => { return a.price - b.price })
         else if (type === 'Rating')
             filtered = this.state.originalPlaces.sort((a, b) => { return b.stars - a.stars })
-        else { filtered = this.state.originalPlaces.sort((a, b) => { return a.id - b.id })}
+        else { filtered = this.state.originalPlaces.sort((a, b) => { return a.id - b.id }) }
         this.setState({ places: filtered })
     }
 
@@ -89,7 +94,6 @@ class Places extends React.Component {
                         )
                     })}
                 </div>
-
 
 
             </div>

@@ -26,7 +26,7 @@ class Thumbnail extends React.Component {
 					</button>
 				</div>
 				<div className="content">
-					<small className="meta">{this.props.place.description} </small>
+					<small className="meta">{this.props.place.type.name} • {this.props.place.rooms} Rooms</small>
 					<h2>{this.props.place.title}</h2>
 
 					{this.props.place.location ? <small className="location">
@@ -35,7 +35,7 @@ class Thumbnail extends React.Component {
 					{this.props.page === 'bookings' ? <span className="price">{this.props.place.price}</span> : <span className="price">${this.props.place.price}/night</span>}
 
 					<span className="rating">
-						{[...Array(5)].map((n, i) => i >= this.props.place.stars ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
+						{[...Array(5)].map((n, i) => i >= this.props.place.rating ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
 						<span>{this.props.place.reviews} Reviews</span>
 					</span>
 					<span className={this.props.place.date ? 'date' : ''}>{this.props.place.date ? this.props.place.date : ''}</span>
