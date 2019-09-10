@@ -16,11 +16,10 @@ class Thumbnail extends React.Component {
 	}
 
 
-
 	render() {
 		return (
 			<Link className="card link" to="/place">
-				<div className="image" style={{ backgroundImage: `url(${this.state.place.bg})` }}>
+				<div className="image" style={{ backgroundImage: `url(${this.state.place.image})` }}>
 					<button className="icon" type="button" onClick={(e) => {this.like(e, this.props.index)}}>
 						<i className={this.props.fav ? "fas fa-heart" : "far fa-heart"} ></i>
 					</button>

@@ -53,18 +53,39 @@ class Places extends React.Component {
         this.setState({ places: filtered })
     }
 
+
+    // filterByType = (event) => {
+    //     let text = event.target.value
+    //     let filtered = this.state.originalPlaces.filter(e =>
+    //         e.title.toUpperCase().includes(text.toUpperCase()))
+
+    //     this.setState({ places: filtered })
+    // }
+
     filterByNumOfRooms = (e) => {
         let rooms = Number(e.target.value) + 1
-        let filtered = this.state.originalPlaces.filter(e => e.rooms === rooms)
 
-        this.setState({ places: filtered })
+         axios.get(`http://localhost:5000/places?min_rooms=${rooms}`)
+            .then(res => {
+                this.setState({
+                    places: res.data,
+                })
+                console.log(res.data)
+            })
+            .catch(err => { console.log(err) })
     }
 
+   
     filterByPrice = (e) => {
         let maxPrice = e.target.value
-        let filtered = this.state.originalPlaces.filter(e => e.price <= maxPrice)
-
-        this.setState({ places: filtered })
+        axios.get(`http://localhost:5000/places?max_price=${maxPrice}`)
+        .then(res => {
+            this.setState({
+                places: res.data,
+            })
+            console.log(res.data)
+        })
+        .catch(err => { console.log(err) })
     }
 
     sortBy = (e) => {
