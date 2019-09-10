@@ -10,7 +10,7 @@ class Places extends React.Component {
     state = {
         page: 'places',
         places: [],
-        placeTitles: ['All types', 'Shared House', 'Shared Villa', 'Private Room', 'Shared room double bed'],
+        types: [],
         filterTypes: ['Latest', 'Price', 'Rating'],
         originalPlaces: []
     }
@@ -22,7 +22,18 @@ class Places extends React.Component {
                     places: res.data,
                     originalPlaces: res.data
                 })
-                console.log(res.data)
+                // console.log(res.data)
+            })
+            .catch(err => { console.log(err) })
+
+        axios.get('http://localhost:5000/types')
+            .then(res => {
+                let types = res.data.map(e => {
+                    return e.name
+                })
+                types.unshift('All Types')
+                this.setState({ types })
+                // console.log('types: ',res.data)
             })
             .catch(err => { console.log(err) })
     }
@@ -79,7 +90,7 @@ class Places extends React.Component {
                         {[...Array(10)].map((n, i) => { return <option key={i} value={i}>Rooms: {i + 1}</option> })}
                     </select>
                     <select>
-                        {this.state.placeTitles.map((e, i) => { return <option key={i} value="1">{e}</option> })}
+                        {this.state.types.map((e, i) => { return <option key={i} value="1">{e}</option> })}
                     </select>
                     <input onChange={(e) => this.filterByPrice(e)} type="number" placeholder="max price" />
                     <select onChange={(e) => this.sortBy(e)}>
