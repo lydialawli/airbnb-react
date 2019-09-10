@@ -22,7 +22,7 @@ class Places extends React.Component {
                     places: res.data,
                     originalPlaces: res.data
                 })
-                // console.log(res.data)
+                console.log(res.data)
             })
             .catch(err => { console.log(err) })
 
