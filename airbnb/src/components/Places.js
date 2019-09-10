@@ -12,7 +12,7 @@ class Places extends React.Component {
         places: [],
         types: [],
         filterTypes: ['Latest', 'Price', 'Rating'],
-        originalPlaces: []
+        originalPlaces: [],
     }
 
     UNSAFE_componentWillMount() {
@@ -29,9 +29,9 @@ class Places extends React.Component {
         axios.get('http://localhost:5000/types')
             .then(res => {
                 let types = res.data.map(e => {
-                    return e.name
+                    return { id: e._id, name: e.name }
                 })
-                types.unshift('All Types')
+                types.unshift({name: 'All Types' })
                 this.setState({ types })
                 // console.log('types: ',res.data)
             })
@@ -54,18 +54,31 @@ class Places extends React.Component {
     }
 
 
-    // filterByType = (event) => {
-    //     let text = event.target.value
-    //     let filtered = this.state.originalPlaces.filter(e =>
-    //         e.title.toUpperCase().includes(text.toUpperCase()))
+    filterByType = (event) => {
+        console.log(event.target.value)
+        let typeId = event.target.value
+        if (typeId == "All Types") {
+            this.setState({
+                places: this.state.originalPlaces,
+            })
+        }
+        else {
+            axios.get(`http://localhost:5000/places?type=${typeId}`)
+                .then(res => {
+                    this.setState({
+                        places: res.data,
+                    })
+                    // console.log(res.data)
+                })
+                .catch(err => { console.log(err) })
+        }
 
-    //     this.setState({ places: filtered })
-    // }
+    }
 
     filterByNumOfRooms = (e) => {
         let rooms = Number(e.target.value) + 1
 
-         axios.get(`http://localhost:5000/places?min_rooms=${rooms}`)
+        axios.get(`http://localhost:5000/places?min_rooms=${rooms}`)
             .then(res => {
                 this.setState({
                     places: res.data,
@@ -75,17 +88,17 @@ class Places extends React.Component {
             .catch(err => { console.log(err) })
     }
 
-   
+
     filterByPrice = (e) => {
         let maxPrice = e.target.value
         axios.get(`http://localhost:5000/places?max_price=${maxPrice}`)
-        .then(res => {
-            this.setState({
-                places: res.data,
+            .then(res => {
+                this.setState({
+                    places: res.data,
+                })
+                console.log(res.data)
             })
-            console.log(res.data)
-        })
-        .catch(err => { console.log(err) })
+            .catch(err => { console.log(err) })
     }
 
     sortBy = (e) => {
@@ -110,8 +123,8 @@ class Places extends React.Component {
                     <select onChange={(e) => this.filterByNumOfRooms(e)}>
                         {[...Array(10)].map((n, i) => { return <option key={i} value={i}>Rooms: {i + 1}</option> })}
                     </select>
-                    <select>
-                        {this.state.types.map((e, i) => { return <option key={i} value="1">{e}</option> })}
+                    <select onChange={(e) => this.filterByType(e)}>
+                        {this.state.types.map((e, i) => { return <option key={i} value={e.id}>{e.name}</option> })}
                     </select>
                     <input onChange={(e) => this.filterByPrice(e)} type="number" placeholder="max price" />
                     <select onChange={(e) => this.sortBy(e)}>
