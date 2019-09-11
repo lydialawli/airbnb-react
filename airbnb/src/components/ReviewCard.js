@@ -8,7 +8,8 @@ import '../styles/users.css'
 
 class ReviewCard extends React.Component {
     state = {
-        user: this.props.user
+        review: this.props.review,
+        author: this.props.review.author
     }
 
 
@@ -17,16 +18,16 @@ class ReviewCard extends React.Component {
             <div className="card review">
                 <div className="content">
                     <div className="user">
-                        <div className="avatar" style={{ backgroundImage: `url(${this.state.user.avatar})` }}></div>
+                        <div className="avatar" style={{ backgroundImage: `url(${this.state.author.avatar})` }}></div>
                         <div className="name">
-                            <small>{this.state.user.date}</small>
-                            <span>{this.state.user.name}</span>
+                            <small>{this.state.review.date}</small>
+                            <span>{this.state.author.name}</span>
                         </div>
                     </div>
                     <div className="rating">
-                        {[...Array(5)].map((n, i) => i >= this.state.user.rating ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
+                        {[...Array(5)].map((n, i) => i >= this.state.review.rating ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
                     </div>
-                    <p>{this.state.user.comment}</p>
+                    <p>{this.state.review.content}</p>
                 </div>
             </div>
         )

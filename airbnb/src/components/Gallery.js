@@ -8,14 +8,9 @@ import '../styles/buttons.css'
 class Gallery extends React.Component {
     state = {
         thumbnails: this.props.images,
-        bigImage: '',
+        bigImage: this.props.images[0],
     }
 
-    UNSAFE_componentWillMount() {
-        this.setState({
-            bigImage: this.state.thumbnails[0]
-        })
-    }
 
     changeBigImage = (i) => {
         this.setState({

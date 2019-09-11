@@ -2,6 +2,7 @@ import React from 'react'
 import Nav from '../components/Nav.js'
 import Gallery from '../components/Gallery.js'
 import ReviewCard from '../components/ReviewCard.js'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import '../styles/icons.css'
 import '../styles/grid.css'
@@ -13,56 +14,55 @@ import '../styles/sidebar.css'
 
 class Place extends React.Component {
     state = {
-        user: { avatar: 'https://seakoala.io/docs/images/universeLy.png', name: 'Ly', location: 'Girona', rating: 0 },
-        place: {
-            host: { avatar: 'https://randomuser.me/api/portraits/women/2.jpg', name: 'Kitty' },
-            title: 'Luxury Villa Indu Siam',
-            location: 'Koh Samui, Thailand',
-            description: 'Stylish, tropical, luxurious, airy and absolute beach front, this villa combines form and function, enjoying magnificent views of Samui’s small islands and the sea beyond. With 520sqm of indoor/outdoor living space with 5 ensuite bedrooms, large living area, beachfront infinity pool, garden, air conditioned gym, professional pool table, bbq and Sala, this villa is perfect for up to 10 adults With 260sqm (2798sqfeet) of living space and 250sqm (2,700sqfeet) of outdoor space.',
-            reviews: [
-                {
-                    name: 'Ella', date: '27 May 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
-                    avatar: 'https://randomuser.me/api/portraits/women/7.jpg'
-                },
-                {
-                    name: 'Sam', date: '4 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 4,
-                    avatar: 'https://randomuser.me/api/portraits/men/5.jpg'
-                },
-                {
-                    name: 'John', date: '22 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 3,
-                    avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
-                },
-                {
-                    name: 'Amanda', date: '27 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
-                    avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
-                }
-
-            ],
-            houseInfo: [{ icon: 'fas fa-fw fa-home', about: 'Entire Villa' }, { icon: 'fas fa-fw fa-user-friends', about: '10 guests' }, { icon: 'fas fa-fw fa-bed', about: '7 bedrooms' }, { icon: 'fas fa-fw fa-bath', about: '6 baths' }],
-            amenities: [{ icon: 'fas fa-utensils', asset: 'Swimming Pool' }, { icon: 'fas fa-dumbbell', asset: 'Kitchen' }, { icon: 'fas fa-dumbbell', asset: 'Wi-Fi' }, { icon: 'fas fa-tshirt', asset: 'TV' }, { icon: 'fas fa-swimmer', asset: 'Gym' }, { icon: 'fas fa-wind', asset: 'Iron' }, { icon: 'fas fa-tv', asset: 'Air Conditioning' }],
-            rating: 4,
-            priceOneNight: 350, fav: false,
-        },
-        thumbnails: [
-            'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223171.jpg',
-            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223174.jpg',
-            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223178.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223180.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223186.jpg',
-            'https://r-ak.bstatic.com/images/hotel/max1280x900/186/186223190.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223195.jpg',
-            'https://q-ak.bstatic.com/images/hotel/max1280x900/186/186223199.jpg'
-        ],
+        place: {},
+        originalPlace: {},
+        host: {},
+        amenities: [],
         userReviewed: false,
-        months :['January','February','March','April','May','June','July','August','September','October','November','December']
+        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        info: [],
+        reviews: []
     }
 
 
-    UNSAFE_componentWillMount() {
-        this.setState({
-            originalPlace: this.state.place
-        })
+    componentWillMount() {
+        let info = ['fas fa-fw fa-home', 'fas fa-fw fa-user-friends', 'fas fa-fw fa-bed', 'fas fa-fw fa-bath']
+        axios.get(`http://localhost:5000/reviews/${this.props.match.params.id}`)
+            .then(res => {
+                console.log('reviews: ',res.data)
+                this.setState({
+                    reviews: res.data,
+                })
+                // console.log(res.data)
+            })
+            .catch(err => { console.log(err) })
+
+        axios.get(`http://localhost:5000/places/${this.props.match.params.id}`)
+            .then(res => {
+                // console.log('place: ',res.data)
+                let info = [
+                    {icon:'fas fa-fw fa-home', about:`${res.data.type.name}`},
+                    {icon:'fas fa-fw fa-user-friends', about:`${res.data.guests} guests`},
+                    {icon:'fas fa-fw fa-bed', about:`${res.data.rooms} bedrooms`},
+                    {icon:'fas fa-fw fa-bath', about:`${res.data.bathrooms} baths`},
+                ]
+                console.log('info: ', info)
+               
+                .then(
+                    this.setState({
+                        place: res.data,
+                        originalPlace: res.data,
+                        host: res.data.host,
+                        amenities: res.data.amenities,
+                        info: info
+                    })
+
+                ).catch(err => { console.log(err) })
+
+
+                // console.log(res.data)
+            })
+            .catch(err => { console.log(err) })
     }
 
 
@@ -121,26 +121,26 @@ class Place extends React.Component {
         return (
             <div>
                 <Nav />
-                <Gallery images={this.state.thumbnails} like={this.changeFav} fav={this.state.place.fav} />
+                <Gallery images={this.state.place.images} like={this.changeFav} fav={this.state.place.fav} />
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">
                             <h1>{this.state.place.title}</h1>
                             <small>
                                 <i className="fas fa-map-marker-alt"></i>
-                                <span>{this.state.place.location}</span>
+                                <span>{this.state.place.city},{this.state.place.country}</span>
                             </small>
                             <div className="user">
-                                <div className="avatar" style={{ backgroundImage: `url(${this.state.place.host.avatar})` }}></div>
+                                <div className="avatar" style={{ backgroundImage: `url(${this.state.host.avatar})` }}></div>
                                 <div className="name">
                                     <small>Hosted by</small>
-                                    <span>{this.state.place.host.name}</span>
+                                    <span>{this.state.host.name}</span>
                                 </div>
                             </div>
                             <div className="card specs">
                                 <div className="content">
                                     <ul className="grid two">
-                                        {this.state.place.houseInfo.map((e, i) => {
+                                        {this.state.info.map((e, i) => {
                                             return <li key={i}><i key={i} className={e.icon}></i>{e.about}</li>
                                         })}
                                     </ul>
@@ -151,17 +151,17 @@ class Place extends React.Component {
                             <div className="card specs">
                                 <div className="content">
                                     <ul className="grid two">
-                                        {this.state.place.amenities.map((e, i) => {
-                                            return <li key={i}> <i key={i} className={e.icon}> </i>{e.asset} </li>
+                                        {this.state.amenities.map((e, i) => {
+                                            return <li key={i}> <i key={i} className={e.icon}> </i>{e.name} </li>
                                         })}
                                     </ul>
                                 </div>
                             </div>
                             <div className="reviews">
-                                <h2>{this.state.place.reviews.length} Reviews</h2>
+                                <h2>{this.state.place.reviews} Reviews</h2>
                                 <form>
                                     <div className="group">
-                                        {
+                                        {/* {
                                             this.state.userReviewed ? <h3>Done!</h3> :
                                                 (
                                                     <>
@@ -169,21 +169,21 @@ class Place extends React.Component {
                                                         <textarea onChange={this.saveUserReview}></textarea>
                                                         <div className="rating" />
 
-                                                        {  [...Array(5)].map((n, i) => {
-                                                           return  i >= this.state.user.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
+                                                        {[...Array(5)].map((n, i) => {
+                                                            return i >= this.state.place.author.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
                                                         })}
-                                                            < button className="primary small" onClick={(e) => this.handleSubmit(e)}>Submit</button>
+                                                        < button className="primary small" onClick={(e) => this.handleSubmit(e)}>Submit</button>
                                                     </>
                                                 )
-                                        }
+                                        } */}
 
 
 
                                     </div>
                                 </form>
                                 <div>{}
-                                    {this.state.place.reviews.map((user, i) => {
-                                        return <ReviewCard key={i} user={user} />
+                                    {this.state.reviews.map((review, i) => {
+                                        return <ReviewCard key={i} review={review} />
                                     }).reverse()}
                                 </div>
                             </div>
@@ -193,7 +193,7 @@ class Place extends React.Component {
                         <div className="sidebar booking">
                             <div className="card shadow">
                                 <div className="content large">
-                                    <h3>${this.state.place.priceOneNight}<small>per night</small></h3>
+                                    <h3>${this.state.place.price}<small>per night</small></h3>
                                     <small>
                                         {[...Array(5)].map((n, i) => i >= this.state.place.rating ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
                                         <span>{this.state.place.rating} Reviews</span>
@@ -233,3 +233,33 @@ class Place extends React.Component {
 
 export default Place
 
+ // user: { avatar: 'https://seakoala.io/docs/images/universeLy.png', name: 'Ly', location: 'Girona', rating: 0 },
+        // place: {
+        //     host: { avatar: 'https://randomuser.me/api/portraits/women/2.jpg', name: 'Kitty' },
+        //     title: 'Luxury Villa Indu Siam',
+        //     location: 'Koh Samui, Thailand',
+        //     description: 'Stylish, tropical, luxurious, airy and absolute beach front, this villa combines form and function, enjoying magnificent views of Samui’s small islands and the sea beyond. With 520sqm of indoor/outdoor living space with 5 ensuite bedrooms, large living area, beachfront infinity pool, garden, air conditioned gym, professional pool table, bbq and Sala, this villa is perfect for up to 10 adults With 260sqm (2798sqfeet) of living space and 250sqm (2,700sqfeet) of outdoor space.',
+        //     reviews: [
+        //         {
+        //             name: 'Ella', date: '27 May 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
+        //             avatar: 'https://randomuser.me/api/portraits/women/7.jpg'
+        //         },
+        //         {
+        //             name: 'Sam', date: '4 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 4,
+        //             avatar: 'https://randomuser.me/api/portraits/men/5.jpg'
+        //         },
+        //         {
+        //             name: 'John', date: '22 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 3,
+        //             avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
+        //         },
+        //         {
+        //             name: 'Amanda', date: '27 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
+        //             avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
+        //         }
+
+        //     ],
+        //     houseInfo: [{ icon: 'fas fa-fw fa-home', about: 'Entire Villa' }, { icon: 'fas fa-fw fa-user-friends', about: '10 guests' }, { icon: 'fas fa-fw fa-bed', about: '7 bedrooms' }, { icon: 'fas fa-fw fa-bath', about: '6 baths' }],
+        //     amenities: [{ icon: 'fas fa-utensils', asset: 'Swimming Pool' }, { icon: 'fas fa-dumbbell', asset: 'Kitchen' }, { icon: 'fas fa-dumbbell', asset: 'Wi-Fi' }, { icon: 'fas fa-tshirt', asset: 'TV' }, { icon: 'fas fa-swimmer', asset: 'Gym' }, { icon: 'fas fa-wind', asset: 'Iron' }, { icon: 'fas fa-tv', asset: 'Air Conditioning' }],
+        //     rating: 4,
+        //     priceOneNight: 350, fav: false,
+        // },
