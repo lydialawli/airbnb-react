@@ -21,15 +21,16 @@ class Place extends React.Component {
         userReviewed: false,
         months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         info: [],
-        reviews: []
+        reviews: [],
+        images: [],
+        bigImage: ''
     }
 
 
     componentWillMount() {
-        let info = ['fas fa-fw fa-home', 'fas fa-fw fa-user-friends', 'fas fa-fw fa-bed', 'fas fa-fw fa-bath']
         axios.get(`http://localhost:5000/reviews/${this.props.match.params.id}`)
             .then(res => {
-                console.log('reviews: ',res.data)
+                // console.log('reviews: ', res.data)
                 this.setState({
                     reviews: res.data,
                 })
@@ -39,28 +40,22 @@ class Place extends React.Component {
 
         axios.get(`http://localhost:5000/places/${this.props.match.params.id}`)
             .then(res => {
-                // console.log('place: ',res.data)
-                let info = [
-                    {icon:'fas fa-fw fa-home', about:`${res.data.type.name}`},
-                    {icon:'fas fa-fw fa-user-friends', about:`${res.data.guests} guests`},
-                    {icon:'fas fa-fw fa-bed', about:`${res.data.rooms} bedrooms`},
-                    {icon:'fas fa-fw fa-bath', about:`${res.data.bathrooms} baths`},
-                ]
-                console.log('info: ', info)
-               
-                .then(
-                    this.setState({
-                        place: res.data,
-                        originalPlace: res.data,
-                        host: res.data.host,
-                        amenities: res.data.amenities,
-                        info: info
-                    })
+                // console.log("==>", res.data.amenities)
+                this.setState({
+                    place: res.data,
+                    images: res.data.images,
+                    originalPlace: res.data,
+                    host: res.data.host,
+                    amenities: res.data.amenities,
+                    info: [
+                        { icon: 'fas fa-fw fa-home', about: `${res.data.type.name}` },
+                        { icon: 'fas fa-fw fa-user-friends', about: `${res.data.guests} guests` },
+                        { icon: 'fas fa-fw fa-bed', about: `${res.data.rooms} bedrooms` },
+                        { icon: 'fas fa-fw fa-bath', about: `${res.data.bathrooms} baths` }
+                    ],
+                    bigImage: res.data.images[0]
+                })
 
-                ).catch(err => { console.log(err) })
-
-
-                // console.log(res.data)
             })
             .catch(err => { console.log(err) })
     }
@@ -114,6 +109,11 @@ class Place extends React.Component {
         })
     }
 
+    changeBigImage = (i) => {
+        this.setState({
+            bigImage: this.state.images[i]
+        })
+    }
 
 
     render() {
@@ -121,14 +121,14 @@ class Place extends React.Component {
         return (
             <div>
                 <Nav />
-                <Gallery images={this.state.place.images} like={this.changeFav} fav={this.state.place.fav} />
+                <Gallery images={this.state.images} changeImage={this.changeBigImage} like={this.changeFav} fav={this.state.place.fav} bigImage={this.state.bigImage}/>
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">
                             <h1>{this.state.place.title}</h1>
                             <small>
                                 <i className="fas fa-map-marker-alt"></i>
-                                <span>{this.state.place.city},{this.state.place.country}</span>
+                                <span>{this.state.place.city}, {this.state.place.country}</span>
                             </small>
                             <div className="user">
                                 <div className="avatar" style={{ backgroundImage: `url(${this.state.host.avatar})` }}></div>

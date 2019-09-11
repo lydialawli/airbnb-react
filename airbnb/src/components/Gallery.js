@@ -6,19 +6,7 @@ import '../styles/forms.css'
 import '../styles/buttons.css'
 
 class Gallery extends React.Component {
-    state = {
-        thumbnails: this.props.images,
-        bigImage: this.props.images[0],
-    }
-
-
-    changeBigImage = (i) => {
-        this.setState({
-            bigImage: this.state.thumbnails[i]
-        })
-    }
-
-
+ 
 	like = (e) => {
 		e.preventDefault()
 		this.props.like(e)
@@ -28,14 +16,14 @@ class Gallery extends React.Component {
     render() {
         return (
             <div className="gallery">
-                <div className="image-main" style={{ backgroundImage: `url(${this.state.bigImage})` }}>
+                <div className="image-main" style={{ backgroundImage: `url(${this.props.bigImage})` }}>
                     <button className="icon" type="button" onClick={(e) => {this.like(e)}}>
                         <i className={this.props.fav ? "fas fa-heart" : "far fa-heart"}></i>
                     </button>
                 </div>
                 <div className="thumbnails">
-                    {this.state.thumbnails.map((e, i) => {
-                        return <div key={i} className={`thumbnail ${this.state.bigImage === e ? 'selected' : ''}`} onClick={()=> this.changeBigImage(i)} style={{ backgroundImage: `url(${this.state.thumbnails[i]})` }}></div>
+                    {this.props.images.map((e, i) => {
+                        return <div key={i} className={`thumbnail ${this.props.bigImage === e ? 'selected' : ''}`} onClick={()=> this.props.changeImage(i)} style={{ backgroundImage: `url(${this.props.images[i]})` }}></div>
                     })}
 
                 </div>

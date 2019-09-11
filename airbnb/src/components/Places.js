@@ -31,7 +31,7 @@ class Places extends React.Component {
                 let types = res.data.map(e => {
                     return { id: e._id, name: e.name }
                 })
-                types.unshift({name: 'All Types' })
+                types.unshift({ name: 'All Types' })
                 this.setState({ types })
                 // console.log('types: ',res.data)
             })
@@ -57,7 +57,7 @@ class Places extends React.Component {
     filterByType = (event) => {
         console.log(event.target.value)
         let typeId = event.target.value
-        if (typeId == "All Types") {
+        if (typeId === "All Types") {
             this.setState({
                 places: this.state.originalPlaces,
             })
@@ -135,7 +135,8 @@ class Places extends React.Component {
                 <div className="grid five large">
                     {this.state.places.map((p, i) => {
                         return (
-                            <Thumbnail key={i} place={p} index={i} page={this.state.page} fav={p.fav} like={this.changeFav} />
+                            <Thumbnail key={i} place={p} 
+                            id={p._id} index={i} page={this.state.page} fav={p.fav} like={this.changeFav} />
                         )
                     })}
                 </div>
