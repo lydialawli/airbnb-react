@@ -161,7 +161,7 @@ class Place extends React.Component {
                                 <h2>{this.state.place.reviews} Reviews</h2>
                                 <form>
                                     <div className="group">
-                                        {/* {
+                                        {
                                             this.state.userReviewed ? <h3>Done!</h3> :
                                                 (
                                                     <>
@@ -170,12 +170,12 @@ class Place extends React.Component {
                                                         <div className="rating" />
 
                                                         {[...Array(5)].map((n, i) => {
-                                                            return i >= this.state.place.author.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
+                                                            return i >= this.state.place.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
                                                         })}
                                                         < button className="primary small" onClick={(e) => this.handleSubmit(e)}>Submit</button>
                                                     </>
                                                 )
-                                        } */}
+                                        }
 
 
 
