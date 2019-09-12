@@ -3,8 +3,8 @@ import Nav from '../components/Nav.js'
 import Gallery from '../components/Gallery.js'
 import ReviewCard from '../components/ReviewCard.js'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import DatePicker from "react-datepicker"
+import moment from "moment"
 import "react-datepicker/dist/react-datepicker.css"
 import '../styles/icons.css'
 import '../styles/grid.css'
@@ -87,12 +87,7 @@ class Place extends React.Component {
 
     todayDate = () => {
         let user = this.state.user
-
-        let today = new Date()
-        let dd = today.getDate()
-        let mm = today.getMonth()
-        let yyyy = today.getFullYear()
-        today = dd + ' ' + this.state.months[mm] + ' ' + yyyy
+        let today = moment(new Date()).format('D MMMM YYYY')
 
         user.date = today
         this.setState({ user })

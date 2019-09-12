@@ -5,6 +5,7 @@ import '../styles/reviews.css'
 import '../styles/forms.css'
 import '../styles/buttons.css'
 import '../styles/users.css'
+import moment from "moment"
 
 class ReviewCard extends React.Component {
     state = {
@@ -20,7 +21,7 @@ class ReviewCard extends React.Component {
                     <div className="user">
                         <div className="avatar" style={{ backgroundImage: `url(${this.state.author.avatar})` }}></div>
                         <div className="name">
-                            <small>{this.state.review.date}</small>
+                            <small>{moment(this.state.review.date).format('D MMMM YYYY')}</small>
                             <span>{this.state.author.name}</span>
                         </div>
                     </div>
