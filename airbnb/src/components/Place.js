@@ -26,11 +26,12 @@ class Place extends React.Component {
         reviews: [],
         images: [],
         bigImage: '',
-        guests: 1,
+        selectedGuests: 1,
         bookingDates: {
             startDate: null,
             endDate: null
-        }
+        },
+        guests: 1
        
     }
 
@@ -121,7 +122,9 @@ class Place extends React.Component {
     goToConfirmPage = () =>{
         this.props.history.push({
             pathname: `/confirm`,
-            bookingDates: this.state.bookingDates
+            bookingDates: this.state.bookingDates,
+            selectedGuests: this.state.selectedGuests,
+            place: this.state.place
         })
     }
 
@@ -131,10 +134,16 @@ class Place extends React.Component {
         })
     }
 
-    handleChange = (date, startOrEnd) => {
+    handleChange = (date, field) => {
         let bookingDates = this.state.bookingDates
-        bookingDates[startOrEnd] = date
+        bookingDates[field] = date
         this.setState({bookingDates})
+      }
+
+      updateGuestState = (e)=>{
+          this.setState({
+              selectedGuests: e.target.value
+          })
       }
 
     render() {
@@ -228,13 +237,13 @@ class Place extends React.Component {
                                         </div>
                                         <div className="group">
                                             <label>Guests</label>
-                                            <select>
+                                            <select onChange={this.updateGuestState}>
                                                 {
                                                     [...Array(this.state.guests)].map((n, i) => {
                                                         if (i + 1 === 1)
-                                                            return <option key={i}>{i + 1} guest</option>
+                                                            return <option key={i} value={i+1}>{i + 1} guest</option>
                                                         else
-                                                            return <option key={i}>{i + 1} guests</option>
+                                                            return <option key={i} value={i+1}>{i + 1} guests</option>
                                                     })}
                                             </select>
                                         </div>
