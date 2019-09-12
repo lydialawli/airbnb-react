@@ -15,18 +15,6 @@ class Confirm extends React.Component {
     state = {
         page: 'confirm',
         place: {},
-        // place: {
-        //     title: 'Duplex with Garden',
-        //     description: 'Entire Duplex • 2 Rooms',
-        //     id: 0,
-        //     stars: 4,
-        //     reviews: 37,
-        //     bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
-        //     nights: 3,
-        //     price: 150,
-        //     totalPrice: '$1.050',
-
-        // },
         bookingDates: {
             startDate: null,
             endDate: null
@@ -40,7 +28,7 @@ class Confirm extends React.Component {
             selectedGuests: this.props.location.selectedGuests,
             place: this.props.location.place
         })
-        console.log(this.props.location.selectedGuests)
+        console.log(this.props.location.place)
     }
 
     handleChange = (date, startOrEnd) => {
@@ -58,7 +46,7 @@ class Confirm extends React.Component {
                 <div className="grid medium">
                     <div className="grid sidebar-left">
                         <div className="sidebar">
-                            <Thumbnail key={1} place={this.state.place} page={this.state.page}  id={this.state._id}/>
+                            <Thumbnail key={1} place={this.state.place} page={this.state.page}  id={this.state.place._id}/>
                         </div>
                         <div className="content">
                             <h2>Confirm Booking</h2>
@@ -93,9 +81,9 @@ class Confirm extends React.Component {
                                 </Link>
                             </form>
                             <hr />
-                            <Link to='/place' >
-                                <button>Cancel</button>
-                            </Link>
+                            {/* <Link to='/place' > */}
+                                <button onClick={()=>this.props.history.goBack()}>Cancel</button>
+                            {/* </Link> */}
                         </div>
 
                     </div>
