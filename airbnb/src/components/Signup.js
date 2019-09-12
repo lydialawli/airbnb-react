@@ -24,6 +24,7 @@ class Signup extends React.Component {
         e.preventDefault()
         axios.post('http://localhost:5000/signup', this.state.user)
             .then(res => {
+                localStorage.setItem('token',res.data)
                 this.props.history.push({
                     pathname: `/`
                 })
