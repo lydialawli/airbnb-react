@@ -23,7 +23,8 @@ class Place extends React.Component {
         info: [],
         reviews: [],
         images: [],
-        bigImage: ''
+        bigImage: '',
+        guests: 1
     }
 
 
@@ -53,7 +54,8 @@ class Place extends React.Component {
                         { icon: 'fas fa-fw fa-bed', about: `${res.data.rooms} bedrooms` },
                         { icon: 'fas fa-fw fa-bath', about: `${res.data.bathrooms} baths` }
                     ],
-                    bigImage: res.data.images[0]
+                    bigImage: res.data.images[0],
+                    guests: res.data.guests
                 })
 
             })
@@ -207,7 +209,8 @@ class Place extends React.Component {
                                         <div className="group">
                                             <label>Guests</label>
                                             <select>
-                                                {[...Array(10)].map((n, i) => {
+                                                {
+                                                    [...Array(this.state.guests)].map((n, i) => {
                                                     if (i + 1 === 1)
                                                         return <option key={i}>{i + 1} guest</option>
                                                     else
@@ -232,34 +235,3 @@ class Place extends React.Component {
 
 
 export default Place
-
- // user: { avatar: 'https://seakoala.io/docs/images/universeLy.png', name: 'Ly', location: 'Girona', rating: 0 },
-        // place: {
-        //     host: { avatar: 'https://randomuser.me/api/portraits/women/2.jpg', name: 'Kitty' },
-        //     title: 'Luxury Villa Indu Siam',
-        //     location: 'Koh Samui, Thailand',
-        //     description: 'Stylish, tropical, luxurious, airy and absolute beach front, this villa combines form and function, enjoying magnificent views of Samui’s small islands and the sea beyond. With 520sqm of indoor/outdoor living space with 5 ensuite bedrooms, large living area, beachfront infinity pool, garden, air conditioned gym, professional pool table, bbq and Sala, this villa is perfect for up to 10 adults With 260sqm (2798sqfeet) of living space and 250sqm (2,700sqfeet) of outdoor space.',
-        //     reviews: [
-        //         {
-        //             name: 'Ella', date: '27 May 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
-        //             avatar: 'https://randomuser.me/api/portraits/women/7.jpg'
-        //         },
-        //         {
-        //             name: 'Sam', date: '4 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 4,
-        //             avatar: 'https://randomuser.me/api/portraits/men/5.jpg'
-        //         },
-        //         {
-        //             name: 'John', date: '22 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 3,
-        //             avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
-        //         },
-        //         {
-        //             name: 'Amanda', date: '27 July 2019', comment: 'It was beyond my imagination that my AirBnB experience could be better than a 5 star resort hotel. It is one of the most beautiful villa that I have had stayed so far in the many countries travelled so far. The pictures have not sufficiently described the details of the place.', rating: 5,
-        //             avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
-        //         }
-
-        //     ],
-        //     houseInfo: [{ icon: 'fas fa-fw fa-home', about: 'Entire Villa' }, { icon: 'fas fa-fw fa-user-friends', about: '10 guests' }, { icon: 'fas fa-fw fa-bed', about: '7 bedrooms' }, { icon: 'fas fa-fw fa-bath', about: '6 baths' }],
-        //     amenities: [{ icon: 'fas fa-utensils', asset: 'Swimming Pool' }, { icon: 'fas fa-dumbbell', asset: 'Kitchen' }, { icon: 'fas fa-dumbbell', asset: 'Wi-Fi' }, { icon: 'fas fa-tshirt', asset: 'TV' }, { icon: 'fas fa-swimmer', asset: 'Gym' }, { icon: 'fas fa-wind', asset: 'Iron' }, { icon: 'fas fa-tv', asset: 'Air Conditioning' }],
-        //     rating: 4,
-        //     priceOneNight: 350, fav: false,
-        // },
