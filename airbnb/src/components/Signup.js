@@ -14,7 +14,7 @@ class Signup extends React.Component {
         bg: './thailand.jpg',
         user: {
             name: '',
-            email:'',
+            email: '',
             password: '',
             location: '',
         }
@@ -22,23 +22,23 @@ class Signup extends React.Component {
 
     signup = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5000/signup',this.state.user)
-        .then(res => {
-            localStorage.setItem('token',res.data)
-            this.props.history.push({
-            pathname: `/`
+        axios.post('http://localhost:5000/signup', this.state.user)
+            .then(res => {
+                this.props.history.push({
+                    pathname: `/`
+                })
+                console.log(res.data)
             })
-        })
-        .catch(err=> console.log(err))
+            .catch(err => console.log(err))
     }
-    
-    changeField = (e, field) =>{
+
+    changeField = (e, field) => {
         let user = this.state.user
-        user[field] = e.target.value 
-        this.setState({user})
+        user[field] = e.target.value
+        this.setState({ user })
     }
-    
- 
+
+
 
     render() {
         return (<div className="grid center middle tall image" style={{ backgroundImage: `url(${this.state.bg})` }}>
@@ -48,25 +48,25 @@ class Signup extends React.Component {
                     <form >
                         <div className="group">
                             <label>Name</label>
-                            <input type="text"  value={this.state.user.name}  onChange={(e)=> this.changeField(e,'name')} />
+                            <input type="text" value={this.state.user.name} onChange={(e) => this.changeField(e, 'name')} />
                         </div>
                         <div className="group">
                             <label>Email</label>
-                            <input type="email" value={this.state.user.email}  onChange={(e)=> this.changeField(e,'email')}/>
+                            <input type="email" value={this.state.user.email} onChange={(e) => this.changeField(e, 'email')} />
                         </div>
                         <div className="group">
                             <label>Password</label>
-                            <input type="password" value={this.state.user.password}  onChange={(e)=> this.changeField(e,'password')}/>
+                            <input type="password" value={this.state.user.password} onChange={(e) => this.changeField(e, 'password')} />
                         </div>
                         <div className="group">
                             <label>Location</label>
-                            <input type="text" value={this.state.user.location}  onChange={(e)=> this.changeField(e,'location')} />
+                            <input type="text" value={this.state.user.location} onChange={(e) => this.changeField(e, 'location')} />
                         </div>
                         <div className="group">
                             <label>Profile Picture</label>
-                            <input type="file"/>
+                            <input type="file" />
                         </div>
-                        
+
                         <button onClick={this.signup} className="primary">Signup</button>
                     </form>
                     <p className="footer">
