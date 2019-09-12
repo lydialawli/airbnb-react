@@ -32,7 +32,7 @@ class Place extends React.Component {
             endDate: null
         },
         guests: 1
-       
+
     }
 
 
@@ -119,7 +119,7 @@ class Place extends React.Component {
         })
     }
 
-    goToConfirmPage = () =>{
+    goToConfirmPage = () => {
         this.props.history.push({
             pathname: `/confirm`,
             bookingDates: this.state.bookingDates,
@@ -137,14 +137,14 @@ class Place extends React.Component {
     handleChange = (date, field) => {
         let bookingDates = this.state.bookingDates
         bookingDates[field] = date
-        this.setState({bookingDates})
-      }
+        this.setState({ bookingDates })
+    }
 
-      updateGuestState = (e)=>{
-          this.setState({
-              selectedGuests: e.target.value
-          })
-      }
+    updateGuestState = (e) => {
+        this.setState({
+            selectedGuests: e.target.value
+        })
+    }
 
     render() {
 
@@ -231,9 +231,9 @@ class Place extends React.Component {
                                     <form className="small">
                                         <div className="group">
                                             <label>Dates</label>
-                                            <DatePicker placeholderText="Check-in" selected={this.state.bookingDates.startDate} onChange={(e)=>this.handleChange(e,'startDate')}/>
-                                            <DatePicker placeholderText="Check-out" selected={this.state.bookingDates.endDate} onChange={(e)=>this.handleChange(e,'endDate')}/>
-                                            
+                                            <DatePicker placeholderText="Check-in" selected={this.state.bookingDates.startDate} onChange={(e) => this.handleChange(e, 'startDate')} />
+                                            <DatePicker placeholderText="Check-out" selected={this.state.bookingDates.endDate} onChange={(e) => this.handleChange(e, 'endDate')} />
+
                                         </div>
                                         <div className="group">
                                             <label>Guests</label>
@@ -241,15 +241,15 @@ class Place extends React.Component {
                                                 {
                                                     [...Array(this.state.guests)].map((n, i) => {
                                                         if (i + 1 === 1)
-                                                            return <option key={i} value={i+1}>{i + 1} guest</option>
+                                                            return <option key={i} value={i + 1}>{i + 1} guest</option>
                                                         else
-                                                            return <option key={i} value={i+1}>{i + 1} guests</option>
+                                                            return <option key={i} value={i + 1}>{i + 1} guests</option>
                                                     })}
                                             </select>
                                         </div>
-                                        {/* <Link to='/confirm' className="group"> */}
-                                            <button onClick={this.goToConfirmPage} className="secondary full">Book this place</button>
-                                        {/* </Link> */}
+
+                                        <button onClick={this.goToConfirmPage} disabled={!this.state.bookingDates.startDate||!this.state.bookingDates.endDate} className="secondary full">Book this place</button>
+
                                     </form>
 
                                 </div>
