@@ -17,20 +17,37 @@ class Signup extends React.Component {
             email: '',
             password: '',
             location: '',
-        }
+        },
+        errorMsg:''
     }
 
     signup = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5000/signup', this.state.user)
+        let fields = ['name', 'email', 'password', 'location']
+        let error = fields.forEach(f => {
+            if (this.state.user[f] === '') {
+                this.setState({
+                    errorMsg: `missing ${f}`
+                })
+                return true
+            }
+            else { return false }
+        })
+
+        if(!error) {
+            axios.post('http://localhost:5000/signup', this.state.user)
             .then(res => {
-                localStorage.setItem('token',res.data)
+                localStorage.setItem('token', res.data)
                 this.props.history.push({
                     pathname: `/`
                 })
                 console.log(res.data)
             })
             .catch(err => console.log(err))
+
+        }
+      
+
     }
 
     changeField = (e, field) => {
@@ -70,6 +87,7 @@ class Signup extends React.Component {
 
                         <button onClick={this.signup} className="primary">Signup</button>
                     </form>
+                    <span style={{color:"red"}}>{this.state.errorMsg}</span>
                     <p className="footer">
                         Already have an account? <Link to="/login">Login</Link>
                     </p>
