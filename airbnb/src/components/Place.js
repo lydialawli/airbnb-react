@@ -4,6 +4,8 @@ import Gallery from '../components/Gallery.js'
 import ReviewCard from '../components/ReviewCard.js'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/users.css'
@@ -24,7 +26,12 @@ class Place extends React.Component {
         reviews: [],
         images: [],
         bigImage: '',
-        guests: 1
+        guests: 1,
+        bookingDates: {
+            startDate: null,
+            endDate: null
+        }
+       
     }
 
 
@@ -99,7 +106,7 @@ class Place extends React.Component {
         console.log(this.state.user)
     }
 
-    handleSubmit = (e) => {
+    handleSubmitReview = (e) => {
         e.preventDefault()
         this.todayDate()
         let place = this.state.place
@@ -111,19 +118,31 @@ class Place extends React.Component {
         })
     }
 
+    goToConfirmPage = () =>{
+        this.props.history.push({
+            pathname: `/confirm`,
+            bookingDates: this.state.bookingDates
+        })
+    }
+
     changeBigImage = (i) => {
         this.setState({
             bigImage: this.state.images[i]
         })
     }
 
+    handleChange = (date, startOrEnd) => {
+        let bookingDates = this.state.bookingDates
+        bookingDates[startOrEnd] = date
+        this.setState({bookingDates})
+      }
 
     render() {
 
         return (
             <div>
                 <Nav />
-                <Gallery images={this.state.images} changeImage={this.changeBigImage} like={this.changeFav} fav={this.state.place.fav} bigImage={this.state.bigImage}/>
+                <Gallery images={this.state.images} changeImage={this.changeBigImage} like={this.changeFav} fav={this.state.place.fav} bigImage={this.state.bigImage} />
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">
@@ -174,7 +193,7 @@ class Place extends React.Component {
                                                         {[...Array(5)].map((n, i) => {
                                                             return i >= this.state.place.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
                                                         })}
-                                                        < button className="primary small" onClick={(e) => this.handleSubmit(e)}>Submit</button>
+                                                        < button className="primary small" onClick={(e) => this.handleSubmitReview(e)}>Submit</button>
                                                     </>
                                                 )
                                         }
@@ -203,24 +222,25 @@ class Place extends React.Component {
                                     <form className="small">
                                         <div className="group">
                                             <label>Dates</label>
-                                            <input type="text" placeholder="Check-in"></input>
-                                            <input type="text" placeholder="Check-out"></input>
+                                            <DatePicker placeholderText="Check-in" selected={this.state.bookingDates.startDate} onChange={(e)=>this.handleChange(e,'startDate')}/>
+                                            <DatePicker placeholderText="Check-out" selected={this.state.bookingDates.endDate} onChange={(e)=>this.handleChange(e,'endDate')}/>
+                                            
                                         </div>
                                         <div className="group">
                                             <label>Guests</label>
                                             <select>
                                                 {
                                                     [...Array(this.state.guests)].map((n, i) => {
-                                                    if (i + 1 === 1)
-                                                        return <option key={i}>{i + 1} guest</option>
-                                                    else
-                                                        return <option key={i}>{i + 1} guests</option>
-                                                })}
+                                                        if (i + 1 === 1)
+                                                            return <option key={i}>{i + 1} guest</option>
+                                                        else
+                                                            return <option key={i}>{i + 1} guests</option>
+                                                    })}
                                             </select>
                                         </div>
-                                        <Link to='/confirm' className="group">
-                                            <button className="secondary full">Book this place</button>
-                                        </Link>
+                                        {/* <Link to='/confirm' className="group"> */}
+                                            <button onClick={this.goToConfirmPage} className="secondary full">Book this place</button>
+                                        {/* </Link> */}
                                     </form>
 
                                 </div>

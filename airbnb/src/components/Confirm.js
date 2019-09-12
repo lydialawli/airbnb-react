@@ -2,6 +2,7 @@ import React from 'react'
 import Nav from '../components/Nav.js'
 import Thumbnail from '../components/Thumbnail'
 import { Link } from 'react-router-dom'
+import DatePicker from "react-datepicker"
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -23,10 +24,27 @@ class Confirm extends React.Component {
             nights: 3,
             price: 150,
             totalPrice: '$1.050',
+          
+
+        },
+        bookingDates: {
+            startDate: null,
+            endDate: null
         }
     }
 
+    componentWillMount() {
+        console.log(this.props.location.bookingDates)
+        this.setState({
+            bookingDates: this.props.location.bookingDates
+        })
+    }
 
+    handleChange = (date, startOrEnd) => {
+        let bookingDates = this.state.bookingDates
+        bookingDates[startOrEnd] = date
+        this.setState({ bookingDates })
+    }
 
     render() {
         return (
@@ -37,18 +55,19 @@ class Confirm extends React.Component {
                 <div className="grid medium">
                     <div className="grid sidebar-left">
                         <div className="sidebar">
-                            <Thumbnail key={1} place={this.state.place} page={this.state.page} />
+                            {/* <Thumbnail key={1} place={this.state.place} page={this.state.page} /> */}
                         </div>
                         <div className="content">
                             <h2>Confirm Booking</h2>
                             <form>
                                 <div className="group">
                                     <label>From</label>
-                                    <input type="text" defaultValue="12/11/2019" />
+                                    <DatePicker placeholderText="Check-in" selected={this.state.bookingDates.startDate} onChange={(e) => this.handleChange(e, 'startDate')} />
+
                                 </div>
                                 <div className="group">
                                     <label>To</label>
-                                    <input type="text" defaultValue="15/11/2019" />
+                                    <DatePicker placeholderText="Check-out" selected={this.state.bookingDates.endDate} onChange={(e) => this.handleChange(e, 'endDate')} />
                                 </div>
                                 <div className="group">
                                     <label>Guests</label>
