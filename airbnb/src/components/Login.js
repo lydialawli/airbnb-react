@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import '../styles/global.css'
 import '../styles/grid.css'
 import '../styles/users.css'
@@ -10,7 +11,32 @@ import '../styles/buttons.css'
 class Login extends React.Component {
     state = {
         logo: './logo-airbnb.png',
-        bg: './thailand.jpg'
+        bg: './thailand.jpg',
+        user: {
+            email: '',
+            password: '',
+        },
+        errorMsg: ''
+    }
+
+    changeField = (e, field) => {
+        let user = this.state.user
+        user[field] = e.target.value
+        this.setState({ user })
+    }
+
+    login = (e) => {
+        e.preventDefault()
+        if (!this.state.user.email || !this.state.user.password) {
+            this.setState({ errorMsg: 'missing fields' })
+        }
+        else {
+            axios.get('http://localhost:5000/login', this.state.user)
+            this.setState({ errorMsg: '' })
+            console.log('logged in!')
+        }
+
+
     }
 
     render() {
@@ -21,16 +47,17 @@ class Login extends React.Component {
                     <form>
                         <div className="group">
                             <label>Email</label>
-                            <input type="email" />
+                            <input type="email" value={this.state.user.email} onChange={(e) => this.changeField(e, 'email')} />
                         </div>
                         <div className="group">
                             <label>Password</label>
-                            <input type="password" />
+                            <input type="password" value={this.state.user.password} onChange={(e) => this.changeField(e, 'password')} />
                         </div>
 
-                        <button className="primary">Login</button>
+                        <button onClick={this.login} className="primary">Login</button>
 
                     </form>
+                    <span style={{ color: "red" }}>{this.state.errorMsg}</span>
                     <p className="footer">
                         New to Airbnb?  <Link to="/signup">Signup</Link>
                     </p>
