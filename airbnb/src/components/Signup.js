@@ -18,8 +18,10 @@ class Signup extends React.Component {
             password: '',
             location: '',
         },
-        errorMsg:''
+        errorMsg:'',
+        emailError: ''
     }
+
 
     signup = (e) => {
         e.preventDefault()
@@ -37,17 +39,21 @@ class Signup extends React.Component {
         if(!error) {
             axios.post('http://localhost:5000/signup', this.state.user)
             .then(res => {
-                localStorage.setItem('token', res.data)
-                this.props.history.push({
-                    pathname: `/`
-                })
-                console.log(res.data)
+                if(!res.data){
+                    this.setState({
+                        emailError: 'email is already in use'
+                    })
+                }
+                else {
+                    localStorage.setItem('token', res.data)
+                    this.props.history.push({
+                        pathname: `/`
+                    })
+                    console.log(res.data)
+                }
             })
             .catch(err => console.log(err))
-
         }
-      
-
     }
 
     changeField = (e, field) => {
@@ -71,6 +77,7 @@ class Signup extends React.Component {
                         <div className="group">
                             <label>Email</label>
                             <input type="email" value={this.state.user.email} onChange={(e) => this.changeField(e, 'email')} />
+                            <span style={{color:"red"}}>{this.state.emailError}</span>
                         </div>
                         <div className="group">
                             <label>Password</label>
