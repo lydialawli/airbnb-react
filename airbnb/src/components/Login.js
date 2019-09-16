@@ -31,16 +31,16 @@ class Login extends React.Component {
             this.setState({ errorMsg: 'missing fields' })
         }
         else {
-            axios.get('http://localhost:5000/login', this.state.user)
-            this.setState({ errorMsg: '' })
-            console.log('logged in!')
+            axios.post('http://localhost:5000/login', this.state.user)
+                .then(res => {
+                    console.log('result: ', res.data.token)
+                })
         }
-
-
     }
 
     render() {
-        return (<div className="grid center middle tall image" style={{ backgroundImage: `url(${this.state.bg})` }}>
+        return (<div className="grid center middle tall image" style={{ backgroundImage: `url(${this.state.bg})` }
+        }>
             <div className="card small">
                 <div className="content">
                     <div className="logo" style={{ backgroundImage: `url(${this.state.logo})` }}></div>
@@ -63,7 +63,7 @@ class Login extends React.Component {
                     </p>
                 </div>
             </div>
-        </div>)
+        </div >)
     }
 
 }
