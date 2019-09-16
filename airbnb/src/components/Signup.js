@@ -37,7 +37,7 @@ class Signup extends React.Component {
         })
 
         if(!error) {
-            axios.post('http://localhost:5000/signup', this.state.user)
+            axios.post(`${process.env.REACT_APP_API}/signup`, this.state.user)
             .then(res => {
                 if(!res.data){
                     this.setState({

@@ -16,7 +16,7 @@ class Places extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-        axios.get('http://localhost:5000/places')
+        axios.get(`${process.env.REACT_APP_API}/places`)
             .then(res => {
                 this.setState({
                     places: res.data,
@@ -26,7 +26,7 @@ class Places extends React.Component {
             })
             .catch(err => { console.log(err) })
 
-        axios.get('http://localhost:5000/types')
+        axios.get(`${process.env.REACT_APP_API}/types`)
             .then(res => {
                 let types = res.data.map(e => {
                     return { id: e._id, name: e.name }
@@ -63,7 +63,7 @@ class Places extends React.Component {
             })
         }
         else {
-            axios.get(`http://localhost:5000/places?type=${typeId}`)
+            axios.get(`${process.env.REACT_APP_API}/places?type=${typeId}`)
                 .then(res => {
                     this.setState({
                         places: res.data,
@@ -78,7 +78,7 @@ class Places extends React.Component {
     filterByNumOfRooms = (e) => {
         let rooms = Number(e.target.value) + 1
 
-        axios.get(`http://localhost:5000/places?min_rooms=${rooms}`)
+        axios.get(`${process.env.REACT_APP_API}/places?min_rooms=${rooms}`)
             .then(res => {
                 this.setState({
                     places: res.data,
@@ -91,7 +91,7 @@ class Places extends React.Component {
 
     filterByPrice = (e) => {
         let maxPrice = e.target.value
-        axios.get(`http://localhost:5000/places?max_price=${maxPrice}`)
+        axios.get(`${process.env.REACT_APP_API}/places?max_price=${maxPrice}`)
             .then(res => {
                 this.setState({
                     places: res.data,

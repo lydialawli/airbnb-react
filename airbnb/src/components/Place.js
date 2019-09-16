@@ -37,7 +37,7 @@ class Place extends React.Component {
 
 
     componentWillMount() {
-        axios.get(`http://localhost:5000/reviews/${this.props.match.params.id}`)
+        axios.get(`${process.env.REACT_APP_API}/reviews/${this.props.match.params.id}`)
             .then(res => {
                 // console.log('reviews: ', res.data)
                 this.setState({
@@ -47,7 +47,7 @@ class Place extends React.Component {
             })
             .catch(err => { console.log(err) })
 
-        axios.get(`http://localhost:5000/places/${this.props.match.params.id}`)
+        axios.get(`${process.env.REACT_APP_API}/places/${this.props.match.params.id}`)
             .then(res => {
                 // console.log("==>", res.data.amenities)
                 this.setState({

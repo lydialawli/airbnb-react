@@ -31,7 +31,7 @@ class Login extends React.Component {
             this.setState({ errorMsg: 'missing fields' })
         }
         else {
-            axios.post('http://localhost:5000/login', this.state.user)
+            axios.post(`${process.env.REACT_APP_API}/login`, this.state.user)
                 .then(res => {
                     console.log('result: ', res.data.token)
                 })
