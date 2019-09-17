@@ -31,16 +31,18 @@ class Confirm extends React.Component {
         this.setState({
             bookingDates: this.props.location.bookingDates,
             selectedGuests: this.props.location.selectedGuests,
-            place: this.props.location.place
+            place: this.props.location.place,
+            totalNights: this.calcNights(this.props.location.bookingDates.startDate, this.props.location.bookingDates.endDate)
         })
         console.log(this.props.location.bookingDates)
-        this.calcNights(this.props.location.bookingDates.startDate, this.props.location.bookingDates.endDate)
     }
 
     handleChange = (date, startOrEnd) => {
         let bookingDates = this.state.bookingDates
         bookingDates[startOrEnd] = date
         this.setState({ bookingDates })
+        let totaNights = this.calcNights(this.state.bookingDates.startDate, this.state.bookingDates.endDate)
+        this.setState({ totaNights })
     }
 
     closePanel = () => {
@@ -50,8 +52,10 @@ class Confirm extends React.Component {
     }
 
     calcNights = (date1,date2) => {
-       let diff=  moment.duration(date2.diff(date1).days())
-       console.log('days!',diff)
+        let a = moment(date1)
+        let b = moment(date2)
+       return b.diff(a,'days')
+     
     }
 
     render() {
