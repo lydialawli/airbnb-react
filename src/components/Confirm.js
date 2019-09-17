@@ -94,7 +94,7 @@ class Confirm extends React.Component {
                 <StripeProvider apiKey="pk_test_nffKwuVlBG3bE3i0W1XEc6v9009tuLnrDk">
                     <div className="stripe-form">
                         <Elements>
-                            <StripeForm />
+                            <StripeForm amount={20000} description={this.state.place.title}/>
                         </Elements>
                     </div>
                 </StripeProvider>

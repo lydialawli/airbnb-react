@@ -66,3 +66,7 @@ button.full {
 	width: 100%;
 	font-weight: bold;
 }
+
+button.pay {
+	margin-top: 20px;
+}
