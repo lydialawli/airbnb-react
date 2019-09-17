@@ -5,6 +5,7 @@ import StripeForm from '../components/StripeForm'
 import { Link } from 'react-router-dom'
 import DatePicker from "react-datepicker"
 import { Elements, StripeProvider } from 'react-stripe-elements'
+import moment from "moment"
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -22,7 +23,8 @@ class Confirm extends React.Component {
             endDate: null
         },
         selectedGuests: 1,
-        closePayment: false
+        closePayment: false,
+        totalNights: 1
     }
 
     UNSAFE_componentWillMount() {
@@ -31,7 +33,8 @@ class Confirm extends React.Component {
             selectedGuests: this.props.location.selectedGuests,
             place: this.props.location.place
         })
-        console.log(this.props.location.place)
+        console.log(this.props.location.bookingDates)
+        this.calcNights(this.props.location.bookingDates.startDate, this.props.location.bookingDates.endDate)
     }
 
     handleChange = (date, startOrEnd) => {
@@ -44,6 +47,11 @@ class Confirm extends React.Component {
         this.setState({
             closePayment: true
         })
+    }
+
+    calcNights = (date1,date2) => {
+       let diff=  moment.duration(date2.diff(date1).days())
+       console.log('days!',diff)
     }
 
     render() {
@@ -82,7 +90,7 @@ class Confirm extends React.Component {
                                     </select>
                                 </div>
                                 <div className="group">
-                                    <label>Total: {this.state.place.nights} nights</label>
+                                    <label>Total: {this.state.totalNights} nights</label>
                                     <h2>{this.state.place.totalPrice}</h2>
                                 </div>
                                 <Link to='/bookings' >
