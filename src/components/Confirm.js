@@ -21,7 +21,8 @@ class Confirm extends React.Component {
             startDate: null,
             endDate: null
         },
-        selectedGuests: 1
+        selectedGuests: 1,
+        closePayment: false
     }
 
     UNSAFE_componentWillMount() {
@@ -37,6 +38,12 @@ class Confirm extends React.Component {
         let bookingDates = this.state.bookingDates
         bookingDates[startOrEnd] = date
         this.setState({ bookingDates })
+    }
+
+    closePanel = () => {
+        this.setState({
+            closePayment: true
+        })
     }
 
     render() {
@@ -90,14 +97,14 @@ class Confirm extends React.Component {
 
                     </div>
                 </div>
-
-                <StripeProvider apiKey="pk_test_nffKwuVlBG3bE3i0W1XEc6v9009tuLnrDk">
-                    <div className="stripe-form">
-                        <Elements>
-                            <StripeForm amount={20000} description={this.state.place.title}/>
-                        </Elements>
-                    </div>
-                </StripeProvider>
+                {!this.state.closePayment ?
+                    (<StripeProvider apiKey="pk_test_nffKwuVlBG3bE3i0W1XEc6v9009tuLnrDk">
+                        <div className="stripe-form">
+                            <Elements>
+                                <StripeForm amount={40000} description={this.state.place.title} onPaid={this.closePanel} />
+                            </Elements>
+                        </div>
+                    </StripeProvider>) : <></>}
 
             </div>
         )
