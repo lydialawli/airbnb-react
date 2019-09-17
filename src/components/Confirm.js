@@ -1,8 +1,10 @@
 import React from 'react'
 import Nav from '../components/Nav.js'
 import Thumbnail from '../components/Thumbnail'
+import StripeForm from '../components/StripeForm'
 import { Link } from 'react-router-dom'
 import DatePicker from "react-datepicker"
+import { Elements, StripeProvider } from 'react-stripe-elements'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -22,7 +24,7 @@ class Confirm extends React.Component {
         selectedGuests: 1
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.setState({
             bookingDates: this.props.location.bookingDates,
             selectedGuests: this.props.location.selectedGuests,
@@ -46,7 +48,7 @@ class Confirm extends React.Component {
                 <div className="grid medium">
                     <div className="grid sidebar-left">
                         <div className="sidebar">
-                            <Thumbnail key={1} place={this.state.place} page={this.state.page}  id={this.state.place._id}/>
+                            <Thumbnail key={1} place={this.state.place} page={this.state.page} id={this.state.place._id} />
                         </div>
                         <div className="content">
                             <h2>Confirm Booking</h2>
@@ -62,13 +64,13 @@ class Confirm extends React.Component {
                                 </div>
                                 <div className="group">
                                     <label>Guests</label>
-                                    <select  defaultValue={this.state.selectedGuests}>
+                                    <select defaultValue={this.state.selectedGuests}>
                                         {[...Array(this.state.place.guests)].map((n, i) => {
 
                                             if (i + 1 === 1)
-                                                return <option  key={i + 1} value={i+1}>{i+1} guest</option>
+                                                return <option key={i + 1} value={i + 1}>{i + 1} guest</option>
                                             else
-                                                return <option  key={i + 1} value={i+1}>{i + 1} guests</option>
+                                                return <option key={i + 1} value={i + 1}>{i + 1} guests</option>
                                         })}
                                     </select>
                                 </div>
@@ -82,12 +84,20 @@ class Confirm extends React.Component {
                             </form>
                             <hr />
                             {/* <Link to='/place' > */}
-                                <button onClick={()=>this.props.history.goBack()}>Cancel</button>
+                            <button onClick={() => this.props.history.goBack()}>Cancel</button>
                             {/* </Link> */}
                         </div>
 
                     </div>
                 </div>
+
+                <StripeProvider apiKey="pk_test_nffKwuVlBG3bE3i0W1XEc6v9009tuLnrDk">
+                    <div className="stripe-form">
+                        <Elements>
+                            <StripeForm />
+                        </Elements>
+                    </div>
+                </StripeProvider>
 
             </div>
         )

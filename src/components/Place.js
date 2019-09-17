@@ -36,7 +36,7 @@ class Place extends React.Component {
     }
 
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         axios.get(`${process.env.REACT_APP_API}/reviews/${this.props.match.params.id}`)
             .then(res => {
                 // console.log('reviews: ', res.data)
@@ -116,7 +116,7 @@ class Place extends React.Component {
 
     goToConfirmPage = () => {
         this.props.history.push({
-            pathname: `/confirm`,
+            pathname: '/confirm',
             bookingDates: this.state.bookingDates,
             selectedGuests: this.state.selectedGuests,
             place: this.state.place

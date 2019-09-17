@@ -3,11 +3,13 @@ import {CardElement, injectStripe} from 'react-stripe-elements'
 
 class StripeForm extends React.Component {
 
+
+
     render() {
         return (
-          <div className="checkout">
+          <div >
             <CardElement />
-            <button>Send</button>
+            <button className="primary">Send</button>
           </div>
         )
       }

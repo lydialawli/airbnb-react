@@ -88,4 +88,14 @@ form .rating {
 	width: 100%;
 }
 
-
+.stripe-form {
+	background: white;
+	padding: 50px;
+	width: 400px;
+	margin: 0 auto;
+	border-radius: 0 0 6px 6px;
+	position: absolute;
+	top: 0;
+	left: calc(50vw - 200px);
+	box-shadow: 0 2px 200px rgba(0,0,0,.5);
+  }
