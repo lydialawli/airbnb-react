@@ -69,7 +69,7 @@ class Signup extends React.Component {
             <div className="card small">
                 <div className="content">
                     <div className="logo" style={{ backgroundImage: `url(${this.state.logo})` }}></div>
-                    <form >
+                    <form onSubmit={this.signup}>
                         <div className="group">
                             <label>Name</label>
                             <input type="text" value={this.state.user.name} onChange={(e) => this.changeField(e, 'name')} />
@@ -92,7 +92,7 @@ class Signup extends React.Component {
                             <input type="file" />
                         </div>
 
-                        <button onClick={this.signup} className="primary">Signup</button>
+                        <button className="primary">Signup</button>
                     </form>
                     <span style={{color:"red"}}>{this.state.errorMsg}</span>
                     <p className="footer">

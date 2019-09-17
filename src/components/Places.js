@@ -18,13 +18,14 @@ class Places extends React.Component {
     UNSAFE_componentWillMount() {
         axios.get(`${process.env.REACT_APP_API}/places`)
             .then(res => {
+                console.log('res', res)
                 this.setState({
                     places: res.data,
                     originalPlaces: res.data
                 })
                 console.log(res.data)
             })
-            .catch(err => { console.log(err) })
+            .catch(err => { console.log('err==>',err) })
 
         axios.get(`${process.env.REACT_APP_API}/types`)
             .then(res => {
@@ -35,8 +36,9 @@ class Places extends React.Component {
                 this.setState({ types })
                 // console.log('types: ',res.data)
             })
-            .catch(err => { console.log(err) })
+            .catch(err => { console.log('err==>',err) })
     }
+
 
     changeFav = (e, i) => {
         let places = this.state.places

@@ -33,8 +33,14 @@ class Login extends React.Component {
         else {
             axios.post(`${process.env.REACT_APP_API}/login`, this.state.user)
                 .then(res => {
-                    console.log('result: ', res.data.token)
+                    console.log('result: ', res.data)
+                    // let token = localStorage.getItem('token')
+                    // axios.get(`http://localhost:5000/auth?token=${token}`)
+                    // this.props.history.push({
+                    //     pathname: `/`
+                    // })
                 })
+                .catch(err => console.log(err))
         }
     }
 
@@ -44,7 +50,7 @@ class Login extends React.Component {
             <div className="card small">
                 <div className="content">
                     <div className="logo" style={{ backgroundImage: `url(${this.state.logo})` }}></div>
-                    <form>
+                    <form onSubmit={this.login}>
                         <div className="group">
                             <label>Email</label>
                             <input type="email" value={this.state.user.email} onChange={(e) => this.changeField(e, 'email')} />
@@ -54,7 +60,7 @@ class Login extends React.Component {
                             <input type="password" value={this.state.user.password} onChange={(e) => this.changeField(e, 'password')} />
                         </div>
 
-                        <button onClick={this.login} className="primary">Login</button>
+                        <button className="primary">Login</button>
 
                     </form>
                     <span style={{ color: "red" }}>{this.state.errorMsg}</span>
