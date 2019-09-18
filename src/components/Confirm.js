@@ -95,7 +95,7 @@ class Confirm extends React.Component {
                                 </div>
                                 <div className="group">
                                     <label>Total: {this.state.totalNights} nights</label>
-                                    <h2>{this.state.place.totalPrice}</h2>
+                                    <h2>${this.state.place.price*this.state.totalNights}</h2>
                                 </div>
                                 <Link to='/bookings' >
                                     <button className="primary">Confirm</button>
@@ -113,7 +113,7 @@ class Confirm extends React.Component {
                     (<StripeProvider apiKey="pk_test_nffKwuVlBG3bE3i0W1XEc6v9009tuLnrDk">
                         <div className="stripe-form">
                             <Elements>
-                                <StripeForm amount={40000} description={this.state.place.title} onPaid={this.closePanel} />
+                                <StripeForm amount={(this.state.place.price*this.state.totalNights)*100} description={this.state.place.title} onPaid={this.closePanel} />
                             </Elements>
                         </div>
                     </StripeProvider>) : <></>}
