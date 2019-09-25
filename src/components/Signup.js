@@ -17,14 +17,25 @@ class Signup extends React.Component {
             email: '',
             password: '',
             location: '',
+            // file: ''
         },
-        errorMsg:'',
+        errorMsg: '',
         emailError: ''
     }
 
-
     signup = (e) => {
         e.preventDefault()
+       
+        // let data = new FormData
+        // data.append('file', this.state.user.file)
+        // data.append('name', this.state.user.name)
+        // ... or better
+
+        // for(var key in this.state.user){
+        //     data.append(key, this.state.user[key])
+        // }
+        
+
         let fields = ['name', 'email', 'password', 'location']
         let error = fields.forEach(f => {
             if (this.state.user[f] === '') {
@@ -36,23 +47,23 @@ class Signup extends React.Component {
             else { return false }
         })
 
-        if(!error) {
+        if (!error) {
             axios.post(`${process.env.REACT_APP_API}/signup`, this.state.user)
-            .then(res => {
-                if(!res.data){
-                    this.setState({
-                        emailError: 'email is already in use'
-                    })
-                }
-                else {
-                    localStorage.setItem('token', res.data)
-                    this.props.history.push({
-                        pathname: `/`
-                    })
-                    console.log(res.data)
-                }
-            })
-            .catch(err => console.log(err))
+                .then(res => {
+                    if (!res.data) {
+                        this.setState({
+                            emailError: 'email is already in use'
+                        })
+                    }
+                    else {
+                        localStorage.setItem('token', res.data)
+                        this.props.history.push({
+                            pathname: `/`
+                        })
+                        console.log(res.data)
+                    }
+                })
+                .catch(err => console.log(err))
         }
     }
 
@@ -62,6 +73,10 @@ class Signup extends React.Component {
         this.setState({ user })
     }
 
+    // addFile = (e)=> {
+    //     let user = this.state.user
+    //     user.file = e.target.files[0]
+    // }
 
 
     render() {
@@ -77,7 +92,7 @@ class Signup extends React.Component {
                         <div className="group">
                             <label>Email</label>
                             <input type="email" value={this.state.user.email} onChange={(e) => this.changeField(e, 'email')} />
-                            <span style={{color:"red"}}>{this.state.emailError}</span>
+                            <span style={{ color: "red" }}>{this.state.emailError}</span>
                         </div>
                         <div className="group">
                             <label>Password</label>
@@ -94,7 +109,7 @@ class Signup extends React.Component {
 
                         <button className="primary">Signup</button>
                     </form>
-                    <span style={{color:"red"}}>{this.state.errorMsg}</span>
+                    <span style={{ color: "red" }}>{this.state.errorMsg}</span>
                     <p className="footer">
                         Already have an account? <Link to="/login">Login</Link>
                     </p>
