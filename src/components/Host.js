@@ -25,6 +25,10 @@ class Host extends React.Component {
                 reviews: 18,
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
                 fav: false,
+                rooms: 4,
+                type: {
+                    name: 'Entire Villa'
+                }
             },
             {
                 title: 'Tropical Architecture',
@@ -36,6 +40,10 @@ class Host extends React.Component {
                 reviews: 290,
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
                 fav: false,
+                rooms: 1,
+                type: {
+                    name: 'Private Room'
+                }
             },]
     }
 

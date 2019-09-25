@@ -21,7 +21,11 @@ class Favorites extends React.Component {
                 id: 0,
                 stars: 4,
                 reviews: 37,
-                bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg'
+                bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
+                rooms: 4,
+                type: {
+                    name: 'Entire Villa'
+                }
             }]
        
     }

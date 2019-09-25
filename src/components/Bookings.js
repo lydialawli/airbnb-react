@@ -24,7 +24,11 @@ class Bookings extends React.Component {
                 nights:5,
                 date: '10 Aug 2020 - 15 Aug 2020',
                 bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
-                fav: true
+                fav: true,
+                rooms: 2,
+                type: {
+                    name: 'Entire Villa'
+                }
             },
             {
                 title: 'Villa Kelusa',
@@ -37,7 +41,11 @@ class Bookings extends React.Component {
                 nights:3,
                 date: '01 May 2019 - 04 May 2019',
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/eee424d0-ca05-4405-8bdb-e5caf2db3fbe.jpg',
-                fav: false
+                fav: false,
+                rooms: 4,
+                type: {
+                    name: 'Entire Villa'
+                }
             },
             {
                 title: 'Tropical Architecture',
@@ -50,7 +58,11 @@ class Bookings extends React.Component {
                 nights:9,
                 date: '18 Apr 2019 - 27 Apr 2019',
                 bg: 'https://a0.muscache.com/4ea/air/v2/pictures/58f86a91-a526-4e1b-934e-8f6bc3f60e10.jpg',
-                fav: false
+                fav: false,
+                rooms: 3,
+                type: {
+                    name: 'Private Room'
+                }
             },]
     }
 
