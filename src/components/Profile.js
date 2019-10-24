@@ -2,6 +2,7 @@ import React from 'react'
 import Nav from '../components/Nav.js'
 import Sidebar from '../components/Sidebar.js'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -11,9 +12,35 @@ import '../styles/buttons.css'
 
 class Profile extends React.Component {
     state = {
-        user: { name: 'Ly', avatar: 'https://seakoala.io/docs/images/universeLy.png', email: 'ly@seakoala.io', location: 'Spain' }
+        user: {
+            name: '',
+            avatar: '',
+            email: '',
+            location: ''
+        }
     }
 
+    UNSAFE_componentWillMount() {
+        let token = localStorage.getItem('token')
+
+        if (token) {
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
+                .then(res => {
+                    console.log('user info ==> ', res.data)
+                    this.setState({
+                        user: res.data,
+                    })
+                })
+                .catch(err => { console.log('err==>', err) })
+        }
+    }
+
+    logout = () => {
+        localStorage.removeItem('token')
+        // this.props.history.push({
+        // 	pathname: '/'
+        // })
+    }
 
     render() {
         return (
@@ -52,8 +79,8 @@ class Profile extends React.Component {
                                 <button>Save Changes</button>
                             </form>
                             <hr />
-                            <Link to='/login' >
-                                <button className="secondary">Logout</button>
+                            <Link to="/">
+                                <button className="secondary" onClick={this.logout}>Logout</button>
                             </Link>
                         </div>
                     </div>

@@ -17,6 +17,7 @@ class Signup extends React.Component {
             email: '',
             password: '',
             location: '',
+            avatar: ''
             // file: ''
         },
         errorMsg: '',
