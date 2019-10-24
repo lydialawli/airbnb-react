@@ -34,7 +34,7 @@ class Login extends React.Component {
         else {
             axios.post(`${process.env.REACT_APP_API}/login`, this.state.user)
                 .then(res => {
-                    if (!res.data.token) {
+                    if (typeof res.data === "string") {
                         this.setState({ errorMsg: res.data })
                     }
                     else {
