@@ -16,6 +16,7 @@ import '../styles/global.css'
 class Routes extends React.Component {
 
     checkAuth = () => {
+        
         if (localStorage.getItem('token')) {
             console.log('true!!')
             return true

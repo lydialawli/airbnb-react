@@ -30,15 +30,21 @@ class Login extends React.Component {
         if (!this.state.user.email || !this.state.user.password) {
             this.setState({ errorMsg: 'missing fields' })
             console.log('got stuck here')
-        }
+        }   
         else {
             axios.post(`${process.env.REACT_APP_API}/login`, this.state.user)
                 .then(res => {
-                    localStorage.setItem('token', res.data)
-                    this.props.history.push({
-                        pathname: `/`
-                    })
-                    console.log('data==>',res.data)
+                    if (!res.data.token) {
+                        this.setState({ errorMsg: res.data })
+                    }
+                    else {
+                        localStorage.setItem('token', res.data.token)
+                        this.props.history.push({
+                            pathname: `/`
+                        })
+                        console.log('data==>', res.data.token)
+                    }
+
                 })
                 .catch(err => console.log(err))
         }
