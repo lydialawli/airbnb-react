@@ -2,6 +2,7 @@ import React from 'react'
 import Nav from '../components/Nav.js'
 import Sidebar from '../components/Sidebar.js'
 import Thumbnail from '../components/Thumbnail'
+import axios from 'axios'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -11,7 +12,10 @@ import '../styles/buttons.css'
 
 class Bookings extends React.Component {
     state = {
-        userProfile: 'https://randomuser.me/api/portraits/men/9.jpg',
+        user: {
+            name: '',
+            avatar: ''
+        },
         places: [
             {
                 title: 'Luxury Villa Indu Siam',
@@ -66,6 +70,21 @@ class Bookings extends React.Component {
             },]
     }
 
+    UNSAFE_componentWillMount() {
+        let token = localStorage.getItem('token')
+
+        if (token) {
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
+                .then(res => {
+                    console.log('user info ==> ', res.data)
+                    this.setState({
+                        user: res.data,
+                    })
+                })
+                .catch(err => { console.log('err==>', err) })
+        }
+    }
+
     changeFav = (e, i) => {
         let places = this.state.places
         let element = places[i]
@@ -79,7 +98,7 @@ class Bookings extends React.Component {
         return (
             <div >
                 <div >
-                    <Nav />
+                    <Nav user={this.state.user}/>
                 </div>
                 <div className="grid medium">
                     <div className="grid sidebar-left">
