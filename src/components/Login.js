@@ -19,6 +19,13 @@ class Login extends React.Component {
         errorMsg: ''
     }
 
+    UNSAFE_componentWillMount(){
+        let token = localStorage.getItem('token')
+        if(token){
+            this.props.history.push('/places')
+        }
+    }
+
     changeField = (e, field) => {
         let user = this.state.user
         user[field] = e.target.value

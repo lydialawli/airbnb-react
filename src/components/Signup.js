@@ -24,9 +24,16 @@ class Signup extends React.Component {
         emailError: ''
     }
 
+    UNSAFE_componentWillMount() {
+        let token = localStorage.getItem('token')
+        if (token) {
+            this.props.history.push('/places')
+        }
+    }
+
     signup = (e) => {
         e.preventDefault()
-       
+
         // let data = new FormData
         // data.append('file', this.state.user.file)
         // data.append('name', this.state.user.name)
@@ -35,7 +42,7 @@ class Signup extends React.Component {
         // for(var key in this.state.user){
         //     data.append(key, this.state.user[key])
         // }
-        
+
 
         let fields = ['name', 'email', 'password', 'location']
         let error = fields.forEach(f => {
