@@ -58,17 +58,17 @@ class Place extends React.Component {
 
         // console.log('idPlace => ', this.props.match.params.id)
 
-            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
-                .then(res => {
-                    // console.log('user info ==> ', res.data)
-                    this.setState({
-                        user: res.data,
-                    })
-
-
+        axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
+            .then(res => {
+                // console.log('user info ==> ', res.data)
+                this.setState({
+                    user: res.data,
                 })
-                .catch(err => { console.log('err==>', err) })
-        
+
+
+            })
+            .catch(err => { console.log('err==>', err) })
+
 
         let place = this.props.match.params.id
 
@@ -233,10 +233,10 @@ class Place extends React.Component {
 
                                     </div>
                                 </form>
-                                <div>{}
-                                    {this.state.reviews.map((review, i) => {
-                                        return <ReviewCard key={i} review={review} />
-                                    }).reverse()}
+                                <div>
+                                    {
+                                        this.state.place.reviews.length > 0 ? ((this.state.reviews.map((review, i) => { return <ReviewCard key={i} review={review} /> }).reverse())) : null
+                                    }
                                 </div>
                             </div>
 
