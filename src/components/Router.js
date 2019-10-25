@@ -37,8 +37,8 @@ class Router extends React.Component {
                     <Route path='/profile' render={() => this.checkAuth() ? <Profile /> : <Redirect to='/login' />} />
                     <Route path='/confirm' render={() => this.checkAuth() ? <Confirm /> : <Redirect to='/login' />} />
                     <Route path='/create' render={() => this.checkAuth() ? <Create /> : <Redirect to='/login' />} />
-                    <Route path='/signup' component={Signup}></Route>
-                    <Route path='/login' component={Login}></Route>
+                    <Route path='/signup' render={() => !this.checkAuth() ? <Signup /> : <Redirect to='/places' />} />
+                    <Route path='/login' render={() => !this.checkAuth() ? <Login /> : <Redirect to='/places' />} />
                     <Route path='/host' render={() => this.checkAuth() ? <Host /> : <Redirect to='/login' />} />
                     <Route path='/' render={() => this.checkAuth() ? <Places /> : <Redirect to='/login' />} />
                 </Switch>
