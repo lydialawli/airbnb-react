@@ -31,7 +31,11 @@ class Place extends React.Component {
             startDate: null,
             endDate: null
         },
-        guests: 1
+        guests: 1,
+        user: {
+            name: '',
+            avatar: ''
+        },
 
     }
 
@@ -68,6 +72,21 @@ class Place extends React.Component {
 
             })
             .catch(err => { console.log(err) })
+
+
+        let token = localStorage.getItem('token')
+
+        if (token) {
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
+                .then(res => {
+                    console.log('user info ==> ', res.data)
+                    this.setState({
+                        user: res.data,
+                    })
+                })
+                .catch(err => { console.log('err==>', err) })
+        }
+
     }
 
 
@@ -145,7 +164,7 @@ class Place extends React.Component {
 
         return (
             <div>
-                <Nav />
+                <Nav user={this.state.user} />
                 <Gallery images={this.state.images} changeImage={this.changeBigImage} like={this.changeFav} fav={this.state.place.fav} bigImage={this.state.bigImage} />
                 <div className="grid medium">
                     <div className="grid sidebar-right">
@@ -243,7 +262,7 @@ class Place extends React.Component {
                                             </select>
                                         </div>
 
-                                        <button onClick={this.goToConfirmPage} disabled={!this.state.bookingDates.startDate||!this.state.bookingDates.endDate} className="secondary full">Book this place</button>
+                                        <button onClick={this.goToConfirmPage} disabled={!this.state.bookingDates.startDate || !this.state.bookingDates.endDate} className="secondary full">Book this place</button>
 
                                     </form>
 

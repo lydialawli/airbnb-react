@@ -2,6 +2,7 @@ import React from 'react'
 import Nav from '../components/Nav.js'
 import Sidebar from '../components/Sidebar.js'
 import Thumbnail from '../components/Thumbnail'
+import axios from 'axios'
 import '../styles/icons.css'
 import '../styles/grid.css'
 import '../styles/gallery.css'
@@ -11,7 +12,10 @@ import '../styles/buttons.css'
 
 class Favorites extends React.Component {
     state = {
-        userProfile: 'https://randomuser.me/api/portraits/men/9.jpg',
+        user: {
+            name: '',
+            avatar: ''
+        },
         places: [
             {
                 title: 'Luxury Villa Indu Siam',
@@ -27,15 +31,28 @@ class Favorites extends React.Component {
                     name: 'Entire Villa'
                 }
             }]
-       
+
     }
 
+    UNSAFE_componentWillMount() {
+        let token = localStorage.getItem('token')
 
+        if (token) {
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
+                .then(res => {
+                    console.log('user info ==> ', res.data)
+                    this.setState({
+                        user: res.data,
+                    })
+                })
+                .catch(err => { console.log('err==>', err) })
+        }
+    }
     render() {
         return (
             <div >
                 <div >
-                    <Nav />
+                    <Nav user={this.state.user} />
                 </div>
                 <div className="grid medium">
                     <div className="grid sidebar-left">
@@ -43,9 +60,9 @@ class Favorites extends React.Component {
                         <div className="content">
                             <h2>My Favorites</h2>
                             <div className="grid two">
-                                <Thumbnail page="favorites" key={this.state.places[0].id} place={this.state.places[0]} index={0} fav="true"/>
+                                <Thumbnail page="favorites" key={this.state.places[0].id} place={this.state.places[0]} index={0} fav="true" />
                             </div>
-                    
+
                         </div>
                     </div>
                 </div>
