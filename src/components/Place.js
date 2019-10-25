@@ -16,12 +16,25 @@ import '../styles/sidebar.css'
 
 class Place extends React.Component {
     state = {
-        place: {},
+        place: {
+            images: [],
+            type: {
+                name: ''
+            },
+            amenities: [
+                { name: '', icon: '' }
+            ],
+            host: {
+                avatar: '',
+                name: ''
+            },
+            rating: 0,
+            reviews: []
+        },
         originalPlace: {},
         host: {},
         amenities: [],
         userReviewed: false,
-        // months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         info: [],
         reviews: [],
         images: [],
@@ -41,17 +54,24 @@ class Place extends React.Component {
 
 
     UNSAFE_componentWillMount() {
-        axios.get(`${process.env.REACT_APP_API}/reviews/${this.props.match.params.id}`)
-            .then(res => {
-                // console.log('reviews: ', res.data)
-                this.setState({
-                    reviews: res.data,
-                })
-                // console.log(res.data)
-            })
-            .catch(err => { console.log(err) })
+        let token = localStorage.getItem('token')
 
-        axios.get(`${process.env.REACT_APP_API}/places/${this.props.match.params.id}`)
+        // console.log('idPlace => ', this.props.match.params.id)
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
+                .then(res => {
+                    // console.log('user info ==> ', res.data)
+                    this.setState({
+                        user: res.data,
+                    })
+
+
+                })
+                .catch(err => { console.log('err==>', err) })
+        
+
+        let place = '5d805d927c213e05ecaa546c'
+
+        axios.get(`${process.env.REACT_APP_API}/places/${place}`)
             .then(res => {
                 // console.log("==>", res.data.amenities)
                 this.setState({
@@ -59,6 +79,7 @@ class Place extends React.Component {
                     images: res.data.images,
                     originalPlace: res.data,
                     host: res.data.host,
+                    reviews: res.data.reviews,
                     amenities: res.data.amenities,
                     info: [
                         { icon: 'fas fa-fw fa-home', about: `${res.data.type.name}` },
@@ -72,20 +93,6 @@ class Place extends React.Component {
 
             })
             .catch(err => { console.log(err) })
-
-
-        let token = localStorage.getItem('token')
-
-        if (token) {
-            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
-                .then(res => {
-                    console.log('user info ==> ', res.data)
-                    this.setState({
-                        user: res.data,
-                    })
-                })
-                .catch(err => { console.log('err==>', err) })
-        }
 
     }
 

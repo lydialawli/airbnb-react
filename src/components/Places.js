@@ -28,10 +28,12 @@ class Places extends React.Component {
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
 		])
 		.then(([places, types, user]) => {
+            console.log('places=>',places.data)
+            console.log('types=>',types.data)
 			this.setState({
 				places: places.data,
 				originalPlaces: places.data,
-				types: types.data,
+				types: types.data.reverse(),
 				user: user.data,
 				token: token
 			})
@@ -126,7 +128,7 @@ class Places extends React.Component {
                         {[...Array(10)].map((n, i) => { return <option key={i} value={i}>Rooms: {i + 1}</option> })}
                     </select>
                     <select onChange={(e) => this.filterByType(e)}>
-                        {this.state.types.map((e, i) => { return <option key={i} value={e.id}>{e.name}</option> })}
+                        {this.state.types.map((e, i) => { return <option key={i} value={e.name}>{e.name}</option> })}
                     </select>
                     <input onChange={(e) => this.filterByPrice(e)} type="number" placeholder="max price" />
                     <select onChange={(e) => this.sortBy(e)}>
