@@ -31,7 +31,7 @@ class Router extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route path='/place/:id' render={() => this.checkAuth() ? <Place /> : <Redirect to='/login' />} />
+                    <Route path='/place/:id' render={(props) => this.checkAuth() ? <Place {...props} /> : <Redirect to='/login' />} />
                     <Route path='/favorites' render={() => this.checkAuth() ? <Favorites /> : <Redirect to='/login' />} />
                     <Route path='/bookings' render={() => this.checkAuth() ? <Bookings /> : <Redirect to='/login' />} />
                     <Route path='/profile' render={() => this.checkAuth() ? <Profile /> : <Redirect to='/login' />} />

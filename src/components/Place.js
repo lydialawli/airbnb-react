@@ -57,6 +57,7 @@ class Place extends React.Component {
         let token = localStorage.getItem('token')
 
         // console.log('idPlace => ', this.props.match.params.id)
+
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
                 .then(res => {
                     // console.log('user info ==> ', res.data)
@@ -69,7 +70,7 @@ class Place extends React.Component {
                 .catch(err => { console.log('err==>', err) })
         
 
-        let place = '5d805d927c213e05ecaa546c'
+        let place = this.props.match.params.id
 
         axios.get(`${process.env.REACT_APP_API}/places/${place}`)
             .then(res => {
