@@ -32,8 +32,6 @@ class Place extends React.Component {
             reviews: []
         },
         originalPlace: {},
-        host: {},
-        amenities: [],
         userReviewed: false,
         info: [],
         reviews: [],
@@ -49,6 +47,7 @@ class Place extends React.Component {
             name: '',
             avatar: ''
         },
+        userRating: 0,
 
     }
 
@@ -74,13 +73,11 @@ class Place extends React.Component {
 
         axios.get(`${process.env.REACT_APP_API}/places/${place}`)
             .then(res => {
-                // console.log("==>", res.data.amenities)
+                console.log("==>", res.data)
                 this.setState({
                     place: res.data,
                     images: res.data.images,
                     originalPlace: res.data,
-                    host: res.data.host,
-                    reviews: res.data.reviews,
                     amenities: res.data.amenities,
                     info: [
                         { icon: 'fas fa-fw fa-home', about: `${res.data.type.name}` },
@@ -105,11 +102,7 @@ class Place extends React.Component {
     }
 
     setUserRating = (i) => {
-        let user = this.state.user
-        user.rating = i
-
-        this.setState({ user })
-        console.log(this.state.user)
+        this.setState({ userRating: i })
     }
 
     todayDate = () => {
@@ -122,11 +115,16 @@ class Place extends React.Component {
 
     saveUserReview = (event) => {
         let text = event.target.value
-        let user = this.state.user
-        user.comment = text
+     
+        let review = {
+            author: this.state.user._id,
+            rating:this.state.userRating,
+            content: text
+        }
 
-        this.setState({ user })
-        console.log(this.state.user)
+        this.setState({
+            userReviewed: true
+        })
     }
 
     handleSubmitReview = (e) => {
@@ -183,10 +181,10 @@ class Place extends React.Component {
                                 <span>{this.state.place.city}, {this.state.place.country}</span>
                             </small>
                             <div className="user">
-                                <div className="avatar" style={{ backgroundImage: `url(${this.state.host.avatar})` }}></div>
+                                <div className="avatar" style={{ backgroundImage: `url(${this.state.place.host.avatar})` }}></div>
                                 <div className="name">
                                     <small>Hosted by</small>
-                                    <span>{this.state.host.name}</span>
+                                    <span>{this.state.place.host.name}</span>
                                 </div>
                             </div>
                             <div className="card specs">
@@ -203,14 +201,14 @@ class Place extends React.Component {
                             <div className="card specs">
                                 <div className="content">
                                     <ul className="grid two">
-                                        {this.state.amenities.map((e, i) => {
+                                        {this.state.place.amenities.map((e, i) => {
                                             return <li key={i}> <i key={i} className={e.icon}> </i>{e.name} </li>
                                         })}
                                     </ul>
                                 </div>
                             </div>
                             <div className="reviews">
-                                <h2>{this.state.place.reviews} Reviews</h2>
+                                <h2>{this.state.place.reviews.length} Reviews</h2>
                                 <form>
                                     <div className="group">
                                         {
@@ -235,7 +233,7 @@ class Place extends React.Component {
                                 </form>
                                 <div>
                                     {
-                                        this.state.place.reviews.length > 0 ? ((this.state.reviews.map((review, i) => { return <ReviewCard key={i} review={review} /> }).reverse())) : null
+                                        this.state.place.reviews.length > 0 ? ((this.state.place.reviews.map((review, i) => { return <ReviewCard key={i} review={review} /> }).reverse())) : null
                                     }
                                 </div>
                             </div>

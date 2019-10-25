@@ -8,21 +8,35 @@ import '../styles/users.css'
 import moment from "moment"
 
 class ReviewCard extends React.Component {
+
     state = {
-        review: this.props.review,
-        author: this.props.review.author
+        review: {
+            author: {
+                _id: '',
+                name: '',
+                avatar: ''
+            },
+            rating: 0,
+            content: ''
+        }
+
     }
 
+    UNSAFE_componentWillReceiveProps(props) {
+        this.setState({
+            review: props.review
+        })
+    }
 
     render() {
         return (
             <div className="card review">
                 <div className="content">
                     <div className="user">
-                        <div className="avatar" style={{ backgroundImage: `url(${this.state.author.avatar})` }}></div>
+                        <div className="avatar" style={{ backgroundImage: `url(${this.state.review.author.avatar})` }}></div>
                         <div className="name">
                             <small>{moment(this.state.review.date).format('D MMMM YYYY')}</small>
-                            <span>{this.state.author.name}</span>
+                            <span>{this.state.review.author.name}</span>
                         </div>
                     </div>
                     <div className="rating">
