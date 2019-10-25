@@ -46,7 +46,7 @@ class Profile extends React.Component {
         return (
             <div >
                 <div >
-                    <Nav />
+                    <Nav user={this.state.user}/>
                 </div>
                 <div className="grid medium">
                     <div className="grid sidebar-left">

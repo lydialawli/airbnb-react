@@ -13,30 +13,30 @@ class Places extends React.Component {
         types: [],
         filterTypes: ['Latest', 'Price', 'Rating'],
         originalPlaces: [],
+        user: {
+            name: '',
+            avatar: ''
+        }
     }
 
     UNSAFE_componentWillMount() {
-        axios.get(`${process.env.REACT_APP_API}/places`)
-            .then(res => {
-                console.log('res', res)
-                this.setState({
-                    places: res.data,
-                    originalPlaces: res.data
-                })
-                console.log(res.data)
-            })
-            .catch(err => { console.log('err==>',err) })
+        let token = localStorage.getItem('token')
 
-        axios.get(`${process.env.REACT_APP_API}/types`)
-            .then(res => {
-                let types = res.data.map(e => {
-                    return { id: e._id, name: e.name }
-                })
-                types.unshift({ name: 'All Types' })
-                this.setState({ types })
-                // console.log('types: ',res.data)
-            })
-            .catch(err => { console.log('err==>',err) })
+		Promise.all([
+			axios.get(`${process.env.REACT_APP_API}/places/`),
+			axios.get(`${process.env.REACT_APP_API}/types`),
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
+		])
+		.then(([places, types, user]) => {
+			this.setState({
+				places: places.data,
+				originalPlaces: places.data,
+				types: types.data,
+				user: user.data,
+				token: token
+			})
+		})
+		.catch(err => console.log(err))
     }
 
 
@@ -119,7 +119,7 @@ class Places extends React.Component {
         return (
             <div>
                 <div>
-                    <Nav></Nav>
+                    <Nav  user={this.state.user}></Nav>
                 </div>
                 <div className="filters">
                     <select onChange={(e) => this.filterByNumOfRooms(e)}>

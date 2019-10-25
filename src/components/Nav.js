@@ -8,9 +8,15 @@ class Nav extends React.Component {
     state = {
         logo: '../logo-airbnb.png',
         user: {
-            avatar: 'https://seakoala.io/docs/images/universeLy.png',
-            name: 'Ly'
+            avatar: '',
+            name: ''
         }
+    }
+
+    UNSAFE_componentWillReceiveProps(props) {
+        this.setState({
+            user: props.user
+        })
     }
 
     render() {
