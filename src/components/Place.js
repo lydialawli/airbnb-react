@@ -29,12 +29,11 @@ class Place extends React.Component {
                 name: ''
             },
             rating: 0,
-            reviews: []
+            reviews: [],
+            guests: 1
         },
         originalPlace: {},
-        userReviewed: false,
         info: [],
-        reviews: [],
         images: [],
         bigImage: '',
         selectedGuests: 1,
@@ -47,8 +46,11 @@ class Place extends React.Component {
             name: '',
             avatar: ''
         },
-        userRating: 0,
-
+        userReview: {
+            rating: 0,
+            content: ''
+        },
+        userReviewed: false
     }
 
 
@@ -63,22 +65,25 @@ class Place extends React.Component {
                 this.setState({
                     user: res.data,
                 })
-
-
             })
             .catch(err => { console.log('err==>', err) })
 
 
         let place = this.props.match.params.id
-
+        let userReviewed = this.state.userReviewed
         axios.get(`${process.env.REACT_APP_API}/places/${place}`)
             .then(res => {
-                console.log("this ==>", res.data.reviews)
+                // console.log("this ==>", res.data)
+                res.data.reviews.forEach(r => {
+                    if (r.author._id === this.state.user._id) {
+                        userReviewed = true
+                    }
+                })
+
                 this.setState({
                     place: res.data,
                     images: res.data.images,
                     originalPlace: res.data,
-                    amenities: res.data.amenities,
                     info: [
                         { icon: 'fas fa-fw fa-home', about: `${res.data.type.name}` },
                         { icon: 'fas fa-fw fa-user-friends', about: `${res.data.guests} guests` },
@@ -86,7 +91,7 @@ class Place extends React.Component {
                         { icon: 'fas fa-fw fa-bath', about: `${res.data.bathrooms} baths` }
                     ],
                     bigImage: res.data.images[0],
-                    guests: res.data.guests
+                    userReviewed: userReviewed
                 })
 
             })
@@ -102,41 +107,39 @@ class Place extends React.Component {
     }
 
     setUserRating = (i) => {
-        this.setState({ userRating: i })
+        let userReview = this.state.userReview
+        userReview.rating = i
+
+        this.setState({ userReview })
     }
 
-    todayDate = () => {
-        let user = this.state.user
-        let today = moment(new Date()).format('D MMMM YYYY')
+    saveUserContent = (event) => {
+        let userReview = this.state.userReview
 
-        user.date = today
-        this.setState({ user })
-    }
+        userReview.content = event.target.value
 
-    saveUserReview = (event) => {
-        let text = event.target.value
-     
-        let review = {
-            author: this.state.user._id,
-            rating:this.state.userRating,
-            content: text
-        }
-
-        this.setState({
-            userReviewed: true
-        })
+        this.setState({ userReview })
     }
 
     handleSubmitReview = (e) => {
         e.preventDefault()
-        this.todayDate()
-        let place = this.state.place
-        place.reviews.push(this.state.user)
 
-        this.setState({
-            place: place,
-            userReviewed: true
+        axios.post(`${process.env.REACT_APP_API}/reviews`, {
+            author: this.state.user._id,
+            place: this.state.place._id,
+            rating: this.state.userReview.rating,
+            content: this.state.userReview.content
         })
+            .then(review => {
+                let reviews = this.state.place.reviews
+                reviews.push(review.data)
+
+                this.setState({
+                    reviews: reviews,
+                    userReviewed: true
+                })
+            })
+            .catch(err => console.log(err))
     }
 
     goToConfirmPage = () => {
@@ -212,15 +215,15 @@ class Place extends React.Component {
                                 <form>
                                     <div className="group">
                                         {
-                                            this.state.userReviewed ? <h3>Done!</h3> :
+                                            this.state.userReviewed ? '' :
                                                 (
                                                     <>
                                                         <label>Leave a review</label>
-                                                        <textarea onChange={this.saveUserReview}></textarea>
+                                                        <textarea onChange={this.saveUserContent}></textarea>
                                                         <div className="rating" />
 
                                                         {[...Array(5)].map((n, i) => {
-                                                            return i >= this.state.place.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
+                                                            return i >= this.state.userReview.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
                                                         })}
                                                         < button className="primary small" onClick={(e) => this.handleSubmitReview(e)}>Submit</button>
                                                     </>
