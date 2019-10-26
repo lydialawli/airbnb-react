@@ -10,15 +10,7 @@ import moment from "moment"
 class ReviewCard extends React.Component {
 
     state = {
-        review: {
-            author: {
-                _id: '',
-                name: '',
-                avatar: ''
-            },
-            rating: 0,
-            content: ''
-        }
+        review: this.props.review
 
     }
 

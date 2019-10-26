@@ -73,7 +73,7 @@ class Place extends React.Component {
 
         axios.get(`${process.env.REACT_APP_API}/places/${place}`)
             .then(res => {
-                console.log("==>", res.data)
+                console.log("this ==>", res.data.reviews)
                 this.setState({
                     place: res.data,
                     images: res.data.images,
@@ -233,7 +233,7 @@ class Place extends React.Component {
                                 </form>
                                 <div>
                                     {
-                                        this.state.place.reviews.length > 0 ? ((this.state.place.reviews.map((review, i) => { return <ReviewCard key={i} review={review} /> }).reverse())) : null
+                                        this.state.place.reviews.length > 0 ? (this.state.place.reviews.map((review, i) => { return <ReviewCard key={i} review={review} /> }).reverse()) : null
                                     }
                                 </div>
                             </div>
