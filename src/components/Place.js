@@ -50,7 +50,8 @@ class Place extends React.Component {
             rating: 0,
             content: ''
         },
-        userReviewed: false
+        userReviewed: false,
+        errorMsg: ''
     }
 
 
@@ -121,25 +122,38 @@ class Place extends React.Component {
         this.setState({ userReview })
     }
 
+    showRatingError = () => {
+        let errorMsg = "please choose a rating"
+        this.setState({ errorMsg })
+
+        setTimeout(()=>{this.setState({ errorMsg: '' })}, 2000)
+    }
+
     handleSubmitReview = (e) => {
         e.preventDefault()
 
-        axios.post(`${process.env.REACT_APP_API}/reviews`, {
-            author: this.state.user._id,
-            place: this.state.place._id,
-            rating: this.state.userReview.rating,
-            content: this.state.userReview.content
-        })
-            .then(review => {
-                let reviews = this.state.place.reviews
-                reviews.push(review.data)
-
-                this.setState({
-                    reviews: reviews,
-                    userReviewed: true
-                })
+        if (this.state.userReview.rating === 0) {
+            this.showRatingError()
+        }
+        else {
+            axios.post(`${process.env.REACT_APP_API}/reviews`, {
+                author: this.state.user._id,
+                place: this.state.place._id,
+                rating: this.state.userReview.rating,
+                content: this.state.userReview.content
             })
-            .catch(err => console.log(err))
+                .then(review => {
+                    let reviews = this.state.place.reviews
+                    reviews.push(review.data)
+
+                    this.setState({
+                        reviews: reviews,
+                        userReviewed: true
+                    })
+                })
+                .catch(err => console.log(err))
+        }
+
     }
 
     goToConfirmPage = () => {
@@ -226,6 +240,8 @@ class Place extends React.Component {
                                                             return i >= this.state.userReview.rating ? <i key={i} onClick={() => this.setUserRating(i + 1)} className="far fa-star"></i> : <i onClick={() => this.setUserRating(i + 1)} key={i} className="fas fa-star"></i>
                                                         })}
                                                         < button className="primary small" onClick={(e) => this.handleSubmitReview(e)}>Submit</button>
+
+                                                        <span style={{ color: "red", margin: "20px" }}>{this.state.errorMsg}</span>
                                                     </>
                                                 )
                                         }
