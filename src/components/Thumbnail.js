@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom'
 class Thumbnail extends React.Component {
 
 	state = {
-		user: {
-			likes: []
-		},
+		user: this.props.user,
 		place: this.props.place,
 		liked: '',
 	}
@@ -31,7 +29,7 @@ class Thumbnail extends React.Component {
 
 	componentDidMount() {
 		let user = this.state.user
-
+		console.log('thumbnail user',user)
 		if (user.likes.includes(this.state.place._id))
 			this.setState({ liked: true })
 	}

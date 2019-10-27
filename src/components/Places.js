@@ -31,7 +31,6 @@ class Places extends React.Component {
         ])
             .then(([places, types, user]) => {
                 console.log('places=>', places.data)
-                console.log('types=>', types.data)
                 this.setState({
                     places: places.data,
                     originalPlaces: places.data,
@@ -45,13 +44,18 @@ class Places extends React.Component {
 
 
     updateLike = (placeId) => {
-        console.log(placeId)
+        // console.log('changing like')
         axios.patch(`${process.env.REACT_APP_API}/users?token=${this.state.token}`, {
             place: placeId
         })
             .then(res => {
-                let user = res.data
-                this.setState({ user })
+                console.log('res => ', res.data)
+               
+                let user = res.data.user
+                let token = res.data.token
+                // localStorage.removeItem(this.state.token)
+                this.setState({ user, token })
+                localStorage.setItem('token', token)
             })
             .catch(err => { console.log(err) })
     }
