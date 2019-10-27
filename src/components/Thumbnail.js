@@ -7,28 +7,46 @@ import { Link } from 'react-router-dom'
 class Thumbnail extends React.Component {
 
 	state = {
-		place: this.props.place
+		user: {
+			likes: []
+		},
+		place: this.props.place,
+		liked: '',
 	}
-
-	like = (e, i) => {
-		e.preventDefault()
-		this.props.like(e, i)
-	}
-
 
 	UNSAFE_componentWillReceiveProps(props) {
+		let liked = this.state.liked
+
+		if (props.user.likes.includes(props.place._id)) {
+			liked = true
+		}
+		else { liked = false }
+
 		this.setState({
-			place: props.place
+			place: props.place,
+			user: props.user,
+			liked
 		})
 	}
 
+	componentDidMount() {
+		let user = this.state.user
+
+		if (user.likes.includes(this.state.place._id))
+			this.setState({ liked: true })
+	}
+
+	like = (e) => {
+		e.preventDefault()
+		this.props.like(this.state.place._id)
+	}
 
 	render() {
 		return (
 			<Link className="card link" to={`/place/${this.state.place._id}`} >
 				<div className="image" style={{ backgroundImage: `url(${this.state.place.image})` }}>
-					<button className="icon" type="button" onClick={(e) => { this.like(e, this.props.index) }}>
-						<i className={this.props.fav ? "fas fa-heart" : "far fa-heart"} ></i>
+					<button className="icon" type="button" onClick={(e) => { this.like(e) }}>
+						<i className={this.state.liked ? "fas fa-heart" : "far fa-heart"} ></i>
 					</button>
 				</div>
 				<div className="content">

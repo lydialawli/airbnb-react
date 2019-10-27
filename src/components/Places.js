@@ -15,38 +15,45 @@ class Places extends React.Component {
         originalPlaces: [],
         user: {
             name: '',
-            avatar: ''
-        }
+            avatar: '',
+            likes: []
+        },
+        token: ''
     }
 
     UNSAFE_componentWillMount() {
         let token = localStorage.getItem('token')
 
-		Promise.all([
-			axios.get(`${process.env.REACT_APP_API}/places/`),
-			axios.get(`${process.env.REACT_APP_API}/types`),
+        Promise.all([
+            axios.get(`${process.env.REACT_APP_API}/places/`),
+            axios.get(`${process.env.REACT_APP_API}/types`),
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
-		])
-		.then(([places, types, user]) => {
-            console.log('places=>',places.data)
-            console.log('types=>',types.data)
-			this.setState({
-				places: places.data,
-				originalPlaces: places.data,
-				types: types.data.reverse(),
-				user: user.data,
-				token: token
-			})
-		})
-		.catch(err => console.log(err))
+        ])
+            .then(([places, types, user]) => {
+                console.log('places=>', places.data)
+                console.log('types=>', types.data)
+                this.setState({
+                    places: places.data,
+                    originalPlaces: places.data,
+                    types: types.data.reverse(),
+                    user: user.data,
+                    token: token
+                })
+            })
+            .catch(err => console.log(err))
     }
 
 
-    changeFav = (e, i) => {
-        let places = this.state.places
-        let element = places[i]
-        element.fav = !element.fav
-        this.setState({ places })
+    updateLike = (placeId) => {
+        console.log(placeId)
+        axios.patch(`${process.env.REACT_APP_API}/users?token=${this.state.token}`, {
+            place: placeId
+        })
+            .then(res => {
+                let user = res.data
+                this.setState({ user })
+            })
+            .catch(err => { console.log(err) })
     }
 
     filterPlaces = (event) => {
@@ -121,7 +128,7 @@ class Places extends React.Component {
         return (
             <div>
                 <div>
-                    <Nav  user={this.state.user}></Nav>
+                    <Nav user={this.state.user}></Nav>
                 </div>
                 <div className="filters">
                     <select onChange={(e) => this.filterByNumOfRooms(e)}>
@@ -139,8 +146,7 @@ class Places extends React.Component {
                 <div className="grid five large">
                     {this.state.places.map((p, i) => {
                         return (
-                            <Thumbnail key={i} place={p} 
-                            id={p._id} index={i} page={this.state.page} fav={p.fav} like={this.changeFav} />
+                            <Thumbnail key={i} place={p} index={i} page={this.state.page} user={this.state.user} like={this.updateLike} />
                         )
                     })}
                 </div>
