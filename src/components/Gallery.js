@@ -50,14 +50,14 @@ class Gallery extends React.Component {
     render() {
         return (
             <div className="gallery">
-                <div className="image-main" style={{ backgroundImage: `url(${this.props.bigImage})` }}>
+                <div className="image-main" style={{ backgroundImage: `url(${this.state.bigImage})` }}>
                     <button className="icon" type="button" onClick={(e) => {this.like(e)}}>
                         <i className={this.state.liked ? "fas fa-heart" : "far fa-heart"}></i>
                     </button>
                 </div>
                 <div className="thumbnails">
                     {this.state.place.images.map((e, i) => {
-                        return <div key={i} className={`thumbnail ${this.props.bigImage === e ? 'selected' : ''}`} onClick={()=> this.changeBigImage(i)} style={{ backgroundImage: `url(${this.state.place.images[i]})` }}></div>
+                        return <div key={i} className={`thumbnail ${this.state.bigImage === e ? 'selected' : ''}`} onClick={()=> this.changeBigImage(i)} style={{ backgroundImage: `url(${this.state.place.images[i]})` }}></div>
                     })}
 
                 </div>
