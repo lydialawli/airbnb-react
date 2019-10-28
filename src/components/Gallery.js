@@ -6,24 +6,58 @@ import '../styles/forms.css'
 import '../styles/buttons.css'
 
 class Gallery extends React.Component {
- 
-	like = (e) => {
-		e.preventDefault()
-		this.props.like(e)
+    state = {
+		user: this.props,
+		place: this.props.place,
+        liked: '',
+        bigImage: '',
 	}
 
+	UNSAFE_componentWillReceiveProps(props) {
+		let liked = this.state.liked
+		
+		if (props.user.likes.includes(props.place._id)) {
+			liked = true
+		}
+		else { liked = false }
+
+		this.setState({
+			place: props.place,
+            user: props.user,
+            biImage: props.place.images[0],
+			liked
+		})
+	}
+
+	componentDidMount() {
+		let user = this.state.user.user
+	
+		if (user.likes.includes(this.state.place._id))
+			this.setState({ liked: true })
+	}
+
+	like = (e) => {
+		e.preventDefault()
+		this.props.like(this.state.place._id)
+    }
+    
+    changeBigImage = (i) => {
+        this.setState({
+            bigImage: this.state.place.images[i]
+        })
+    }
   
     render() {
         return (
             <div className="gallery">
                 <div className="image-main" style={{ backgroundImage: `url(${this.props.bigImage})` }}>
                     <button className="icon" type="button" onClick={(e) => {this.like(e)}}>
-                        <i className={this.props.fav ? "fas fa-heart" : "far fa-heart"}></i>
+                        <i className={this.state.liked ? "fas fa-heart" : "far fa-heart"}></i>
                     </button>
                 </div>
                 <div className="thumbnails">
-                    {this.props.images.map((e, i) => {
-                        return <div key={i} className={`thumbnail ${this.props.bigImage === e ? 'selected' : ''}`} onClick={()=> this.props.changeImage(i)} style={{ backgroundImage: `url(${this.props.images[i]})` }}></div>
+                    {this.state.place.images.map((e, i) => {
+                        return <div key={i} className={`thumbnail ${this.props.bigImage === e ? 'selected' : ''}`} onClick={()=> this.changeBigImage(i)} style={{ backgroundImage: `url(${this.state.place.images[i]})` }}></div>
                     })}
 
                 </div>

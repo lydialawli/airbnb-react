@@ -34,8 +34,6 @@ class Place extends React.Component {
         },
         originalPlace: {},
         info: [],
-        images: [],
-        bigImage: '',
         selectedGuests: 1,
         bookingDates: {
             startDate: null,
@@ -44,7 +42,8 @@ class Place extends React.Component {
         guests: 1,
         user: {
             name: '',
-            avatar: ''
+            avatar: '',
+            likes: []
         },
         userReview: {
             rating: 0,
@@ -86,7 +85,6 @@ class Place extends React.Component {
                         { icon: 'fas fa-fw fa-bed', about: `${place.data.rooms} bedrooms` },
                         { icon: 'fas fa-fw fa-bath', about: `${place.data.bathrooms} baths` }
                     ],
-                    bigImage: place.data.images[0],
                     userReviewed: userReviewed,
                     user: user.data,
                 })
@@ -96,10 +94,20 @@ class Place extends React.Component {
     }
 
 
-    changeFav = () => {
-        let place = this.state.place
-        place.fav = !place.fav
-        this.setState({ place })
+    updateLike = (placeId) => {
+        // console.log('changing like')
+        axios.patch(`${process.env.REACT_APP_API}/users?token=${this.state.token}`, {
+            place: placeId
+        })
+            .then(res => {
+                console.log('res => ', res.data)
+
+                let user = res.data.user
+                let token = res.data.token
+                this.setState({ user, token })
+                localStorage.setItem('token', token)
+            })
+            .catch(err => { console.log(err) })
     }
 
     setUserRating = (i) => {
@@ -160,12 +168,6 @@ class Place extends React.Component {
         })
     }
 
-    changeBigImage = (i) => {
-        this.setState({
-            bigImage: this.state.images[i]
-        })
-    }
-
     handleChange = (date, field) => {
         let bookingDates = this.state.bookingDates
         bookingDates[field] = date
@@ -183,7 +185,7 @@ class Place extends React.Component {
         return (
             <div>
                 <Nav user={this.state.user} />
-                <Gallery images={this.state.images} changeImage={this.changeBigImage} like={this.changeFav} fav={this.state.place.fav} bigImage={this.state.bigImage} />
+                <Gallery place={this.state.place}  user={this.state.user} like={this.updateLike} bigImage={this.state.bigImage} />
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">
