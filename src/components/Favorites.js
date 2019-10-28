@@ -41,10 +41,12 @@ class Favorites extends React.Component {
         let token = localStorage.getItem('token')
 
         Promise.all([
-            axios.get(`${process.env.REACT_APP_API}/places?token=${token}`),
+            axios.get(`${process.env.REACT_APP_API}/favorites?token=${token}`),
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
         ])
             .then(([places, user]) => {
+                console.log('user =>>',user.data)
+                console.log('placesFav =>>',places.data)
                 this.setState({
                     places: places.data,
                     user: user.data,
