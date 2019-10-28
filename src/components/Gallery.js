@@ -10,7 +10,7 @@ class Gallery extends React.Component {
         user: this.props,
         place: this.props.place,
         liked: '',
-        bigImage: '',
+        bigImage: this.props.place.images[0],
     }
 
     UNSAFE_componentWillReceiveProps(props) {
