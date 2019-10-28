@@ -30,7 +30,7 @@ class Places extends React.Component {
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
         ])
             .then(([places, types, user]) => {
-                console.log('places=>', places.data)
+                console.log('user ==>', user.data)
                 this.setState({
                     places: places.data,
                     originalPlaces: places.data,

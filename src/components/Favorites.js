@@ -14,40 +14,61 @@ class Favorites extends React.Component {
     state = {
         user: {
             name: '',
-            avatar: ''
+            avatar: '',
+            likes: []
         },
-        places: [
-            {
-                title: 'Luxury Villa Indu Siam',
-                description: 'Entire Villa • 3 Rooms',
-                price: '5 nights • $1,750 Total',
-                location: 'Koh Samui, Thailand',
-                id: 0,
-                stars: 4,
-                reviews: 37,
-                bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
-                rooms: 4,
-                type: {
-                    name: 'Entire Villa'
-                }
-            }]
+        places: [],
+        token: ''
+        // places: [
+        //     {
+        //         title: 'Luxury Villa Indu Siam',
+        //         description: 'Entire Villa • 3 Rooms',
+        //         price: '5 nights • $1,750 Total',
+        //         location: 'Koh Samui, Thailand',
+        //         id: 0,
+        //         stars: 4,
+        //         reviews: 37,
+        //         bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
+        //         rooms: 4,
+        //         type: {
+        //             name: 'Entire Villa'
+        //         }
+        //     }]
 
     }
 
     UNSAFE_componentWillMount() {
         let token = localStorage.getItem('token')
 
-        if (token) {
+        Promise.all([
+            axios.get(`${process.env.REACT_APP_API}/places?token=${token}`),
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
-                .then(res => {
-                    console.log('user info ==> ', res.data)
-                    this.setState({
-                        user: res.data,
-                    })
+        ])
+            .then(([places, user]) => {
+                this.setState({
+                    places: places.data,
+                    user: user.data,
+                    token: token
                 })
-                .catch(err => { console.log('err==>', err) })
-        }
+            })
+            .catch(err => console.log(err))
     }
+
+    updateLike = (placeId) => {
+        axios.patch(`${process.env.REACT_APP_API}/users?token=${this.state.token}`, {
+            place: placeId
+        })
+            .then(res => {
+                console.log('res => ', res.data)
+
+                let user = res.data.user
+                let token = res.data.token
+                this.setState({ user, token })
+                localStorage.setItem('token', token)
+            })
+            .catch(err => { console.log(err) })
+    }
+
     render() {
         return (
             <div >
@@ -59,10 +80,11 @@ class Favorites extends React.Component {
                         <Sidebar page="favorites" />
                         <div className="content">
                             <h2>My Favorites</h2>
-                            <div className="grid two">
-                                <Thumbnail page="favorites" key={this.state.places[0].id} place={this.state.places[0]} index={0} fav="true" />
-                            </div>
-
+                            {this.state.places.map((p, i) => {
+                                return (
+                                    <Thumbnail key={i} place={p} index={i} page={this.state.page} user={this.state.user} like={this.updateLike} />
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
