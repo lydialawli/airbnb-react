@@ -57,47 +57,42 @@ class Place extends React.Component {
 
     UNSAFE_componentWillMount() {
         let token = localStorage.getItem('token')
-
-        // console.log('idPlace => ', this.props.match.params.id)
-
-        axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
-            .then(res => {
-                // console.log('user info ==> ', res.data)
-                this.setState({
-                    user: res.data,
-                })
-            })
-            .catch(err => { console.log('err==>', err) })
-
-
         let place = this.props.match.params.id
         let userReviewed = this.state.userReviewed
-        axios.get(`${process.env.REACT_APP_API}/places/${place}`)
-            .then(res => {
-                // console.log("this ==>", res.data)
-                res.data.reviews.forEach(r => {
+
+        // console.log('idPlace => ', this.props.match.params.id)
+        Promise.all([
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`),
+            axios.get(`${process.env.REACT_APP_API}/places/${place}`)
+        ])
+            .then(([user, place]) => {
+
+                place.data.reviews.forEach(r => {
                     if (r.author._id === this.state.user._id) {
                         userReviewed = true
                     }
                 })
 
+                if (user.data._id === place.data.host._id)
+                    userReviewed = true
+
                 this.setState({
-                    place: res.data,
-                    images: res.data.images,
-                    originalPlace: res.data,
+                    place: place.data,
+                    images: place.data.images,
+                    originalPlace: place.data,
                     info: [
-                        { icon: 'fas fa-fw fa-home', about: `${res.data.type.name}` },
-                        { icon: 'fas fa-fw fa-user-friends', about: `${res.data.guests} guests` },
-                        { icon: 'fas fa-fw fa-bed', about: `${res.data.rooms} bedrooms` },
-                        { icon: 'fas fa-fw fa-bath', about: `${res.data.bathrooms} baths` }
+                        { icon: 'fas fa-fw fa-home', about: `${place.data.type.name}` },
+                        { icon: 'fas fa-fw fa-user-friends', about: `${place.data.guests} guests` },
+                        { icon: 'fas fa-fw fa-bed', about: `${place.data.rooms} bedrooms` },
+                        { icon: 'fas fa-fw fa-bath', about: `${place.data.bathrooms} baths` }
                     ],
-                    bigImage: res.data.images[0],
-                    userReviewed: userReviewed
+                    bigImage: place.data.images[0],
+                    userReviewed: userReviewed,
+                    user: user.data,
                 })
 
             })
-            .catch(err => { console.log(err) })
-
+            .catch(err => { console.log('err==>', err) })
     }
 
 
@@ -126,7 +121,7 @@ class Place extends React.Component {
         let errorMsg = "please choose a rating"
         this.setState({ errorMsg })
 
-        setTimeout(()=>{this.setState({ errorMsg: '' })}, 2000)
+        setTimeout(() => { this.setState({ errorMsg: '' }) }, 2000)
     }
 
     handleSubmitReview = (e) => {
