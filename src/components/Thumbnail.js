@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom'
 class Thumbnail extends React.Component {
 
 	state = {
-		user: this.props.user,
+		user: this.props,
 		place: this.props.place,
 		liked: '',
 	}
 
 	UNSAFE_componentWillReceiveProps(props) {
 		let liked = this.state.liked
-
+		
 		if (props.user.likes.includes(props.place._id)) {
 			liked = true
 		}
@@ -28,7 +28,7 @@ class Thumbnail extends React.Component {
 	}
 
 	componentDidMount() {
-		let user = this.state.user
+		let user = this.state.user.user
 		console.log('thumbnail user',user)
 		if (user.likes.includes(this.state.place._id))
 			this.setState({ liked: true })
