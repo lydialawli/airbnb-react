@@ -50,7 +50,8 @@ class Place extends React.Component {
             content: ''
         },
         userReviewed: false,
-        errorMsg: ''
+        errorMsg: '',
+        token: ''
     }
 
 
@@ -87,6 +88,7 @@ class Place extends React.Component {
                     ],
                     userReviewed: userReviewed,
                     user: user.data,
+                    token: token
                 })
 
             })
@@ -95,7 +97,6 @@ class Place extends React.Component {
 
 
     updateLike = (placeId) => {
-        // console.log('changing like')
         axios.patch(`${process.env.REACT_APP_API}/users?token=${this.state.token}`, {
             place: placeId
         })
@@ -185,7 +186,7 @@ class Place extends React.Component {
         return (
             <div>
                 <Nav user={this.state.user} />
-                <Gallery place={this.state.place}  user={this.state.user} like={this.updateLike} bigImage={this.state.bigImage} />
+                <Gallery place={this.state.place} user={this.state.user} like={this.updateLike} bigImage={this.state.bigImage} />
                 <div className="grid medium">
                     <div className="grid sidebar-right">
                         <div className="content">

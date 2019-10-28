@@ -43,7 +43,6 @@ class Places extends React.Component {
     }
 
     updateLike = (placeId) => {
-        // console.log('changing like')
         axios.patch(`${process.env.REACT_APP_API}/users?token=${this.state.token}`, {
             place: placeId
         })

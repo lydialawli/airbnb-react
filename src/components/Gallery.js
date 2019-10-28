@@ -10,7 +10,7 @@ class Gallery extends React.Component {
 		user: this.props,
 		place: this.props.place,
         liked: '',
-        bigImage: '',
+        bigImage: this.props.place[0],
 	}
 
 	UNSAFE_componentWillReceiveProps(props) {
@@ -31,7 +31,6 @@ class Gallery extends React.Component {
 
 	componentDidMount() {
 		let user = this.state.user.user
-	
 		if (user.likes.includes(this.state.place._id))
 			this.setState({ liked: true })
 	}

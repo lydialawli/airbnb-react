@@ -29,7 +29,6 @@ class Thumbnail extends React.Component {
 
 	componentDidMount() {
 		let user = this.state.user.user
-		console.log('thumbnail user',user)
 		if (user.likes.includes(this.state.place._id))
 			this.setState({ liked: true })
 	}
