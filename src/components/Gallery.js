@@ -10,29 +10,33 @@ class Gallery extends React.Component {
         user: this.props,
         place: this.props.place,
         liked: '',
-        bigImage: this.props.place.images[0],
+        bigImage: 'default',
     }
 
     UNSAFE_componentWillReceiveProps(props) {
         let liked = this.state.liked
-
+        let bigImage = props.place.images[0]
         if (props.user.likes.includes(props.place._id)) {
             liked = true
         }
         else { liked = false }
 
+        if (this.state.bigImage !== 'default')
+            bigImage = this.state.bigImage
+
         this.setState({
             place: props.place,
             user: props.user,
-            biImage: props.place.images[0],
+            bigImage,
             liked
         })
     }
 
     componentDidMount() {
         let user = this.state.user.user
+
         if (user.likes.includes(this.state.place._id))
-            this.setState({ liked: true, bigImage: this.state.place.images[0] })
+            this.setState({ liked: true })
     }
 
     like = (e) => {
