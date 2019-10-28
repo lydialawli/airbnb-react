@@ -32,7 +32,7 @@ class Gallery extends React.Component {
     componentDidMount() {
         let user = this.state.user.user
         if (user.likes.includes(this.state.place._id))
-            this.setState({ liked: true, bigImage: this.props.place.images[0] })
+            this.setState({ liked: true, bigImage: this.state.place.images[0] })
     }
 
     like = (e) => {
