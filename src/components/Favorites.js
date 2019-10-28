@@ -38,6 +38,10 @@ class Favorites extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
+        this.getData()
+    }
+
+    getData = () => {
         let token = localStorage.getItem('token')
 
         Promise.all([
@@ -45,8 +49,8 @@ class Favorites extends React.Component {
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`)
         ])
             .then(([places, user]) => {
-                console.log('user =>>',user.data)
-                console.log('placesFav =>>',places.data)
+                console.log('user =>>', user.data)
+                console.log('placesFav =>>', places.data)
                 this.setState({
                     places: places.data,
                     user: user.data,
@@ -67,6 +71,7 @@ class Favorites extends React.Component {
                 let token = res.data.token
                 this.setState({ user, token })
                 localStorage.setItem('token', token)
+                this.getData()
             })
             .catch(err => { console.log(err) })
     }
