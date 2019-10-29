@@ -60,15 +60,11 @@ class Place extends React.Component {
         let place = this.props.match.params.id
         let userReviewed = this.state.userReviewed
 
-        // console.log('idPlace => ', this.props.match.params.id)
         Promise.all([
             axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`),
             axios.get(`${process.env.REACT_APP_API}/places/${place}`)
         ])
             .then(([user, place]) => {
-                console.log('reviews=>',place.data.reviews)
-                console.log('user=>',user.data._id)
-
                 place.data.reviews.forEach(r => {
                     if (r.author._id === user.data._id) {
                         userReviewed = true
