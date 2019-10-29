@@ -32,9 +32,9 @@ class Create extends React.Component {
             axios.get(`${process.env.REACT_APP_API}/amenities`)
         ])
             .then(([types, user, amenities]) => {
-                console.log('user ==>', user.data)
+                let t = types.data.filter(t => t.name != "All Types")
                 this.setState({
-                    types: types.data,
+                    types: t,
                     user: user.data,
                     token: token,
                     amenities:amenities.data
