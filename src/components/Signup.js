@@ -17,8 +17,8 @@ class Signup extends React.Component {
             email: '',
             password: '',
             location: '',
-            avatar: ''
-            // file: ''
+            avatar: '',
+            file: ''
         },
         errorMsg: '',
         emailError: ''
@@ -33,17 +33,6 @@ class Signup extends React.Component {
 
     signup = (e) => {
         e.preventDefault()
-
-        // let data = new FormData
-        // data.append('file', this.state.user.file)
-        // data.append('name', this.state.user.name)
-        // ... or better
-
-        // for(var key in this.state.user){
-        //     data.append(key, this.state.user[key])
-        // }
-
-
         let fields = ['name', 'email', 'password', 'location']
         let error = fields.forEach(f => {
             if (this.state.user[f] === '') {
@@ -56,7 +45,16 @@ class Signup extends React.Component {
         })
 
         if (!error) {
-            axios.post(`${process.env.REACT_APP_API}/signup`, this.state.user)
+            let user = new FormData()
+            // data.append('file', this.state.user.file)
+            // data.append('name', this.state.user.name)
+            // ... or better
+
+            for (var key in this.state.user) {
+                user.append(key, this.state.user[key])
+            }
+
+            axios.post(`${process.env.REACT_APP_API}/signup`, user)
                 .then(res => {
                     if (!res.data) {
                         this.setState({
@@ -79,6 +77,13 @@ class Signup extends React.Component {
         let user = this.state.user
         user[field] = e.target.value
         this.setState({ user })
+    }
+
+    getFile = (e) => {
+        let user = this.state.user
+        user.file = e.target.files[0]
+        this.setState({ user })
+        console.log('heeee=> ',this.state.user)
     }
 
     // addFile = (e)=> {
@@ -112,7 +117,7 @@ class Signup extends React.Component {
                         </div>
                         <div className="group">
                             <label>Profile Picture</label>
-                            <input type="file" />
+                            <input type="file" onChange={this.getFile} />
                         </div>
 
                         <button className="primary">Signup</button>
