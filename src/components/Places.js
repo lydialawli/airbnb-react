@@ -147,7 +147,7 @@ class Places extends React.Component {
                 <div className="grid five large">
                     {this.state.places.map((p, i) => {
                         return (
-                            <Thumbnail key={i} place={p} index={i} page={this.state.page} user={this.state.user} like={this.updateLike} />
+                            <Thumbnail key={i} place={p} index={i} date={false} page={this.state.page} user={this.state.user} like={this.updateLike} />
                         )
                     })}
                 </div>

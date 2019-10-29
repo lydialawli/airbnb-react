@@ -21,8 +21,25 @@ class Create extends React.Component {
             avatar: '',
             likes: []
         },
-        token: ''
+        token: '',
+        place: {
+            title: '',
+            description: '',
+            type: '',
+            city: '',
+            country: '',
+            price: 0,
+            rooms: 0,
+            rating: 0,
+            guests: 0,
+            bathrooms: 0,
+            host: '',
+            images: [],
+            amenities: []
+        },
+        errorMsg: '',
     }
+
     UNSAFE_componentWillMount() {
         let token = localStorage.getItem('token')
 
@@ -32,67 +49,118 @@ class Create extends React.Component {
             axios.get(`${process.env.REACT_APP_API}/amenities`)
         ])
             .then(([types, user, amenities]) => {
-                let t = types.data.filter(t => t.name != "All Types")
+                let t = types.data.reverse()
+                t[0] = {name:'Choose Type',_id:''}
                 this.setState({
                     types: t,
                     user: user.data,
                     token: token,
-                    amenities:amenities.data
+                    amenities: amenities.data
                 })
             })
             .catch(err => console.log(err))
     }
+    changeField = (e, field) => {
+        let place = this.state.place
+        if (field === 'amenities') {
+            let a = e.target.value
+            if (place.amenities.includes(a)) {
+                place.amenities = place.amenities.filter(x => x !== a)
+            }
+            else {
+                place.amenities.push(a)
+            }
+        }
+        else {
+            place[field] = e.target.value
+        }
+        console.log("newPlace =>", place)
+        this.setState({ place })
+    }
 
+    publish = (e) => {
+        e.preventDefault()
+        let fields = ['title', 'description', 'city', 'country', 'price', 'type', 'rooms', 'bathrooms', 'guests']
+        let error = fields.forEach(f => {
+            if (this.state.place[f] === '' || this.state.place[f] === 0) {
+                this.setState({
+                    errorMsg: 'missing fields'
+                })
+                setTimeout(() => { this.setState({ errorMsg: '' }) }, 4000)
+                return true
+            }
+            else { return false }
+        })
+
+        if (!error) {
+            let place = this.state.place
+            place.host = this.state.user._id
+
+            axios.post(`${process.env.REACT_APP_API}/places`, place).then(res => {
+                if (!res.data) {
+                    this.setState({
+                        errorMsg: 'please modify some fields'
+                    })
+                }
+                else {
+                    this.props.history.push({
+                        pathname: `/host`
+                    })
+                    console.log(res.data)
+                }
+            })
+        }
+    }
 
     render() {
         return (
             <div >
                 <div >
-                    <Nav user={this.state.user}/>
+                    <Nav user={this.state.user} />
                 </div>
                 <div className="grid medium">
                     <div className="grid sidebar-left">
                         <Sidebar page="host" />
                         <div className="content">
                             <h2>Host a new place</h2>
-                            <form>
+                            <form onSubmit={this.publish}>
                                 <div className="group">
                                     <label>Title</label>
-                                    <input type="text" />
+                                    <input type="text" onChange={(e) => this.changeField(e, 'title')} />
                                 </div>
                                 <div className="group">
                                     <label>Description</label>
-                                    <textarea></textarea>
+                                    <textarea onChange={(e) => this.changeField(e, 'description')}></textarea>
                                 </div>
                                 <div className="group">
                                     <label>City or Town</label>
-                                    <input type="text" />
+                                    <input type="text" onChange={(e) => this.changeField(e, 'city')} />
                                 </div>
                                 <div className="group">
                                     <label>Country</label>
-                                    <input type="text" />
+                                    <input type="text" onChange={(e) => this.changeField(e, 'country')} />
                                 </div>
                                 <div className="group">
                                     <label>Price per Night (USD)</label>
-                                    <input type="number" />
+                                    <input type="number" onChange={(e) => this.changeField(e, 'price')} />
                                 </div>
                                 <div className="group">
                                     <label>Type</label>
-                                    <select>
-                                        {this.state.types.map((e,i) => { return <option key={i} defaultValue="1">{e.name}</option> })}
+                                    <select onChange={(e) => this.changeField(e, 'type')}>
+                                        {this.state.types.map((e, i) => { return <option key={i} value={e._id} >{e.name}</option> })}
                                     </select>
                                 </div>
                                 <div className="group">
                                     <label>Number of Rooms</label>
-                                    <input type="number" />
+                                    <input type="number" onChange={(e) => this.changeField(e, 'rooms')} />
                                 </div>
                                 <div className="group">
                                     <label>Number of Bathrooms</label>
-                                    <input type="number" />
+                                    <input type="number" onChange={(e) => this.changeField(e, 'bathrooms')} />
                                 </div>
                                 <div className="group">
                                     <label>Maximum number of Guests</label>
-                                    <input type="number" />
+                                    <input type="number" onChange={(e) => this.changeField(e, 'guests')} />
                                 </div>
                                 <div className="group">
                                     <label>Upload Photos</label>
@@ -100,17 +168,18 @@ class Create extends React.Component {
                                 </div>
                                 <div className="group">
                                     <label>Amenities</label>
-                                    {this.state.amenities.map((e,i) => {
+                                    {this.state.amenities.map((e, i) => {
                                         return (
                                             <label key={i} className="checkbox">
-                                                <input type="checkbox" /> {e.name}
+                                                <input value={e._id} type="checkbox" onChange={(e) => this.changeField(e, 'amenities')} /> {e.name}
                                             </label>
                                         )
                                     })}
                                 </div>
-                                <Link to='/host' className="group">
-                                    <button className="primary">Publish this Place</button>
-                                </Link>
+
+                                <button className="primary">Publish this Place</button>
+                                <span style={{ color: "red" }}>{this.state.errorMsg}</span>
+
                                 <Link to='/host' className="group">
                                     <button className="cancel"><i className="fas fa-times"></i></button>
                                 </Link>

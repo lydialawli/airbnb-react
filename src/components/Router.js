@@ -36,10 +36,10 @@ class Router extends React.Component {
                     <Route path='/bookings' render={() => this.checkAuth() ? <Bookings /> : <Redirect to='/login' />} />
                     <Route path='/profile' render={() => this.checkAuth() ? <Profile /> : <Redirect to='/login' />} />
                     <Route path='/confirm' render={() => this.checkAuth() ? <Confirm /> : <Redirect to='/login' />} />
-                    <Route path='/create' render={() => this.checkAuth() ? <Create /> : <Redirect to='/login' />} />
+                    <Route path='/create' render={(props) => this.checkAuth() ? <Create {...props}/> : <Redirect to='/login' />} />
                     <Route path='/signup' component={Signup} />
                     <Route path='/login' component={Login} />
-                    <Route path='/host' render={() => this.checkAuth() ? <Host /> : <Redirect to='/login' />} />
+                    <Route path='/host' render={(props) => this.checkAuth() ? <Host  {...props}/> : <Redirect to='/login' />} />
                     <Route path='/' render={() => this.checkAuth() ? <Places /> : <Redirect to='/login' />} />
                 </Switch>
             </BrowserRouter>

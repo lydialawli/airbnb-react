@@ -14,7 +14,7 @@ class Thumbnail extends React.Component {
 
 	UNSAFE_componentWillReceiveProps(props) {
 		let liked = this.state.liked
-		
+
 		if (props.user.likes.includes(props.place._id)) {
 			liked = true
 		}
@@ -59,12 +59,15 @@ class Thumbnail extends React.Component {
 						{[...Array(5)].map((n, i) => i >= this.props.place.rating ? <i key={i} className="far fa-star"></i> : <i key={i} className="fas fa-star"></i>)}
 						<span>{this.props.place.reviews} Reviews</span>
 					</span>
-					<span className={this.props.place.date ? 'date' : ''}>{this.props.place.date ? this.props.place.date : ''}</span>
+					{this.props.date ? <span className="date">{this.props.place.date}</span> : ''}
+
 				</div>
 			</Link >
 		)
 	}
 }
+
+
 
 export default Thumbnail
 

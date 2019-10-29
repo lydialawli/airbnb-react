@@ -19,22 +19,6 @@ class Favorites extends React.Component {
         },
         places: [],
         token: ''
-        // places: [
-        //     {
-        //         title: 'Luxury Villa Indu Siam',
-        //         description: 'Entire Villa • 3 Rooms',
-        //         price: '5 nights • $1,750 Total',
-        //         location: 'Koh Samui, Thailand',
-        //         id: 0,
-        //         stars: 4,
-        //         reviews: 37,
-        //         bg: 'https://q-ak.bstatic.com/images/hotel/max1024x768/186/186223203.jpg',
-        //         rooms: 4,
-        //         type: {
-        //             name: 'Entire Villa'
-        //         }
-        //     }]
-
     }
 
     UNSAFE_componentWillMount() {
