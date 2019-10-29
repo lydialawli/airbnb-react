@@ -66,9 +66,11 @@ class Place extends React.Component {
             axios.get(`${process.env.REACT_APP_API}/places/${place}`)
         ])
             .then(([user, place]) => {
+                console.log('reviews=>',place.data.reviews)
+                console.log('user=>',user.data._id)
 
                 place.data.reviews.forEach(r => {
-                    if (r.author._id === this.state.user._id) {
+                    if (r.author._id === user.data._id) {
                         userReviewed = true
                     }
                 })
