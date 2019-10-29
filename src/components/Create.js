@@ -7,14 +7,40 @@ import '../styles/grid.css'
 import '../styles/gallery.css'
 import '../styles/forms.css'
 import '../styles/buttons.css'
+import axios from 'axios'
 
 
 class Create extends React.Component {
     state = {
         page: 'create',
         userProfile: 'https://randomuser.me/api/portraits/men/9.jpg',
-        options: ['Entire Villa', 'Entire House', 'Entire Apartment', 'Private Room', 'Shared Villa', 'Shared House', 'Shared Apartment'],
-        amenities: ['Swimming Pool', 'Kitchen', ' Wi-Fi', 'TV', 'Gym', 'Iron', 'Air Conditioning']
+        types: [],
+        amenities: [],
+        user: {
+            name: '',
+            avatar: '',
+            likes: []
+        },
+        token: ''
+    }
+    UNSAFE_componentWillMount() {
+        let token = localStorage.getItem('token')
+
+        Promise.all([
+            axios.get(`${process.env.REACT_APP_API}/types`),
+            axios.get(`${process.env.REACT_APP_API}/auth?token=${token}`),
+            axios.get(`${process.env.REACT_APP_API}/amenities`)
+        ])
+            .then(([types, user, amenities]) => {
+                console.log('user ==>', user.data)
+                this.setState({
+                    types: types.data,
+                    user: user.data,
+                    token: token,
+                    amenities:amenities.data
+                })
+            })
+            .catch(err => console.log(err))
     }
 
 
@@ -22,7 +48,7 @@ class Create extends React.Component {
         return (
             <div >
                 <div >
-                    <Nav />
+                    <Nav user={this.state.user}/>
                 </div>
                 <div className="grid medium">
                     <div className="grid sidebar-left">
@@ -53,7 +79,7 @@ class Create extends React.Component {
                                 <div className="group">
                                     <label>Type</label>
                                     <select>
-                                        {this.state.options.map((e,i) => { return <option key={i} defaultValue="1">{e}</option> })}
+                                        {this.state.types.map((e,i) => { return <option key={i} defaultValue="1">{e.name}</option> })}
                                     </select>
                                 </div>
                                 <div className="group">
@@ -77,7 +103,7 @@ class Create extends React.Component {
                                     {this.state.amenities.map((e,i) => {
                                         return (
                                             <label key={i} className="checkbox">
-                                                <input type="checkbox" /> {e}
+                                                <input type="checkbox" /> {e.name}
                                             </label>
                                         )
                                     })}
