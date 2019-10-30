@@ -71,11 +71,13 @@ class Favorites extends React.Component {
                         <Sidebar page="favorites" />
                         <div className="content">
                             <h2>My Favorites</h2>
-                            {this.state.places.map((p, i) => {
-                                return (
-                                    <Thumbnail key={i} place={p} index={i} page={this.state.page} user={this.state.user} like={this.updateLike} />
-                                )
-                            })}
+                            <div className="grid two">
+                                {this.state.places.map((p, i) => {
+                                    return (
+                                        <Thumbnail key={i} place={p} index={i} page={this.state.page} user={this.state.user} like={this.updateLike} />
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
