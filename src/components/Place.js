@@ -274,7 +274,7 @@ class Place extends React.Component {
                                             <label>Guests</label>
                                             <select onChange={this.updateGuestState}>
                                                 {
-                                                    [...Array(this.state.guests)].map((n, i) => {
+                                                    [...Array(this.state.place.guests)].map((n, i) => {
                                                         if (i + 1 === 1)
                                                             return <option key={i} value={i + 1}>{i + 1} guest</option>
                                                         else
