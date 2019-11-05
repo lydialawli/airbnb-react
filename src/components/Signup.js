@@ -18,10 +18,9 @@ class Signup extends React.Component {
             password: '',
             location: '',
             avatar: '',
-            file: ''
         },
         errorMsg: '',
-        emailError: ''
+        spinner: 'transparent'
     }
 
     UNSAFE_componentWillMount() {
@@ -33,6 +32,7 @@ class Signup extends React.Component {
 
     signup = (e) => {
         e.preventDefault()
+        console.log('file is,', this.state.selectedFile)
         let fields = ['name', 'email', 'password', 'location']
         let error = fields.forEach(f => {
             if (this.state.user[f] === '') {
@@ -45,28 +45,26 @@ class Signup extends React.Component {
         })
 
         if (!error) {
-            let user = new FormData()
-            // data.append('file', this.state.user.file)
-            // data.append('name', this.state.user.name)
-            // ... or better
+            this.setState({ spinner: '' })
 
+            const data = new FormData()
             for (var key in this.state.user) {
-                user.append(key, this.state.user[key])
+                data.append(key, this.state.user[key])
             }
 
-            axios.post(`${process.env.REACT_APP_API}/signup`, user)
+            axios.post(`${process.env.REACT_APP_API}/signup`, data, {})
                 .then(res => {
                     if (!res.data) {
                         this.setState({
-                            emailError: 'email is already in use'
+                            errorMsg: 'user or email is already in use'
                         })
                     }
                     else {
+                        console.log(res.statusText)
                         localStorage.setItem('token', res.data)
                         this.props.history.push({
                             pathname: `/`
                         })
-                        console.log(res.data)
                     }
                 })
                 .catch(err => console.log(err))
@@ -79,18 +77,11 @@ class Signup extends React.Component {
         this.setState({ user })
     }
 
-    getFile = (e) => {
+    updateFile = (e) => {
         let user = this.state.user
-        user.file = e.target.files[0]
+        user.avatar = e.target.files[0]
         this.setState({ user })
-        console.log('heeee=> ',this.state.user)
     }
-
-    // addFile = (e)=> {
-    //     let user = this.state.user
-    //     user.file = e.target.files[0]
-    // }
-
 
     render() {
         return (<div className="grid center middle tall image" style={{ backgroundImage: `url(${this.state.bg})` }}>
@@ -105,7 +96,6 @@ class Signup extends React.Component {
                         <div className="group">
                             <label>Email</label>
                             <input type="email" value={this.state.user.email} onChange={(e) => this.changeField(e, 'email')} />
-                            <span style={{ color: "red" }}>{this.state.emailError}</span>
                         </div>
                         <div className="group">
                             <label>Password</label>
@@ -117,10 +107,10 @@ class Signup extends React.Component {
                         </div>
                         <div className="group">
                             <label>Profile Picture</label>
-                            <input type="file" onChange={this.getFile} />
+                            <input type="file" name="file" onChange={this.updateFile} />
                         </div>
 
-                        <button className="primary">Signup</button>
+                        <button className="primary">Signup</button> <i style={{color:this.state.spinner}} className="fas fa-spinner spinnerIcon"></i>
                     </form>
                     <span style={{ color: "red" }}>{this.state.errorMsg}</span>
                     <p className="footer">

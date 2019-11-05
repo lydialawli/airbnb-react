@@ -79,3 +79,16 @@ h2 {
 .hidden {
 	display:none;
 }
+
+@keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
+.spinnerIcon {
+	font-size: 20px;
+	margin-top: 50px;
+	margin-left: 30px;
+	animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
