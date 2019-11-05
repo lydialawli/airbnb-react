@@ -32,7 +32,6 @@ class Signup extends React.Component {
 
     signup = (e) => {
         e.preventDefault()
-        console.log('file is,', this.state.selectedFile)
         let fields = ['name', 'email', 'password', 'location']
         let error = fields.forEach(f => {
             if (this.state.user[f] === '') {
