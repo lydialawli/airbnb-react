@@ -34,31 +34,36 @@
   - [x] import to other pages
 - Profile
   - [x] front-end
+  - [x] data coming from token
+  - [ ] button edit and save
+  - [ ] onClick save, call patchUser
 - Bookings  
   - [x] front-end
   - [ ] fix complain about handling error
+  - [ ] booking calendar not allow pass dates
+  - [ ] API: user model add bookings array
 - [x] Favorites
   - [x] front-end
 - Host
   - [x] front-end
 - Create
   - [x] front-end
+  - [ ] multiple file upload
 - Signup Page
   - [x] front-end
   - [x] functions to prevent wrong input
-  - [x] user arleady exists 
+  - [x] user arleady exists
   - [x] if token exist, redirect to /places
+  - [ ] avatar upload to cloud server
 - Login Page
   - [x] front-end
   - [x] functions to prevent wrong input
   - [x] user authentication checked with API
   - [x] if token exist, redirect to /places
 
-- user vote star link to dbs
-  
-
+- [x] API: user vote star link to dbs
 - [x] Make search bar work
-- [x] Fix all keys
+- [x] Fix all keys in mapped components
 - [x] Make user vote stars work
 - [x] Make review work
 - [ ] Add modules to reuse fav()
