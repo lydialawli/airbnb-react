@@ -54,7 +54,8 @@
   - [x] functions to prevent wrong input
   - [x] user arleady exists
   - [x] if token exist, redirect to /places
-  - [ ] avatar upload to cloud server
+  - [x] avatar upload to cloud server
+    - [ ] fix bug
 - Login Page
   - [x] front-end
   - [x] functions to prevent wrong input

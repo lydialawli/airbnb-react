@@ -50,7 +50,7 @@ class Create extends React.Component {
         ])
             .then(([types, user, amenities]) => {
                 let t = types.data.reverse()
-                t[0] = {name:'Choose Type',_id:''}
+                t[0] = { name: 'Choose Type', _id: '' }
                 this.setState({
                     types: t,
                     user: user.data,
@@ -95,21 +95,48 @@ class Create extends React.Component {
         if (!error) {
             let place = this.state.place
             place.host = this.state.user._id
+            const data = new FormData()
 
-            axios.post(`${process.env.REACT_APP_API}/places`, place).then(res => {
-                if (!res.data) {
-                    this.setState({
-                        errorMsg: 'please modify some fields'
+            for (var key in place) {
+                if (key === 'amenities') {
+
+                    place.amenities.forEach((item) => {
+                        data.append(key, item)
                     })
                 }
+
+                // if (key === 'images') {
+
+                //     place.images.forEach((item) => {
+                //         data.append(key, item)
+                //     })
+                // }
                 else {
-                    this.props.history.push({
-                        pathname: `/host`
-                    })
-                    console.log(res.data)
+                    data.append(key, place[key])
                 }
-            })
+            }
+
+            axios.post(`${process.env.REACT_APP_API}/places`, place, {})
+                .then(res => {
+                    if (!res.data) {
+                        this.setState({
+                            errorMsg: 'please modify some fields'
+                        })
+                    }
+                    else {
+                        this.props.history.push({
+                            pathname: `/host`
+                        })
+                        console.log(res.data)
+                    }
+                })
         }
+    }
+
+    updateFiles = (e) => {
+        let place = this.state.place
+        place.images = e.target.files
+        this.setState({ place })
     }
 
     render() {
@@ -164,7 +191,7 @@ class Create extends React.Component {
                                 </div>
                                 <div className="group">
                                     <label>Upload Photos</label>
-                                    <input type="file" multiple />
+                                    <input type="file" name="images" onChange={this.updateFiles} multiple />
                                 </div>
                                 <div className="group">
                                     <label>Amenities</label>

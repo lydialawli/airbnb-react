@@ -45,7 +45,6 @@ class Signup extends React.Component {
 
         if (!error) {
             this.setState({ spinner: '' })
-
             const data = new FormData()
             for (var key in this.state.user) {
                 data.append(key, this.state.user[key])
@@ -68,6 +67,7 @@ class Signup extends React.Component {
                 })
                 .catch(err => console.log(err))
         }
+
     }
 
     changeField = (e, field) => {
@@ -109,7 +109,7 @@ class Signup extends React.Component {
                             <input type="file" name="file" onChange={this.updateFile} />
                         </div>
 
-                        <button className="primary">Signup</button> <i style={{color:this.state.spinner}} className="fas fa-spinner spinnerIcon"></i>
+                        <button className="primary">Signup</button> <i style={{ color: this.state.spinner }} className="fas fa-spinner spinnerIcon"></i>
                     </form>
                     <span style={{ color: "red" }}>{this.state.errorMsg}</span>
                     <p className="footer">
